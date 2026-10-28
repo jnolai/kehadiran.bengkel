@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kehadiran - Bengkel Perancangan Perolehan Tahunan 2027</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#06b6d4',
+              teal: '#14b8a6',
+              purple: '#8b5cf6',
+              amber: '#f59e0b',
+              emerald: '#10b981',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #090d16;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Glassmorphism Styles */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+    }
+
+    .glass-card-elevated {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.55);
+    }
+
+    .glass-input {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      color: #f8fafc;
+      transition: all 0.2s ease;
+    }
+    .glass-input:focus {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(6, 182, 212, 0.7);
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.25);
+      outline: none;
+    }
+    .glass-input option {
+      background: #0f172a;
+      color: #f8fafc;
+    }
+
+    /* Floating Aurora Animated Blobs */
+    .aurora-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.5;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      animation: auroraMove 24s infinite alternate ease-in-out;
+    }
+    .blob-cyan {
+      width: 480px;
+      height: 480px;
+      top: -120px;
+      left: -100px;
+      background: radial-gradient(circle, #0284c7 0%, #06b6d4 100%);
+    }
+    .blob-purple {
+      width: 520px;
+      height: 520px;
+      bottom: -100px;
+      right: -100px;
+      background: radial-gradient(circle, #7c3aed 0%, #db2777 100%);
+      animation-delay: -6s;
+    }
+    .blob-emerald {
+      width: 420px;
+      height: 420px;
+      top: 45%;
+      left: 35%;
+      background: radial-gradient(circle, #059669 0%, #0d9488 100%);
+      animation-delay: -12s;
+      opacity: 0.35;
+    }
+
+    @keyframes auroraMove {
+      0% { transform: translate(0px, 0px) scale(1); }
+      50% { transform: translate(70px, -50px) scale(1.12); }
+      100% { transform: translate(-50px, 60px) scale(0.92); }
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+  </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col relative overflow-x-hidden selection:bg-cyan-500 selection:text-white">
+
+  <!-- Ambient Aurora Glow Elements -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+    <div class="aurora-blob blob-cyan"></div>
+    <div class="aurora-blob blob-purple"></div>
+    <div class="aurora-blob blob-emerald"></div>
+  </div>
+
+  <!-- Header Navigasi Glassmorphism -->
+  <header class="sticky top-0 z-40 bg-slate-950/45 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/25">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        
+        <!-- Logo & Tajuk Bengkel -->
+        <div class="flex items-center space-x-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-500 p-[1.5px] shadow-lg shadow-cyan-500/25">
+            <div class="w-full h-full bg-slate-900/95 rounded-[14px] flex items-center justify-center">
+              <i class="fa-solid fa-file-signature text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 text-lg"></i>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-sm sm:text-base font-extrabold tracking-wide text-white font-heading">
+                BENGKEL PERANCANGAN PEROLEHAN TAHUNAN 2027
+              </h1>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+                2027
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 flex items-center gap-2 mt-0.5">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span id="liveClockDisplay" class="font-mono text-slate-300">--:--:--</span>
+              <span class="text-slate-600">|</span>
+              <span id="liveDateDisplay" class="text-slate-400">Hari ini</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Butang Navigasi Tab & Integrasi Form -->
+        <div class="flex items-center space-x-2">
+          <div class="p-1 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1 backdrop-blur-md">
+            <button id="tabFormBtn" onclick="switchView('form')" class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm flex items-center gap-2 transition-all">
+              <i class="fa-solid fa-id-badge"></i>
+              <span class="hidden sm:inline">Daftar Kehadiran</span>
+            </button>
+            <button id="tabDashboardBtn" onclick="switchView('dashboard')" class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white hover:bg-white/5 flex items-center gap-2 transition-all">
+              <i class="fa-solid fa-chart-pie"></i>
+              <span class="hidden sm:inline">Dashboard & Peserta</span>
+            </button>
+          </div>
+
+          <!-- Butang Segerak Google Sheets -->
+          <button onclick="syncFromGoogleSheet()" id="syncBtn" class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20 transition-all shadow-sm flex items-center gap-1.5 text-xs font-semibold" title="Tarik Data Terkini dari Google Sheets">
+            <i class="fa-solid fa-rotate text-xs" id="syncIcon"></i>
+            <span class="hidden md:inline">Sync Sheets</span>
+          </button>
+
+          <!-- Butang Admin Login / Keluar -->
+          <button id="adminLoginBtn" onclick="handleAdminAuthToggle()" class="p-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-cyan-300 hover:border-cyan-500/40 hover:bg-white/10 transition-all shadow-sm flex items-center gap-1.5 text-xs font-semibold" title="Admin Login">
+            <i class="fa-solid fa-lock text-sm" id="adminLockIcon"></i>
+            <span id="adminBtnLabel" class="hidden md:inline">Admin</span>
+          </button>
+
+          <!-- Butang Tetapan (Hanya muncul jika admin log masuk) -->
+          <button id="configSettingsBtn" onclick="toggleConfigModal(true)" class="hidden p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 transition-all shadow-sm" title="Tetapan Google Sheets & Google Forms">
+            <i class="fa-solid fa-sliders text-sm"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Container Pemberitahuan Toast -->
+  <div id="toastContainer" class="fixed top-24 right-4 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- Kandungan Utama -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+
+    <!-- ============================================== -->
+    <!-- TAB 1: BORANG PENDAFTARAN BENGKEL PEROLEHAN   -->
+    <!-- ============================================== -->
+    <section id="sectionForm" class="block">
+      <div class="max-w-2xl mx-auto">
+        
+        <!-- Header Tajuk Mengikut Google Form -->
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-semibold mb-3 backdrop-blur-md">
+            <i class="fa-solid fa-building-columns text-cyan-400"></i> Borang Kehadiran Rasmi
+          </div>
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-400 font-heading">
+            Bengkel Perancangan Perolehan Tahunan 2027
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-2">
+            Sila isi maklumat kehadiran pegawai di bawah. Medan bertanda <span class="text-rose-400 font-bold">*</span> adalah wajib.
+          </p>
+        </div>
+
+        <!-- Kad Borang Glassmorphism -->
+        <div class="glass-card-elevated rounded-3xl p-6 sm:p-9 relative overflow-hidden">
+          <div class="absolute -top-20 -right-20 w-44 h-44 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <form id="attendanceForm" onsubmit="handleFormSubmit(event)" class="space-y-6 relative z-10">
+
+            <!-- 1. Nama Pegawai -->
+            <div>
+              <label for="namaPegawai" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
+                Nama Pegawai <span class="text-rose-400 font-bold">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                  <i class="fa-solid fa-user-tie"></i>
+                </span>
+                <input type="text" id="namaPegawai" required placeholder="Nama penuh pegawai"
+                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-500 font-medium">
+              </div>
+            </div>
+
+            <!-- 2. Jawatan/Gred -->
+            <div>
+              <label for="jawatanGred" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
+                Jawatan/Gred <span class="text-rose-400 font-bold">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                  <i class="fa-solid fa-award"></i>
+                </span>
+                <input type="text" id="jawatanGred" required placeholder="Contoh: Pegawai Tadbir N41 / Penolong Jurutera JA29"
+                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-500 font-medium">
+              </div>
+            </div>
+
+            <!-- 3. Jabatan -->
+            <div>
+              <label for="jabatan" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
+                Jabatan <span class="text-rose-400 font-bold">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                  <i class="fa-solid fa-landmark"></i>
+                </span>
+                <select id="jabatan" required
+                  class="glass-input w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm appearance-none cursor-pointer">
+                  <option value="" disabled selected class="text-slate-500">Pilih Jabatan / Pejabat</option>
+                  <option value="Pejabat Datuk Bandar Kuala Lumpur">Pejabat Datuk Bandar Kuala Lumpur</option>
+                  <option value="Pejabat Pengarah Eksekutif (Pembangunan Sosioekonomi)">Pejabat Pengarah Eksekutif (Pembangunan Sosioekonomi)</option>
+                  <option value="Pejabat Pengarah Eksekutif (Pengurusan)">Pejabat Pengarah Eksekutif (Pengurusan)</option>
+                  <option value="Pejabat Pengarah Eksekutif (Pengurusan Projek)">Pejabat Pengarah Eksekutif (Pengurusan Projek)</option>
+                  <option value="Pejabat Pengarah Eksekutif (Perancangan)">Pejabat Pengarah Eksekutif (Perancangan)</option>
+                  <option value="Jabatan Pembangunan Komuniti Dan Kesejahteraan Bandar (JPKKB)">Jabatan Pembangunan Komuniti Dan Kesejahteraan Bandar (JPKKB)</option>
+                  <option value="Jabatan Pelaksanaan Projek Dan Penyelenggaraan Bangunan (JPPPB)">Jabatan Pelaksanaan Projek Dan Penyelenggaraan Bangunan (JPPPB)</option>
+                  <option value="Jabatan Pembangunan Landskap Dan Rekreasi (JPLR)">Jabatan Pembangunan Landskap Dan Rekreasi (JPLR)</option>
+                  <option value="Jabatan Kesihatan dan Alam Sekitar (JKAS)">Jabatan Kesihatan dan Alam Sekitar (JKAS)</option>
+                  <option value="Jabatan Penguatkuasaan dan Keselamatan (JPK)">Jabatan Penguatkuasaan dan Keselamatan (JPK)</option>
+                  <option value="Jabatan Kejuruteraan Mekanikal Dan Elektrikal (JKME)">Jabatan Kejuruteraan Mekanikal Dan Elektrikal (JKME)</option>
+                  <option value="Jabatan Pelesenan Dan Pembangunan Perniagaan (JPPP)">Jabatan Pelesenan Dan Pembangunan Perniagaan (JPPP)</option>
+                  <option value="Jabatan Kejuruteraan Awam Dan Saliran (JKAWS)">Jabatan Kejuruteraan Awam Dan Saliran (JKAWS)</option>
+                  <option value="Jabatan Pengangkutan Bandar (JPB)">Jabatan Pengangkutan Bandar (JPB)</option>
+                  <option value="Jabatan Ukur Bahan (JUB)">Jabatan Ukur Bahan (JUB)</option>
+                  <option value="Jabatan Perancangan Ekonomi dan Pembangunan (JPEP)">Jabatan Perancangan Ekonomi dan Pembangunan (JPEP)</option>
+                  <option value="Jabatan Kawalan Bangunan (JKB)">Jabatan Kawalan Bangunan (JKB)</option>
+                  <option value="Jabatan Pentadbiran  Bahagian Pengurusan Perolehan (JP-BPP)">Jabatan Pentadbiran  Bahagian Pengurusan Perolehan (JP-BPP)</option>
+                  <option value="Jabatan Kebudayaan, Kesenian, Pelancongan Dan Sukan (JKKPS)">Jabatan Kebudayaan, Kesenian, Pelancongan Dan Sukan (JKKPS)</option>
+                  <option value="Jabatan Penilaian dan Pengurusan Harta (JPPH)">Jabatan Penilaian dan Pengurusan Harta (JPPH)</option>
+                  <option value="Jabatan Intergriti (JIT)">Jabatan Intergriti (JIT)</option>
+                  <option value="Jabatan Audit Dalam (JAD)">Jabatan Audit Dalam (JAD)</option>
+                  <option value="Jabatan Pengurusan Sumber Manusia (JPSM)">Jabatan Pengurusan Sumber Manusia (JPSM)</option>
+                  <option value="Jabatan Perancangan Korporat (JPK)">Jabatan Perancangan Korporat (JPK)</option>
+                  <option value="Jabatan Undang-Undang dan Pendakwaan (JUP)">Jabatan Undang-Undang dan Pendakwaan (JUP)</option>
+                  <option value="Jabatan Perancangan Infrastruktur (JPIF)">Jabatan Perancangan Infrastruktur (JPIF)</option>
+                  <option value="Jabatan Pengurusan Maklumat (JPM)">Jabatan Pengurusan Maklumat (JPM)</option>
+                  <option value="Jabatan Perancangan Bandaraya (JPB)">Jabatan Perancangan Bandaraya (JPB)</option>
+                  <option value="Jabatan Kewangan (JKEW)">Jabatan Kewangan (JKEW)</option>
+                </select>
+                <span class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-400">
+                  <i class="fa-solid fa-chevron-down text-xs"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- 4. No.Tel (Whatsaap) -->
+            <div>
+              <label for="noTel" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
+                No.Tel (Whatsaap) <span class="text-rose-400 font-bold">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-emerald-400">
+                  <i class="fa-brands fa-whatsapp text-lg"></i>
+                </span>
+                <input type="tel" id="noTel" required placeholder="Contoh: 012-3456789"
+                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-500 font-medium">
+              </div>
+            </div>
+
+            <!-- 5. eMail (Pilihan) -->
+            <div>
+              <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
+                eMail <span class="text-slate-400 text-[10px] lowercase font-normal">(pilihan)</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                  <i class="fa-regular fa-envelope"></i>
+                </span>
+                <input type="email" id="email" placeholder="Contoh: pegawai@kementerian.gov.my"
+                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-500 font-medium">
+              </div>
+            </div>
+
+            <!-- Google Form Integration Status Banner (Hanya untuk Admin) -->
+            <div id="adminSheetBanner" class="hidden rounded-2xl bg-white/[0.04] p-3.5 border border-white/10 flex items-center justify-between text-xs text-slate-300">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-table text-emerald-400"></i> Google Sheets Web App:
+                <span id="sheetStatusBadge" class="text-emerald-400 font-semibold flex items-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Bersedia
+                </span>
+              </span>
+              <button type="button" onclick="toggleConfigModal(true)" class="text-cyan-400 hover:text-cyan-300 underline font-medium">
+                Ubah Skrip / URL
+              </button>
+            </div>
+
+            <!-- Butang Hantar & Kosongkan -->
+            <div class="pt-2 flex gap-3">
+              <button type="submit" id="submitBtn"
+                class="flex-1 py-3.5 px-6 rounded-2xl font-bold text-slate-900 bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-300 hover:from-cyan-300 hover:to-teal-200 active:scale-[0.99] shadow-lg shadow-cyan-500/20 border border-white/40 transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-check-circle text-slate-900"></i>
+                <span id="btnText">Daftar Kehadiran</span>
+              </button>
+              <button type="reset" class="px-5 py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all" title="Clear form">
+                <i class="fa-solid fa-arrow-rotate-left"></i>
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- TAB 2: DASHBOARD KEHADIRAN & LOG PESERTA       -->
+    <!-- ============================================== -->
+    <section id="sectionDashboard" class="hidden">
+      
+      <!-- Top Action Bar -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-7">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-heading">
+            Dashboard Kehadiran Peserta
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400">
+            Bengkel Perancangan Perolehan Tahunan 2027 • Pemantauan Masa Nyata
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="syncFromGoogleSheet()" class="px-3.5 py-2.5 bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-300 text-xs font-semibold rounded-xl transition-all flex items-center gap-2 backdrop-blur-md">
+            <i class="fa-solid fa-arrows-rotate"></i> Segerak Dari Google Sheet
+          </button>
+          <button onclick="exportToCSV()" class="px-4 py-2.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-bold rounded-xl shadow-lg shadow-emerald-500/10 transition-all flex items-center gap-2 backdrop-blur-md">
+            <i class="fa-solid fa-file-csv"></i> Muat Turun CSV
+          </button>
+          <button onclick="window.print()" class="px-4 py-2.5 bg-white/10 hover:bg-white/15 border border-white/20 text-slate-200 text-xs font-bold rounded-xl shadow-lg transition-all flex items-center gap-2 backdrop-blur-md">
+            <i class="fa-solid fa-print"></i> Cetak Senarai
+          </button>
+        </div>
+      </div>
+
+      <!-- Kad Metrik (KPI Kehadiran) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
+        
+        <!-- Kad 1: Jumlah Peserta Hadir -->
+        <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-cyan-500/40 transition-all">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Jumlah Peserta</p>
+            <div class="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(6,182,212,0.25)]">
+              <i class="fa-solid fa-users"></i>
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <span id="metricTotal" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
+            <span class="text-xs text-cyan-400 font-semibold"><i class="fa-solid fa-user-check"></i> Hadir</span>
+          </div>
+          <div class="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
+            <div class="bg-gradient-to-r from-cyan-500 to-indigo-500 h-full rounded-full" style="width: 100%"></div>
+          </div>
+        </div>
+
+        <!-- Kad 2: Bilangan Jabatan Terlibat -->
+        <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-emerald-500/40 transition-all">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Jabatan Terlibat</p>
+            <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(16,185,129,0.25)]">
+              <i class="fa-solid fa-building-columns"></i>
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <span id="metricDeptCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
+            <span class="text-xs text-slate-400">bahagian</span>
+          </div>
+          <div class="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
+            <div class="bg-gradient-to-r from-emerald-400 to-teal-400 h-full rounded-full" style="width: 100%"></div>
+          </div>
+        </div>
+
+        <!-- Kad 3: WhatsApp Sah -->
+        <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-amber-500/40 transition-all">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">No. WhatsApp</p>
+            <div class="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(245,158,11,0.25)]">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <span id="metricWhatsappCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
+            <span class="text-xs text-slate-400">direkodkan</span>
+          </div>
+          <div class="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
+            <div class="bg-gradient-to-r from-amber-400 to-orange-400 h-full rounded-full" style="width: 100%"></div>
+          </div>
+        </div>
+
+        <!-- Kad 4: Ada eMail -->
+        <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-purple-500/40 transition-all">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">eMail Dibekal</p>
+            <div class="w-10 h-10 rounded-2xl bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(168,85,247,0.25)]">
+              <i class="fa-regular fa-envelope"></i>
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <span id="metricEmailCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
+            <span class="text-xs text-slate-400">peserta</span>
+          </div>
+          <div class="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
+            <div class="bg-gradient-to-r from-purple-400 to-pink-400 h-full rounded-full" style="width: 100%"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bahagian Carta & Visualisasi Glass -->
+      <div class="mb-7">
+        
+        <!-- Carta Bar: Taburan Mengikut Jabatan (Lebar Penuh) -->
+        <div class="glass-card p-6 rounded-3xl relative">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="font-bold text-white text-base font-heading">Kehadiran Mengikut Jabatan</h3>
+              <p class="text-xs text-slate-400">Pecahan bilangan pegawai hadir mengikut jabatan/bahagian</p>
+            </div>
+            <div class="text-xs text-cyan-300 bg-cyan-500/10 border border-cyan-500/25 px-3 py-1 rounded-full">
+              <i class="fa-solid fa-chart-column mr-1"></i> Taburan Sektor
+            </div>
+          </div>
+          <div class="relative h-72 w-full">
+            <canvas id="deptChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Jadual Senarai Peserta Glass -->
+      <div class="glass-card rounded-3xl overflow-hidden border border-white/15">
+        
+        <!-- Bar Carian & Penapis -->
+        <div class="p-4 sm:p-5 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-white/[0.02]">
+          <div class="relative flex-1 max-w-md">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <i class="fa-solid fa-magnifying-glass text-xs"></i>
+            </span>
+            <input type="text" id="tableSearch" oninput="filterTable()" placeholder="Cari nama pegawai, jawatan atau No. WhatsApp..."
+              class="glass-input w-full pl-10 pr-4 py-2.5 rounded-xl text-xs sm:text-sm placeholder-slate-500">
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <!-- Filter Department -->
+            <select id="filterDept" onchange="filterTable()" class="glass-input px-3.5 py-2.5 rounded-xl text-xs sm:text-sm cursor-pointer max-w-xs">
+              <option value="ALL">Semua Jabatan</option>
+              <option value="Pejabat Datuk Bandar Kuala Lumpur">Pejabat Datuk Bandar Kuala Lumpur</option>
+              <option value="Pejabat Pengarah Eksekutif (Pembangunan Sosioekonomi)">Pejabat Pengarah Eksekutif (Pembangunan Sosioekonomi)</option>
+              <option value="Pejabat Pengarah Eksekutif (Pengurusan)">Pejabat Pengarah Eksekutif (Pengurusan)</option>
+              <option value="Pejabat Pengarah Eksekutif (Pengurusan Projek)">Pejabat Pengarah Eksekutif (Pengurusan Projek)</option>
+              <option value="Pejabat Pengarah Eksekutif (Perancangan)">Pejabat Pengarah Eksekutif (Perancangan)</option>
+              <option value="Jabatan Pembangunan Komuniti Dan Kesejahteraan Bandar (JPKKB)">Jabatan Pembangunan Komuniti Dan Kesejahteraan Bandar (JPKKB)</option>
+              <option value="Jabatan Pelaksanaan Projek Dan Penyelenggaraan Bangunan (JPPPB)">Jabatan Pelaksanaan Projek Dan Penyelenggaraan Bangunan (JPPPB)</option>
+              <option value="Jabatan Pembangunan Landskap Dan Rekreasi (JPLR)">Jabatan Pembangunan Landskap Dan Rekreasi (JPLR)</option>
+              <option value="Jabatan Kesihatan dan Alam Sekitar (JKAS)">Jabatan Kesihatan dan Alam Sekitar (JKAS)</option>
+              <option value="Jabatan Penguatkuasaan dan Keselamatan (JPK)">Jabatan Penguatkuasaan dan Keselamatan (JPK)</option>
+              <option value="Jabatan Kejuruteraan Mekanikal Dan Elektrikal (JKME)">Jabatan Kejuruteraan Mekanikal Dan Elektrikal (JKME)</option>
+              <option value="Jabatan Pelesenan Dan Pembangunan Perniagaan (JPPP)">Jabatan Pelesenan Dan Pembangunan Perniagaan (JPPP)</option>
+              <option value="Jabatan Kejuruteraan Awam Dan Saliran (JKAWS)">Jabatan Kejuruteraan Awam Dan Saliran (JKAWS)</option>
+              <option value="Jabatan Pengangkutan Bandar (JPB)">Jabatan Pengangkutan Bandar (JPB)</option>
+              <option value="Jabatan Ukur Bahan (JUB)">Jabatan Ukur Bahan (JUB)</option>
+              <option value="Jabatan Perancangan Ekonomi dan Pembangunan (JPEP)">Jabatan Perancangan Ekonomi dan Pembangunan (JPEP)</option>
+              <option value="Jabatan Kawalan Bangunan (JKB)">Jabatan Kawalan Bangunan (JKB)</option>
+              <option value="Jabatan Pentadbiran  Bahagian Pengurusan Perolehan (JP-BPP)">Jabatan Pentadbiran  Bahagian Pengurusan Perolehan (JP-BPP)</option>
+              <option value="Jabatan Kebudayaan, Kesenian, Pelancongan Dan Sukan (JKKPS)">Jabatan Kebudayaan, Kesenian, Pelancongan Dan Sukan (JKKPS)</option>
+              <option value="Jabatan Penilaian dan Pengurusan Harta (JPPH)">Jabatan Penilaian dan Pengurusan Harta (JPPH)</option>
+              <option value="Jabatan Intergriti (JIT)">Jabatan Intergriti (JIT)</option>
+              <option value="Jabatan Audit Dalam (JAD)">Jabatan Audit Dalam (JAD)</option>
+              <option value="Jabatan Pengurusan Sumber Manusia (JPSM)">Jabatan Pengurusan Sumber Manusia (JPSM)</option>
+              <option value="Jabatan Perancangan Korporat (JPK)">Jabatan Perancangan Korporat (JPK)</option>
+              <option value="Jabatan Undang-Undang dan Pendakwaan (JUP)">Jabatan Undang-Undang dan Pendakwaan (JUP)</option>
+              <option value="Jabatan Perancangan Infrastruktur (JPIF)">Jabatan Perancangan Infrastruktur (JPIF)</option>
+              <option value="Jabatan Pengurusan Maklumat (JPM)">Jabatan Pengurusan Maklumat (JPM)</option>
+              <option value="Jabatan Perancangan Bandaraya (JPB)">Jabatan Perancangan Bandaraya (JPB)</option>
+              <option value="Jabatan Kewangan (JKEW)">Jabatan Kewangan (JKEW)</option>
+            </select>
+
+            <!-- Padam Rekod Button -->
+            <button onclick="confirmClearRecords()" class="p-2.5 text-rose-400 hover:text-white hover:bg-rose-500/20 border border-rose-500/20 rounded-xl transition-all" title="Kosongkan Senarai">
+              <i class="fa-solid fa-trash-can text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Jadual Data Frosted Glass -->
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-white/[0.04] border-b border-white/10 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <th class="py-3.5 px-4">Bil</th>
+                <th class="py-3.5 px-4">Waktu Daftar</th>
+                <th class="py-3.5 px-4">Nama Pegawai</th>
+                <th class="py-3.5 px-4">Jawatan / Gred</th>
+                <th class="py-3.5 px-4">Jabatan</th>
+                <th class="py-3.5 px-4">No. Tel (WhatsApp)</th>
+                <th class="py-3.5 px-4">eMail</th>
+                <th class="py-3.5 px-4 text-center">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceTableBody" class="divide-y divide-white/5 text-xs sm:text-sm text-slate-300">
+              <!-- Dimasukkan dinamik oleh JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Placeholder Tiada Rekod / Empty State -->
+        <div id="noRecordsState" class="p-12 text-center">
+          <div class="w-16 h-16 rounded-3xl bg-white/5 text-cyan-400 border border-white/10 mx-auto flex items-center justify-center text-2xl mb-3 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
+            <i class="fa-solid fa-clipboard-user"></i>
+          </div>
+          <h4 class="font-bold text-slate-200 text-sm sm:text-base">Belum Ada Rekod Kehadiran</h4>
+          <p class="text-xs text-slate-400 mt-1.5 max-w-md mx-auto">
+            Sila daftarkan peserta di tab <strong class="text-cyan-300">Daftar Kehadiran</strong> atau klik butang <strong class="text-emerald-300">Sync Sheets</strong> untuk memuat turun data daripada Google Sheet.
+          </p>
+          <div class="mt-4 flex justify-center gap-3">
+            <button onclick="switchView('form')" class="px-4 py-2 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold hover:bg-cyan-500/30 transition-all">
+              <i class="fa-solid fa-plus mr-1.5"></i> Daftar Sekarang
+            </button>
+          </div>
+        </div>
+
+        <!-- Footer Ringkasan Jadual -->
+        <div class="px-5 py-3.5 border-t border-white/10 bg-white/[0.02] flex items-center justify-between text-xs text-slate-400">
+          <span id="tableCountDisplay">Memaparkan 0 peserta</span>
+          <span class="text-[11px] text-cyan-400 flex items-center gap-1.5 font-medium">
+            <i class="fa-solid fa-shield-halved text-[10px]"></i> Disimpan Tempatan & Disegerak
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- MODAL: TETAPAN GOOGLE FORM & GOOGLE SHEETS     -->
+  <!-- ============================================== -->
+  <div id="configModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-card-elevated rounded-3xl max-w-2xl w-full border border-white/20 overflow-hidden transform transition-all shadow-2xl flex flex-col max-h-[90vh]">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-white/[0.03]">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+            <i class="fa-solid fa-table-cells"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white text-base">Penyambung Terus Google Sheets & Google Form</h3>
+            <p class="text-[11px] text-slate-400">Pilih kaedah simpanan data terus ke Google Drive anda</p>
+          </div>
+        </div>
+        <button onclick="toggleConfigModal(false)" class="text-slate-400 hover:text-white p-2">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Modal Tabs (Google Apps Script vs Google Form) -->
+      <div class="flex border-b border-white/10 bg-white/[0.02] px-6 pt-2">
+        <button id="cfgTabScriptBtn" onclick="switchConfigTab('script')" class="py-2.5 px-4 text-xs font-bold text-cyan-400 border-b-2 border-cyan-400 transition-all flex items-center gap-2">
+          <i class="fa-solid fa-code"></i> Google Sheets (Apps Script Web App)
+        </button>
+        <button id="cfgTabFormBtn" onclick="switchConfigTab('form')" class="py-2.5 px-4 text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center gap-2">
+          <i class="fa-brands fa-google"></i> Google Form Asal
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 space-y-4 overflow-y-auto custom-scrollbar text-xs sm:text-sm flex-1">
+        
+        <!-- Tab 1: Google Apps Script (Simpan Terus ke Sheet) -->
+        <div id="cfgTabScriptContent" class="space-y-4">
+          <div class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-200 p-4 rounded-2xl text-xs backdrop-blur-md">
+            <p class="font-bold text-sm text-emerald-300 mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-bolt"></i> Simpan Terus ke Google Sheet (Cara Paling Pantas):
+            </p>
+            <ol class="list-decimal ml-4 space-y-1 mt-2 text-slate-300 leading-relaxed text-[11px]">
+              <li>Buka Google Sheet baru di akaun anda & beri tajuk <em>Kehadiran Bengkel Perolehan 2027</em>.</li>
+              <li>Klik menu <strong>Extensions &gt; Apps Script</strong>.</li>
+              <li>Padam kod sedia ada, salin kod di bawah dan tampal ke dalam Apps Script.</li>
+              <li>Klik <strong>Deploy &gt; New deployment &gt; Pilih 'Web app'</strong>.</li>
+              <li>Setkan <em>Who has access</em> kepada: <strong>Anyone</strong> (Penting!).</li>
+              <li>Salin URL Web App dan tampal dalam kotak di bawah:</li>
+            </ol>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-200 mb-1">URL Google Apps Script Web App (Exec URL)</label>
+            <input type="url" id="cfgScriptUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec"
+              class="glass-input w-full px-3.5 py-3 rounded-xl font-mono text-xs">
+          </div>
+
+          <!-- Kod Apps Script Siap Pakai -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="font-bold text-slate-300 text-xs">Kod Apps Script Google Sheet (Salin ke Extensions &gt; Apps Script):</label>
+              <button onclick="copyAppsScriptCode()" type="button" class="text-cyan-400 hover:text-cyan-300 text-xs flex items-center gap-1 font-semibold">
+                <i class="fa-regular fa-copy"></i> Salin Kod
+              </button>
+            </div>
+            <pre class="bg-black/60 border border-white/10 rounded-xl p-3 text-[11px] font-mono text-cyan-200 overflow-x-auto max-h-40 custom-scrollbar select-all" id="appsScriptCodeBlock">
+function doPost(e) {
+  var lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Timestamp", "Nama Pegawai", "Jawatan/Gred", "Jabatan", "No. Tel (WhatsApp)", "eMail", "Waktu Daftar"]);
+    }
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      new Date(),
+      data.namaPegawai || "",
+      data.jawatanGred || "",
+      data.jabatan || "",
+      data.noTel || "",
+      data.email || "",
+      data.time || ""
+    ]);
+    return ContentService.createTextOutput(JSON.stringify({result: "success"})).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({result: "error", error: err.toString()})).setMimeType(ContentService.MimeType.JSON);
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var rows = sheet.getDataRange().getValues();
+  var results = [];
+  for (var i = 1; i &lt; rows.length; i++) {
+    results.push({
+      namaPegawai: rows[i][1],
+      jawatanGred: rows[i][2],
+      jabatan: rows[i][3],
+      noTel: rows[i][4],
+      email: rows[i][5],
+      time: rows[i][6] || rows[i][0]
+    });
+  }
+  return ContentService.createTextOutput(JSON.stringify(results)).setMimeType(ContentService.MimeType.JSON);
+}
+            </pre>
+          </div>
+        </div>
+
+        <!-- Tab 2: Google Form Asal -->
+        <div id="cfgTabFormContent" class="space-y-3.5 hidden">
+          <div class="bg-cyan-500/10 border border-cyan-500/30 text-cyan-200 p-4 rounded-2xl text-xs backdrop-blur-md">
+            <p class="font-bold mb-1"><i class="fa-solid fa-link mr-1"></i> Borang Google Form Anda:</p>
+            <a href="https://docs.google.com/forms/d/1uVKyrv2OXRlLgXzGdl12Vx4cwFH2p43350Sq8UA3SBA/edit" target="_blank" class="underline break-all hover:text-white font-mono text-[11px]">
+              https://docs.google.com/forms/d/1uVKyrv2OXRlLgXzGdl12Vx4cwFH2p43350Sq8UA3SBA/
+            </a>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Form Action URL</label>
+            <input type="url" id="cfgFormUrl"
+              value="https://docs.google.com/forms/d/1uVKyrv2OXRlLgXzGdl12Vx4cwFH2p43350Sq8UA3SBA/formResponse"
+              class="glass-input w-full px-3.5 py-2.5 rounded-xl font-mono text-xs">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-semibold text-slate-300 mb-1">Entry: Nama Pegawai</label>
+              <input type="text" id="cfgEntryNama" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-300 mb-1">Entry: Jawatan/Gred</label>
+              <input type="text" id="cfgEntryJawatan" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-300 mb-1">Entry: Jabatan</label>
+              <input type="text" id="cfgEntryJabatan" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-300 mb-1">Entry: No.Tel (WhatsApp)</label>
+              <input type="text" id="cfgEntryTel" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
+            </div>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Entry: eMail</label>
+            <input type="text" id="cfgEntryEmail" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-5 border-t border-white/10 flex justify-between items-center bg-white/[0.02]">
+        <span class="text-[11px] text-slate-400">Data kekal selamat &amp; tersimpan tempatan jika luar talian.</span>
+        <div class="flex gap-2.5">
+          <button type="button" onclick="toggleConfigModal(false)" class="px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-medium transition-all">Tutup</button>
+          <button type="button" onclick="saveConfiguration()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-90 text-slate-950 font-bold shadow-lg shadow-cyan-400/20 transition-all">Simpan Tetapan</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: LOG MASUK ADMIN (PASSWORD: UMKB13813)   -->
+  <!-- ============================================== -->
+  <div id="adminLoginModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-card-elevated rounded-3xl max-w-sm w-full border border-white/20 overflow-hidden shadow-2xl p-6 relative">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center justify-center">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <h3 class="font-bold text-white text-base font-heading">Log Masuk Admin</h3>
+        </div>
+        <button onclick="toggleAdminModal(false)" class="text-slate-400 hover:text-white p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+        Masukkan kata laluan untuk mengakses paparan konfigurasi Google Sheets dan pautan skrip.
+      </p>
+
+      <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+        <div>
+          <label for="adminPasswordInput" class="block text-xs font-semibold text-slate-300 mb-1.5">Kata Laluan</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <i class="fa-solid fa-key text-xs"></i>
+            </span>
+            <input type="password" id="adminPasswordInput" required placeholder="Masukkan kata laluan"
+              class="glass-input w-full pl-10 pr-4 py-2.5 rounded-xl text-xs placeholder-slate-500">
+          </div>
+          <p id="adminErrorMsg" class="text-[11px] text-rose-400 font-semibold mt-1.5 hidden">Kata laluan tidak sah!</p>
+        </div>
+
+        <div class="flex gap-2 pt-1">
+          <button type="button" onclick="toggleAdminModal(false)" class="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold transition-all">
+            Batal
+          </button>
+          <button type="submit" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-teal-400 text-slate-950 font-bold text-xs shadow-md shadow-cyan-400/20 transition-all">
+            Masuk
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Iframe Tersembunyi Bagi Direct Post Tanpa Page Reload -->
+  <iframe name="hidden_google_iframe" id="hidden_google_iframe" class="hidden"></iframe>
+
+  <!-- Footer Glassmorphism -->
+  <footer class="bg-black/40 backdrop-blur-xl border-t border-white/10 py-6 mt-14 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 inline-block shadow-[0_0_8px_#22d3ee]"></span>
+        <span class="font-semibold text-slate-200">Bengkel Perancangan Perolehan Tahunan 2027</span> &copy; 2026/2027.
+      </div>
+      <div class="flex items-center gap-2">
+        <span>Sistem Rekod Kehadiran Pintar</span>
+        <span class="font-bold text-cyan-300 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/30">@JnolAi</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- JAVASCRIPT LOGIK & INTEGRASI                   -->
+  <!-- ============================================== -->
+  <script>
+    // URL Google Apps Script Web App Hardcoded secara terus ke kod
+    const SCRIPT_URL_DEFAULT = "https://script.google.com/macros/s/AKfycbzqVUaklPOB3akAhIhutqrus-4Slm0TNOn6DRXsjbbCp7BgCVYhSm-oYDUlElRZlKAmlA/exec";
+    const ADMIN_PASS = "UMKB13813";
+
+    // Konfigurasi Asas Sistem
+    const DEFAULT_CONFIG = {
+      scriptUrl: SCRIPT_URL_DEFAULT,
+      formActionUrl: "https://docs.google.com/forms/d/1uVKyrv2OXRlLgXzGdl12Vx4cwFH2p43350Sq8UA3SBA/formResponse",
+      entryNama: "entry.1000001",
+      entryJawatan: "entry.1000002",
+      entryJabatan: "entry.1000003",
+      entryTel: "entry.1000004",
+      entryEmail: "entry.1000005"
+    };
+
+    // State - Menggunakan URL Web App Hardcoded
+    let savedConfig = JSON.parse(localStorage.getItem('perolehan_form_config')) || {};
+    let appConfig = {
+      ...DEFAULT_CONFIG,
+      ...savedConfig,
+      // Pastikan URL sentiasa menggunakan Web App yang diberikan jika tiada perubahan tersuai
+      scriptUrl: savedConfig.scriptUrl && savedConfig.scriptUrl.trim() !== '' ? savedConfig.scriptUrl : SCRIPT_URL_DEFAULT
+    };
+    
+    let attendees = JSON.parse(localStorage.getItem('perolehan_attendees')) || [];
+    let isAdminLoggedIn = sessionStorage.getItem('perolehan_admin_auth') === 'true';
+
+    // Charts
+    let deptChartInstance = null;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      startClock();
+      populateConfigInputs();
+      updateSheetBadge();
+      updateAdminUI();
+      renderDashboard();
+      initCharts();
+
+      // Auto-sync dari Google Sheets semasa aplikasi mula dibuka
+      if (appConfig.scriptUrl) {
+        syncFromGoogleSheet(true);
+      }
+    });
+
+    // Kawalan Akses & UI Admin
+    function updateAdminUI() {
+      const banner = document.getElementById('adminSheetBanner');
+      const cfgBtn = document.getElementById('configSettingsBtn');
+      const lockIcon = document.getElementById('adminLockIcon');
+      const adminBtnLabel = document.getElementById('adminBtnLabel');
+
+      if (isAdminLoggedIn) {
+        if (banner) banner.classList.remove('hidden');
+        if (cfgBtn) cfgBtn.classList.remove('hidden');
+        if (lockIcon) lockIcon.className = "fa-solid fa-lock-open text-emerald-400 text-sm";
+        if (adminBtnLabel) adminBtnLabel.textContent = "Keluar";
+      } else {
+        if (banner) banner.classList.add('hidden');
+        if (cfgBtn) cfgBtn.classList.add('hidden');
+        if (lockIcon) lockIcon.className = "fa-solid fa-lock text-slate-400 text-sm";
+        if (adminBtnLabel) adminBtnLabel.textContent = "Admin";
+      }
+    }
+
+    function handleAdminAuthToggle() {
+      if (isAdminLoggedIn) {
+        // Log keluar
+        isAdminLoggedIn = false;
+        sessionStorage.removeItem('perolehan_admin_auth');
+        updateAdminUI();
+        showToast('Anda telah log keluar daripada mod admin.', 'info');
+      } else {
+        toggleAdminModal(true);
+      }
+    }
+
+    function toggleAdminModal(show) {
+      const modal = document.getElementById('adminLoginModal');
+      const input = document.getElementById('adminPasswordInput');
+      const errorMsg = document.getElementById('adminErrorMsg');
+      if (show) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        if (errorMsg) errorMsg.classList.add('hidden');
+        if (input) {
+          input.value = '';
+          setTimeout(() => input.focus(), 100);
+        }
+      } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('adminPasswordInput');
+      const errorMsg = document.getElementById('adminErrorMsg');
+      
+      if (input.value === ADMIN_PASS) {
+        isAdminLoggedIn = true;
+        sessionStorage.setItem('perolehan_admin_auth', 'true');
+        updateAdminUI();
+        toggleAdminModal(false);
+        showToast('Log masuk Admin berjaya!', 'success');
+      } else {
+        if (errorMsg) errorMsg.classList.remove('hidden');
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    // Update Sheet Status Badge
+    function updateSheetBadge() {
+      const badge = document.getElementById('sheetStatusBadge');
+      if (appConfig.scriptUrl && appConfig.scriptUrl.trim() !== '') {
+        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Google Sheet Bersambung (Live)';
+        badge.className = 'text-emerald-400 font-semibold flex items-center gap-1.5';
+      } else {
+        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-cyan-400"></span> Mod Sandaran';
+        badge.className = 'text-cyan-400 font-semibold flex items-center gap-1.5';
+      }
+    }
+
+    // Switch Config Modal Tabs
+    function switchConfigTab(tab) {
+      const scriptTab = document.getElementById('cfgTabScriptContent');
+      const formTab = document.getElementById('cfgTabFormContent');
+      const scriptBtn = document.getElementById('cfgTabScriptBtn');
+      const formBtn = document.getElementById('cfgTabFormBtn');
+
+      if (tab === 'script') {
+        scriptTab.classList.remove('hidden');
+        formTab.classList.add('hidden');
+        scriptBtn.className = "py-2.5 px-4 text-xs font-bold text-cyan-400 border-b-2 border-cyan-400 transition-all flex items-center gap-2";
+        formBtn.className = "py-2.5 px-4 text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center gap-2";
+      } else {
+        scriptTab.classList.add('hidden');
+        formTab.classList.remove('hidden');
+        formBtn.className = "py-2.5 px-4 text-xs font-bold text-cyan-400 border-b-2 border-cyan-400 transition-all flex items-center gap-2";
+        scriptBtn.className = "py-2.5 px-4 text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center gap-2";
+      }
+    }
+
+    // Salin Kod Google Apps Script
+    function copyAppsScriptCode() {
+      const code = document.getElementById('appsScriptCodeBlock').innerText;
+      const el = document.createElement('textarea');
+      el.value = code;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      showToast('Kod Apps Script berjaya disalin! Tampal ke Google Sheets &gt; Extensions &gt; Apps Script', 'success');
+    }
+
+    // Jam & Tarikh
+    function startClock() {
+      const clockEl = document.getElementById('liveClockDisplay');
+      const dateEl = document.getElementById('liveDateDisplay');
+
+      function update() {
+        const now = new Date();
+        clockEl.textContent = now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        dateEl.textContent = now.toLocaleDateString('ms-MY', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    // Switch View
+    function switchView(view) {
+      const sectionForm = document.getElementById('sectionForm');
+      const sectionDashboard = document.getElementById('sectionDashboard');
+      const tabFormBtn = document.getElementById('tabFormBtn');
+      const tabDashboardBtn = document.getElementById('tabDashboardBtn');
+
+      if (view === 'form') {
+        sectionForm.classList.remove('hidden');
+        sectionDashboard.classList.add('hidden');
+        tabFormBtn.className = "px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm flex items-center gap-2 transition-all";
+        tabDashboardBtn.className = "px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white hover:bg-white/5 flex items-center gap-2 transition-all";
+      } else {
+        sectionForm.classList.add('hidden');
+        sectionDashboard.classList.remove('hidden');
+        tabDashboardBtn.className = "px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm flex items-center gap-2 transition-all";
+        tabFormBtn.className = "px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white hover:bg-white/5 flex items-center gap-2 transition-all";
+        
+        renderDashboard();
+        updateCharts();
+      }
+    }
+
+    // Handle Form Submit
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const namaPegawai = document.getElementById('namaPegawai').value.trim();
+      const jawatanGred = document.getElementById('jawatanGred').value.trim();
+      const jabatan = document.getElementById('jabatan').value;
+      const noTel = document.getElementById('noTel').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+
+      submitBtn.disabled = true;
+      btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Mendaftar kehadiran...';
+
+      const now = new Date();
+      // Format tarikh dan masa tempatan Malaysia (cth: 28/10/2026, 10:15:26 am)
+      const formattedTimestamp = now.toLocaleString('ms-MY', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+
+      const newAttendee = {
+        id: Date.now().toString(),
+        timestamp: formattedTimestamp,
+        time: now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true }),
+        date: now.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' }),
+        namaPegawai,
+        jawatanGred,
+        jabatan,
+        noTel,
+        email: email || '-'
+      };
+
+      // Payload seragam yang memadankan semua kemungkinan pembacaan di Apps Script
+      const postPayload = {
+        timestamp: formattedTimestamp,
+        nama: namaPegawai,
+        namaPegawai: namaPegawai,
+        "Nama Pegawai": namaPegawai,
+        jawatan: jawatanGred,
+        jawatanGred: jawatanGred,
+        "Jawatan/Gred": jawatanGred,
+        jabatan: jabatan,
+        "Jabatan": jabatan,
+        tel: noTel,
+        noTel: noTel,
+        "No.Tel (Whatsaap)": noTel,
+        "No.Tel (WhatsApp)": noTel,
+        email: email || "-",
+        "eMail": email || "-"
+      };
+
+      // 1. Simpan ke Google Sheet melalui Web App URL
+      const scriptEndpoint = appConfig.scriptUrl || SCRIPT_URL_DEFAULT;
+      try {
+        await fetch(scriptEndpoint, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(postPayload)
+        });
+      } catch (err) {
+        console.warn('Apps Script POST notice:', err);
+      }
+
+      // Simpan juga dalam LocalStorage untuk paparan pantas luar talian
+      attendees.unshift(newAttendee);
+      localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
+
+      // 2. Sandaran Google Form
+      postToGoogleForm(newAttendee);
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        btnText.innerHTML = 'Daftar Kehadiran';
+        document.getElementById('attendanceForm').reset();
+        
+        showToast(`Kehadiran ${namaPegawai} berjaya direkodkan!`, 'success');
+
+        setTimeout(() => {
+          switchView('dashboard');
+        }, 400);
+      }, 700);
+    }
+
+    // Direct Google Form Silent Submit
+    function postToGoogleForm(data) {
+      try {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = appConfig.formActionUrl;
+        form.target = 'hidden_google_iframe';
+
+        const fields = [
+          { name: appConfig.entryNama, value: data.namaPegawai },
+          { name: appConfig.entryJawatan, value: data.jawatanGred },
+          { name: appConfig.entryJabatan, value: data.jabatan },
+          { name: appConfig.entryTel, value: data.noTel },
+          { name: appConfig.entryEmail, value: data.email === '-' ? '' : data.email }
+        ];
+
+        fields.forEach(f => {
+          if (f.name && f.name.trim() !== '') {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = f.name;
+            input.value = f.value;
+            form.appendChild(input);
+          }
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+      } catch (err) {
+        console.warn('Form Post Error:', err);
+      }
+    }
+
+    // Tarik Data Terkini dari Google Sheets
+    async function syncFromGoogleSheet(silent = false) {
+      const scriptEndpoint = appConfig.scriptUrl || SCRIPT_URL_DEFAULT;
+      if (!scriptEndpoint) {
+        if (!silent) showToast('URL Google Apps Script tidak dijumpai!', 'error');
+        return;
+      }
+
+      const syncIcon = document.getElementById('syncIcon');
+      if (syncIcon) syncIcon.classList.add('fa-spin');
+
+      try {
+        const res = await fetch(scriptEndpoint);
+        const json = await res.json();
+        
+        // Terima data sama ada dalam array terus atau dalam json.data
+        const rawList = Array.isArray(json) ? json : (json && Array.isArray(json.data) ? json.data : []);
+
+        if (rawList.length > 0) {
+          const now = new Date();
+          attendees = rawList.map((item, idx) => {
+            const rawDate = item.timestamp ? new Date(item.timestamp) : now;
+            const isValidDate = !isNaN(rawDate.getTime());
+            return {
+              id: (Date.now() + idx).toString(),
+              timestamp: item.timestamp || now.toISOString(),
+              time: isValidDate ? rawDate.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true }) : (item.time || '-'),
+              date: isValidDate ? rawDate.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' }) : (item.date || '-'),
+              namaPegawai: item.nama || item.namaPegawai || item['Nama Pegawai'] || '-',
+              jawatanGred: item.jawatan || item.jawatanGred || item['Jawatan/Gred'] || '-',
+              jabatan: item.jabatan || item['Jabatan'] || 'Lain-lain',
+              noTel: item.tel || item.noTel || item['No.Tel (Whatsaap)'] || item['No.Tel (WhatsApp)'] || '-',
+              email: item.email || item['eMail'] || '-'
+            };
+          });
+
+          localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
+          renderDashboard();
+          updateCharts();
+          if (!silent) {
+            showToast(`Berjaya menyegerak ${attendees.length} data daripada Google Sheet!`, 'success');
+          }
+        } else {
+          if (!silent) showToast('Google Sheet bersambung, tiada rekod ditemui.', 'info');
+        }
+      } catch (err) {
+        if (!silent) {
+          showToast('Gagal menyegerak. Sila pastikan deployment di Google Apps Script ditetapkan ke "Anyone".', 'error');
+        }
+      } finally {
+        if (syncIcon) syncIcon.classList.remove('fa-spin');
+      }
+    }
+
+    // Papar Metrik & Kemas kini Jadual
+    function renderDashboard() {
+      const total = attendees.length;
+      const uniqueDepts = new Set(attendees.map(a => a.jabatan)).size;
+      const whatsappCount = attendees.filter(a => a.noTel && a.noTel !== '-').length;
+      const emailCount = attendees.filter(a => a.email && a.email !== '-').length;
+
+      document.getElementById('metricTotal').textContent = total;
+      document.getElementById('metricDeptCount').textContent = uniqueDepts;
+      document.getElementById('metricWhatsappCount').textContent = whatsappCount;
+      document.getElementById('metricEmailCount').textContent = emailCount;
+
+      filterTable();
+    }
+
+    // Filter & Render Table
+    function filterTable() {
+      const searchTerm = (document.getElementById('tableSearch')?.value || '').toLowerCase();
+      const deptFilter = document.getElementById('filterDept')?.value || 'ALL';
+
+      const tbody = document.getElementById('attendanceTableBody');
+      const noRecordsState = document.getElementById('noRecordsState');
+      const tableCountDisplay = document.getElementById('tableCountDisplay');
+
+      const filtered = attendees.filter(r => {
+        const matchSearch = r.namaPegawai.toLowerCase().includes(searchTerm) || 
+                            r.jawatanGred.toLowerCase().includes(searchTerm) ||
+                            r.noTel.toLowerCase().includes(searchTerm);
+        const matchDept = deptFilter === 'ALL' || r.jabatan === deptFilter;
+        return matchSearch && matchDept;
+      });
+
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        noRecordsState.classList.remove('hidden');
+      } else {
+        noRecordsState.classList.add('hidden');
+        filtered.forEach((r, idx) => {
+          // Bersihkan no tel untuk link terus WhatsApp
+          const cleanPhone = r.noTel.replace(/[^0-9]/g, '');
+          const waUrl = cleanPhone.startsWith('6') ? `https://wa.me/${cleanPhone}` : (cleanPhone.startsWith('0') ? `https://wa.me/6${cleanPhone}` : `https://wa.me/60${cleanPhone}`);
+
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-white/[0.04] transition-colors";
+          tr.innerHTML = `
+            <td class="py-3.5 px-4 font-semibold text-slate-400 text-xs">${idx + 1}</td>
+            <td class="py-3.5 px-4 whitespace-nowrap">
+              <div class="font-bold text-white text-xs">${r.time}</div>
+              <div class="text-[11px] text-slate-400 font-mono">${r.date}</div>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="font-bold text-white text-sm">${r.namaPegawai}</div>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/5 border border-white/10 text-cyan-300">
+                ${r.jawatanGred}
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-xs text-slate-300 max-w-[200px] truncate" title="${r.jabatan}">
+              ${r.jabatan}
+            </td>
+            <td class="py-3.5 px-4 font-mono text-xs whitespace-nowrap">
+              <a href="${waUrl}" target="_blank" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/20 transition-all font-medium" title="Hantar Mesej WhatsApp">
+                <i class="fa-brands fa-whatsapp text-emerald-400"></i> ${r.noTel}
+              </a>
+            </td>
+            <td class="py-3.5 px-4 font-mono text-xs text-slate-400">
+              ${r.email}
+            </td>
+            <td class="py-3.5 px-4 text-center">
+              <button onclick="deleteAttendee('${r.id}')" class="text-slate-500 hover:text-rose-400 transition-colors p-1.5" title="Padam nama ini">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      tableCountDisplay.textContent = `Memaparkan ${filtered.length} daripada ${attendees.length} pegawai hadir`;
+    }
+
+    // Chart.js Setup
+    function initCharts() {
+      const deptData = getDeptBreakdown();
+      const ctxDept = document.getElementById('deptChart').getContext('2d');
+      const deptLabels = Object.keys(deptData);
+      const deptValues = Object.values(deptData);
+
+      deptChartInstance = new Chart(ctxDept, {
+        type: 'bar',
+        data: {
+          labels: deptLabels.length > 0 ? deptLabels : ['Tiada Data'],
+          datasets: [{
+            label: 'Bilangan Pegawai',
+            data: deptValues.length > 0 ? deptValues : [0],
+            backgroundColor: 'rgba(6, 182, 212, 0.75)',
+            borderColor: '#22d3ee',
+            borderWidth: 1.5,
+            borderRadius: 8,
+            maxBarThickness: 32
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(15, 23, 42, 0.9)',
+              borderColor: 'rgba(255, 255, 255, 0.15)',
+              borderWidth: 1,
+              cornerRadius: 10
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0, color: '#94a3b8', stepSize: 1 },
+              grid: { color: 'rgba(255, 255, 255, 0.05)' }
+            },
+            x: {
+              ticks: { 
+                color: '#94a3b8',
+                callback: function(val, index) {
+                  const label = this.getLabelForValue(val);
+                  return label.length > 20 ? label.substr(0, 20) + '...' : label;
+                }
+              },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    function updateCharts() {
+      if (!deptChartInstance) return;
+
+      const deptData = getDeptBreakdown();
+      const deptLabels = Object.keys(deptData);
+      const deptValues = Object.values(deptData);
+
+      deptChartInstance.data.labels = deptLabels.length > 0 ? deptLabels : ['Tiada Data'];
+      deptChartInstance.data.datasets[0].data = deptValues.length > 0 ? deptValues : [0];
+      deptChartInstance.update();
+    }
+
+    function getDeptBreakdown() {
+      const counts = {};
+      attendees.forEach(a => {
+        counts[a.jabatan] = (counts[a.jabatan] || 0) + 1;
+      });
+      return counts;
+    }
+
+    // Export CSV
+    function exportToCSV() {
+      if (attendees.length === 0) {
+        showToast('Tiada rekod untuk dieksport!', 'error');
+        return;
+      }
+
+      let csv = "data:text/csv;charset=utf-8,\uFEFF";
+      csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (Whatsaap),eMail\r\n";
+
+      attendees.forEach((a, i) => {
+        csv += `${i + 1},"${a.date}","${a.time}","${a.namaPegawai}","${a.jawatanGred}","${a.jabatan}","${a.noTel}","${a.email}"\r\n`;
+      });
+
+      const uri = encodeURI(csv);
+      const link = document.createElement("a");
+      link.setAttribute("href", uri);
+      link.setAttribute("download", `Kehadiran_Bengkel_Perolehan_2027_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showToast('Fail CSV senarai peserta berjaya dimuat turun!', 'success');
+    }
+
+    // Padam Rekod
+    function deleteAttendee(id) {
+      attendees = attendees.filter(a => a.id !== id);
+      localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
+      renderDashboard();
+      updateCharts();
+      showToast('Rekod peserta telah dipadam.', 'info');
+    }
+
+    function confirmClearRecords() {
+      if (attendees.length === 0) return;
+      if (!isAdminLoggedIn) {
+        showToast('Sila log masuk sebagai Admin untuk mengosongkan senarai rekod.', 'error');
+        toggleAdminModal(true);
+        return;
+      }
+      if (confirm('Padam SEMUA senarai kehadiran peserta bengkel?')) {
+        attendees = [];
+        localStorage.removeItem('perolehan_attendees');
+        renderDashboard();
+        updateCharts();
+        showToast('Semua senarai telah dikosongkan.', 'info');
+      }
+    }
+
+    // Config Modal
+    function toggleConfigModal(show) {
+      if (show && !isAdminLoggedIn) {
+        showToast('Akses terhad. Sila log masuk admin terlebih dahulu.', 'error');
+        toggleAdminModal(true);
+        return;
+      }
+      const modal = document.getElementById('configModal');
+      if (show) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function populateConfigInputs() {
+      document.getElementById('cfgScriptUrl').value = appConfig.scriptUrl || '';
+      document.getElementById('cfgFormUrl').value = appConfig.formActionUrl || '';
+      document.getElementById('cfgEntryNama').value = appConfig.entryNama || '';
+      document.getElementById('cfgEntryJawatan').value = appConfig.entryJawatan || '';
+      document.getElementById('cfgEntryJabatan').value = appConfig.entryJabatan || '';
+      document.getElementById('cfgEntryTel').value = appConfig.entryTel || '';
+      document.getElementById('cfgEntryEmail').value = appConfig.entryEmail || '';
+    }
+
+    function saveConfiguration() {
+      appConfig = {
+        scriptUrl: document.getElementById('cfgScriptUrl').value.trim(),
+        formActionUrl: document.getElementById('cfgFormUrl').value.trim(),
+        entryNama: document.getElementById('cfgEntryNama').value.trim(),
+        entryJawatan: document.getElementById('cfgEntryJawatan').value.trim(),
+        entryJabatan: document.getElementById('cfgEntryJabatan').value.trim(),
+        entryTel: document.getElementById('cfgEntryTel').value.trim(),
+        entryEmail: document.getElementById('cfgEntryEmail').value.trim()
+      };
+      localStorage.setItem('perolehan_form_config', JSON.stringify(appConfig));
+      updateSheetBadge();
+      toggleConfigModal(false);
+      showToast('Tetapan Google Sheets & Google Form berjaya disimpan!', 'success');
+    }
+
+    // Toast Alert
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      let icon = 'fa-circle-check text-emerald-400';
+      let borderStyle = 'border-emerald-500/40 text-emerald-200';
+
+      if (type === 'error') {
+        icon = 'fa-circle-exclamation text-rose-400';
+        borderStyle = 'border-rose-500/40 text-rose-200';
+      }
+
+      toast.className = `p-4 rounded-2xl glass-card-elevated flex items-center gap-3 transition-all transform duration-300 pointer-events-auto border ${borderStyle}`;
+      toast.innerHTML = `
+        <i class="fa-solid ${icon} text-lg"></i>
+        <div class="text-xs sm:text-sm font-semibold">${message}</div>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-x-4');
+        setTimeout(() => {
+          if (toast.parentNode) container.removeChild(toast);
+        }, 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
