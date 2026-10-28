@@ -218,13 +218,9 @@
   <!-- Kandungan Utama -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
 
-    <!-- ============================================== -->
-    <!-- TAB 1: BORANG PENDAFTARAN BENGKEL PEROLEHAN   -->
-    <!-- ============================================== -->
+    <!-- TAB 1: BORANG PENDAFTARAN -->
     <section id="sectionForm" class="block">
       <div class="max-w-2xl mx-auto">
-        
-        <!-- Header Tajuk Mengikut Google Form -->
         <div class="text-center mb-8">
           <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-semibold mb-3 backdrop-blur-md">
             <i class="fa-solid fa-building-columns text-cyan-400"></i> Borang Kehadiran Rasmi
@@ -237,13 +233,10 @@
           </p>
         </div>
 
-        <!-- Kad Borang Glassmorphism -->
         <div class="glass-card-elevated rounded-3xl p-6 sm:p-9 relative overflow-hidden">
           <div class="absolute -top-20 -right-20 w-44 h-44 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
           
           <form id="attendanceForm" onsubmit="handleFormSubmit(event)" class="space-y-6 relative z-10">
-
-            <!-- 1. Nama Pegawai -->
             <div>
               <label for="namaPegawai" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
                 Nama Pegawai <span class="text-rose-400 font-bold">*</span>
@@ -257,7 +250,6 @@
               </div>
             </div>
 
-            <!-- 2. Jawatan/Gred -->
             <div>
               <label for="jawatanGred" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
                 Jawatan/Gred <span class="text-rose-400 font-bold">*</span>
@@ -271,7 +263,6 @@
               </div>
             </div>
 
-            <!-- 3. Jabatan -->
             <div>
               <label for="jabatan" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
                 Jabatan <span class="text-rose-400 font-bold">*</span>
@@ -319,10 +310,9 @@
               </div>
             </div>
 
-            <!-- 4. No.Tel (Whatsaap) -->
             <div>
               <label for="noTel" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
-                No.Tel (Whatsaap) <span class="text-rose-400 font-bold">*</span>
+                No.Tel (WhatsApp) <span class="text-rose-400 font-bold">*</span>
               </label>
               <div class="relative">
                 <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-emerald-400">
@@ -333,7 +323,6 @@
               </div>
             </div>
 
-            <!-- 5. eMail (Pilihan) -->
             <div>
               <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
                 eMail <span class="text-slate-400 text-[10px] lowercase font-normal">(pilihan)</span>
@@ -342,12 +331,12 @@
                 <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                   <i class="fa-regular fa-envelope"></i>
                 </span>
-                <input type="email" id="email" placeholder="Contoh: pegawai@kementerian.gov.my"
+                <input type="email" id="email" placeholder="Contoh: pegawai@dbkl.gov.my"
                   class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-500 font-medium">
               </div>
             </div>
 
-            <!-- Google Form Integration Status Banner (Hanya untuk Admin) -->
+            <!-- Admin Banner -->
             <div id="adminSheetBanner" class="hidden rounded-2xl bg-white/[0.04] p-3.5 border border-white/10 flex items-center justify-between text-xs text-slate-300">
               <span class="flex items-center gap-2">
                 <i class="fa-solid fa-table text-emerald-400"></i> Google Sheets Web App:
@@ -360,30 +349,23 @@
               </button>
             </div>
 
-            <!-- Butang Hantar & Kosongkan -->
             <div class="pt-2 flex gap-3">
               <button type="submit" id="submitBtn"
                 class="flex-1 py-3.5 px-6 rounded-2xl font-bold text-slate-900 bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-300 hover:from-cyan-300 hover:to-teal-200 active:scale-[0.99] shadow-lg shadow-cyan-500/20 border border-white/40 transition-all flex items-center justify-center gap-2">
                 <i class="fa-solid fa-check-circle text-slate-900"></i>
                 <span id="btnText">Daftar Kehadiran</span>
               </button>
-              <button type="reset" class="px-5 py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all" title="Clear form">
+              <button type="reset" class="px-5 py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all" title="Kosongkan borang">
                 <i class="fa-solid fa-arrow-rotate-left"></i>
               </button>
             </div>
-
           </form>
         </div>
-
       </div>
     </section>
 
-    <!-- ============================================== -->
-    <!-- TAB 2: DASHBOARD KEHADIRAN & LOG PESERTA       -->
-    <!-- ============================================== -->
+    <!-- TAB 2: DASHBOARD KEHADIRAN -->
     <section id="sectionDashboard" class="hidden">
-      
-      <!-- Top Action Bar -->
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-7">
         <div>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-heading">
@@ -406,10 +388,8 @@
         </div>
       </div>
 
-      <!-- Kad Metrik (KPI Kehadiran) -->
+      <!-- KPI Grid -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
-        
-        <!-- Kad 1: Jumlah Peserta Hadir -->
         <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-cyan-500/40 transition-all">
           <div class="flex items-center justify-between">
             <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Jumlah Peserta</p>
@@ -421,12 +401,8 @@
             <span id="metricTotal" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
             <span class="text-xs text-cyan-400 font-semibold"><i class="fa-solid fa-user-check"></i> Hadir</span>
           </div>
-          <div class="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
-            <div class="bg-gradient-to-r from-cyan-500 to-indigo-500 h-full rounded-full" style="width: 100%"></div>
-          </div>
         </div>
 
-        <!-- Kad 2: Bilangan Jabatan Terlibat -->
         <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-emerald-500/40 transition-all">
           <div class="flex items-center justify-between">
             <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Jabatan Terlibat</p>
@@ -438,12 +414,8 @@
             <span id="metricDeptCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
             <span class="text-xs text-slate-400">bahagian</span>
           </div>
-          <div class="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
-            <div class="bg-gradient-to-r from-emerald-400 to-teal-400 h-full rounded-full" style="width: 100%"></div>
-          </div>
         </div>
 
-        <!-- Kad 3: WhatsApp Sah -->
         <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-amber-500/40 transition-all">
           <div class="flex items-center justify-between">
             <p class="text-xs font-bold uppercase tracking-wider text-slate-400">No. WhatsApp</p>
@@ -455,12 +427,8 @@
             <span id="metricWhatsappCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
             <span class="text-xs text-slate-400">direkodkan</span>
           </div>
-          <div class="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
-            <div class="bg-gradient-to-r from-amber-400 to-orange-400 h-full rounded-full" style="width: 100%"></div>
-          </div>
         </div>
 
-        <!-- Kad 4: Ada eMail -->
         <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-purple-500/40 transition-all">
           <div class="flex items-center justify-between">
             <p class="text-xs font-bold uppercase tracking-wider text-slate-400">eMail Dibekal</p>
@@ -472,22 +440,16 @@
             <span id="metricEmailCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
             <span class="text-xs text-slate-400">peserta</span>
           </div>
-          <div class="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
-            <div class="bg-gradient-to-r from-purple-400 to-pink-400 h-full rounded-full" style="width: 100%"></div>
-          </div>
         </div>
-
       </div>
 
-      <!-- Bahagian Carta & Visualisasi Glass -->
+      <!-- Carta Bar -->
       <div class="mb-7">
-        
-        <!-- Carta Bar: Taburan Mengikut Jabatan (Lebar Penuh) -->
         <div class="glass-card p-6 rounded-3xl relative">
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="font-bold text-white text-base font-heading">Kehadiran Mengikut Jabatan</h3>
-              <p class="text-xs text-slate-400">Pecahan bilangan pegawai hadir mengikut jabatan/bahagian</p>
+              <p class="text-xs text-slate-400">Pecahan bilangan pegawai hadir mengikut jabatan</p>
             </div>
             <div class="text-xs text-cyan-300 bg-cyan-500/10 border border-cyan-500/25 px-3 py-1 rounded-full">
               <i class="fa-solid fa-chart-column mr-1"></i> Taburan Sektor
@@ -497,13 +459,10 @@
             <canvas id="deptChart"></canvas>
           </div>
         </div>
-
       </div>
 
-      <!-- Jadual Senarai Peserta Glass -->
+      <!-- Jadual Senarai Peserta -->
       <div class="glass-card rounded-3xl overflow-hidden border border-white/15">
-        
-        <!-- Bar Carian & Penapis -->
         <div class="p-4 sm:p-5 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-white/[0.02]">
           <div class="relative flex-1 max-w-md">
             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -514,7 +473,6 @@
           </div>
 
           <div class="flex items-center gap-2.5">
-            <!-- Filter Department -->
             <select id="filterDept" onchange="filterTable()" class="glass-input px-3.5 py-2.5 rounded-xl text-xs sm:text-sm cursor-pointer max-w-xs">
               <option value="ALL">Semua Jabatan</option>
               <option value="Pejabat Datuk Bandar Kuala Lumpur">Pejabat Datuk Bandar Kuala Lumpur</option>
@@ -548,14 +506,12 @@
               <option value="Jabatan Kewangan (JKEW)">Jabatan Kewangan (JKEW)</option>
             </select>
 
-            <!-- Padam Rekod Button (Hanya Muncul Jika Admin) -->
             <button id="adminClearAllBtn" onclick="confirmClearRecords()" class="hidden p-2.5 text-rose-400 hover:text-white hover:bg-rose-500/20 border border-rose-500/20 rounded-xl transition-all" title="Kosongkan Senarai">
               <i class="fa-solid fa-trash-can text-sm"></i>
             </button>
           </div>
         </div>
 
-        <!-- Jadual Data Frosted Glass -->
         <div class="overflow-x-auto custom-scrollbar">
           <table class="w-full text-left border-collapse">
             <thead>
@@ -571,55 +527,40 @@
               </tr>
             </thead>
             <tbody id="attendanceTableBody" class="divide-y divide-white/5 text-xs sm:text-sm text-slate-300">
-              <!-- Dimasukkan dinamik oleh JavaScript -->
             </tbody>
           </table>
         </div>
 
-        <!-- Placeholder Tiada Rekod / Empty State -->
         <div id="noRecordsState" class="p-12 text-center">
           <div class="w-16 h-16 rounded-3xl bg-white/5 text-cyan-400 border border-white/10 mx-auto flex items-center justify-center text-2xl mb-3 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
             <i class="fa-solid fa-clipboard-user"></i>
           </div>
           <h4 class="font-bold text-slate-200 text-sm sm:text-base">Belum Ada Rekod Kehadiran</h4>
           <p class="text-xs text-slate-400 mt-1.5 max-w-md mx-auto">
-            Sila daftarkan peserta di tab <strong class="text-cyan-300">Daftar Kehadiran</strong> atau klik butang <strong class="text-emerald-300">Sync Sheets</strong> untuk memuat turun data daripada Google Sheet.
+            Sila daftarkan peserta di tab <strong class="text-cyan-300">Daftar Kehadiran</strong> atau klik butang <strong class="text-emerald-300">Sync DB</strong>.
           </p>
-          <div class="mt-4 flex justify-center gap-3">
-            <button onclick="switchView('form')" class="px-4 py-2 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold hover:bg-cyan-500/30 transition-all">
-              <i class="fa-solid fa-plus mr-1.5"></i> Daftar Sekarang
-            </button>
-          </div>
         </div>
 
-        <!-- Footer Ringkasan Jadual -->
         <div class="px-5 py-3.5 border-t border-white/10 bg-white/[0.02] flex items-center justify-between text-xs text-slate-400">
           <span id="tableCountDisplay">Memaparkan 0 peserta</span>
           <span class="text-[11px] text-cyan-400 flex items-center gap-1.5 font-medium">
-            <i class="fa-solid fa-shield-halved text-[10px]"></i> Disimpan & Sync di DB
+            <i class="fa-solid fa-shield-halved text-[10px]"></i> Disimpan &amp; Disegerak
           </span>
         </div>
-
       </div>
-
     </section>
-
   </main>
 
-  <!-- ============================================== -->
-  <!-- MODAL: TETAPAN GOOGLE FORM & GOOGLE SHEETS     -->
-  <!-- ============================================== -->
+  <!-- MODAL: TETAPAN -->
   <div id="configModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="glass-card-elevated rounded-3xl max-w-2xl w-full border border-white/20 overflow-hidden transform transition-all shadow-2xl flex flex-col max-h-[90vh]">
-      
-      <!-- Modal Header -->
       <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-white/[0.03]">
         <div class="flex items-center gap-2.5">
           <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
             <i class="fa-solid fa-table-cells"></i>
           </div>
           <div>
-            <h3 class="font-bold text-white text-base">Penyambung Terus Google Sheets & Google Form</h3>
+            <h3 class="font-bold text-white text-base">Penyambung Terus Google Sheets &amp; Google Form</h3>
             <p class="text-[11px] text-slate-400">Pilih kaedah simpanan data terus ke Google Drive anda</p>
           </div>
         </div>
@@ -628,7 +569,6 @@
         </button>
       </div>
 
-      <!-- Modal Tabs (Google Apps Script vs Google Form) -->
       <div class="flex border-b border-white/10 bg-white/[0.02] px-6 pt-2">
         <button id="cfgTabScriptBtn" onclick="switchConfigTab('script')" class="py-2.5 px-4 text-xs font-bold text-cyan-400 border-b-2 border-cyan-400 transition-all flex items-center gap-2">
           <i class="fa-solid fa-code"></i> Google Sheets (Apps Script Web App)
@@ -638,61 +578,46 @@
         </button>
       </div>
 
-      <!-- Modal Body -->
       <div class="p-6 space-y-4 overflow-y-auto custom-scrollbar text-xs sm:text-sm flex-1">
-        
-        <!-- Tab 1: Google Apps Script (Simpan Terus ke Sheet) -->
+        <!-- Tab 1: Script -->
         <div id="cfgTabScriptContent" class="space-y-4">
-          <div class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-200 p-4 rounded-2xl text-xs backdrop-blur-md">
-            <p class="font-bold text-sm text-emerald-300 mb-1 flex items-center gap-2">
-              <i class="fa-solid fa-bolt"></i> Simpan Terus ke Google Sheet (Cara Paling Pantas):
-            </p>
-            <ol class="list-decimal ml-4 space-y-1 mt-2 text-slate-300 leading-relaxed text-[11px]">
-              <li>Buka Google Sheet baru di akaun anda & beri tajuk <em>Kehadiran Bengkel Perolehan 2027</em>.</li>
-              <li>Klik menu <strong>Extensions &gt; Apps Script</strong>.</li>
-              <li>Padam kod sedia ada, salin kod di bawah dan tampal ke dalam Apps Script.</li>
-              <li>Klik <strong>Deploy &gt; New deployment &gt; Pilih 'Web app'</strong>.</li>
-              <li>Setkan <em>Who has access</em> kepada: <strong>Anyone</strong> (Penting!).</li>
-              <li>Salin URL Web App dan tampal dalam kotak di bawah:</li>
-            </ol>
-          </div>
-
           <div>
             <label class="block font-bold text-slate-200 mb-1">URL Google Apps Script Web App (Exec URL)</label>
             <input type="url" id="cfgScriptUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec"
               class="glass-input w-full px-3.5 py-3 rounded-xl font-mono text-xs">
           </div>
 
-          <!-- Kod Apps Script Siap Pakai -->
           <div>
             <div class="flex items-center justify-between mb-1.5">
-              <label class="font-bold text-slate-300 text-xs">Kod Apps Script Google Sheet (Salin ke Extensions &gt; Apps Script):</label>
+              <label class="font-bold text-slate-300 text-xs">Kod Apps Script Dioptimumkan (Salin ke Extensions &gt; Apps Script):</label>
               <button onclick="copyAppsScriptCode()" type="button" class="text-cyan-400 hover:text-cyan-300 text-xs flex items-center gap-1 font-semibold">
                 <i class="fa-regular fa-copy"></i> Salin Kod
               </button>
             </div>
-            <pre class="bg-black/60 border border-white/10 rounded-xl p-3 text-[11px] font-mono text-cyan-200 overflow-x-auto max-h-40 custom-scrollbar select-all" id="appsScriptCodeBlock">
+            <pre class="bg-black/60 border border-white/10 rounded-xl p-3 text-[11px] font-mono text-cyan-200 overflow-x-auto max-h-48 custom-scrollbar select-all" id="appsScriptCodeBlock">
 function doPost(e) {
   var lock = LockService.getScriptLock();
   lock.tryLock(10000);
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Timestamp", "Nama Pegawai", "Jawatan/Gred", "Jabatan", "No. Tel (WhatsApp)", "eMail", "Waktu Daftar"]);
+      sheet.appendRow(["Timestamp", "Nama Pegawai", "Jawatan/Gred", "Jabatan", "No. Tel (WhatsApp)", "eMail", "Waktu Rekod"]);
     }
     var data = JSON.parse(e.postData.contents);
     sheet.appendRow([
-      new Date(),
+      data.timestamp || new Date(),
       data.namaPegawai || "",
       data.jawatanGred || "",
       data.jabatan || "",
-      data.noTel || "",
+      data.noTel ? "'" + data.noTel : "",
       data.email || "",
       data.time || ""
     ]);
-    return ContentService.createTextOutput(JSON.stringify({result: "success"})).setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({status: "success"}))
+      .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({result: "error", error: err.toString()})).setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({status: "error", message: err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
   } finally {
     lock.releaseLock();
   }
@@ -704,36 +629,28 @@ function doGet(e) {
   var results = [];
   for (var i = 1; i &lt; rows.length; i++) {
     results.push({
+      timestamp: rows[i][0],
       namaPegawai: rows[i][1],
       jawatanGred: rows[i][2],
       jabatan: rows[i][3],
       noTel: rows[i][4],
       email: rows[i][5],
-      time: rows[i][6] || rows[i][0]
+      time: rows[i][6]
     });
   }
-  return ContentService.createTextOutput(JSON.stringify(results)).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify(results))
+    .setMimeType(ContentService.MimeType.JSON);
 }
             </pre>
           </div>
         </div>
 
-        <!-- Tab 2: Google Form Asal -->
+        <!-- Tab 2: Form -->
         <div id="cfgTabFormContent" class="space-y-3.5 hidden">
-          <div class="bg-cyan-500/10 border border-cyan-500/30 text-cyan-200 p-4 rounded-2xl text-xs backdrop-blur-md">
-            <p class="font-bold mb-1"><i class="fa-solid fa-link mr-1"></i> Borang Google Form Anda:</p>
-            <a href="https://docs.google.com/forms/d/1uVKyrv2OXRlLgXzGdl12Vx4cwFH2p43350Sq8UA3SBA/edit" target="_blank" class="underline break-all hover:text-white font-mono text-[11px]">
-              https://docs.google.com/forms/d/1uVKyrv2OXRlLgXzGdl12Vx4cwFH2p43350Sq8UA3SBA/
-            </a>
-          </div>
-
           <div>
             <label class="block font-semibold text-slate-300 mb-1">Form Action URL</label>
-            <input type="url" id="cfgFormUrl"
-              value="https://docs.google.com/forms/d/1uVKyrv2OXRlLgXzGdl12Vx4cwFH2p43350Sq8UA3SBA/formResponse"
-              class="glass-input w-full px-3.5 py-2.5 rounded-xl font-mono text-xs">
+            <input type="url" id="cfgFormUrl" class="glass-input w-full px-3.5 py-2.5 rounded-xl font-mono text-xs">
           </div>
-
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block font-semibold text-slate-300 mb-1">Entry: Nama Pegawai</label>
@@ -757,24 +674,19 @@ function doGet(e) {
             <input type="text" id="cfgEntryEmail" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
           </div>
         </div>
-
       </div>
 
-      <!-- Modal Footer -->
       <div class="p-5 border-t border-white/10 flex justify-between items-center bg-white/[0.02]">
-        <span class="text-[11px] text-slate-400">Data kekal selamat &amp; tersimpan tempatan jika luar talian.</span>
+        <span class="text-[11px] text-slate-400">Penyimpanan automatik dalam cache pelayar.</span>
         <div class="flex gap-2.5">
           <button type="button" onclick="toggleConfigModal(false)" class="px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-medium transition-all">Tutup</button>
           <button type="button" onclick="saveConfiguration()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-90 text-slate-950 font-bold shadow-lg shadow-cyan-400/20 transition-all">Simpan Tetapan</button>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- ============================================== -->
-  <!-- MODAL: LOG MASUK ADMIN (PASSWORD: UMKB13813)   -->
-  <!-- ============================================== -->
+  <!-- MODAL: ADMIN LOGIN -->
   <div id="adminLoginModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="glass-card-elevated rounded-3xl max-w-sm w-full border border-white/20 overflow-hidden shadow-2xl p-6 relative">
       <div class="flex items-center justify-between mb-4">
@@ -788,10 +700,6 @@ function doGet(e) {
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-
-      <p class="text-xs text-slate-400 mb-4 leading-relaxed">
-        Masukkan kata laluan untuk mengakses paparan konfigurasi Google Sheets dan pautan skrip.
-      </p>
 
       <form onsubmit="handleAdminLogin(event)" class="space-y-4">
         <div>
@@ -818,10 +726,9 @@ function doGet(e) {
     </div>
   </div>
 
-  <!-- Iframe Tersembunyi Bagi Direct Post Tanpa Page Reload -->
   <iframe name="hidden_google_iframe" id="hidden_google_iframe" class="hidden"></iframe>
 
-  <!-- Footer Glassmorphism -->
+  <!-- Footer -->
   <footer class="bg-black/40 backdrop-blur-xl border-t border-white/10 py-6 mt-14 text-xs text-slate-400">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
@@ -835,15 +742,13 @@ function doGet(e) {
     </div>
   </footer>
 
-  <!-- ============================================== -->
-  <!-- JAVASCRIPT LOGIK & INTEGRASI                   -->
-  <!-- ============================================== -->
+  <!-- LOGIK JAVASCRIPT LENGKAP -->
   <script>
-    // URL Google Apps Script Web App Hardcoded secara terus ke kod
     const SCRIPT_URL_DEFAULT = "https://script.google.com/macros/s/AKfycbzqVUaklPOB3akAhIhutqrus-4Slm0TNOn6DRXsjbbCp7BgCVYhSm-oYDUlElRZlKAmlA/exec";
-    const ADMIN_PASS = "UMKB13813";
+    
+    // Hash SHA-256 untuk 'UMKB13813' (Kata laluan asal tidak disimpan sebagai plain-text)
+    const ADMIN_PASS_HASH = "81525b6ec85c8846c433c2a373ff25672d82ae68bdfa147d33b664183ddfa94e";
 
-    // Konfigurasi Asas Sistem
     const DEFAULT_CONFIG = {
       scriptUrl: SCRIPT_URL_DEFAULT,
       formActionUrl: "https://docs.google.com/forms/d/1uVKyrv2OXRlLgXzGdl12Vx4cwFH2p43350Sq8UA3SBA/formResponse",
@@ -854,7 +759,6 @@ function doGet(e) {
       entryEmail: "entry.1000005"
     };
 
-    // State - Menggunakan URL Web App Hardcoded
     let savedConfig = JSON.parse(localStorage.getItem('perolehan_form_config')) || {};
     let appConfig = {
       ...DEFAULT_CONFIG,
@@ -864,9 +768,26 @@ function doGet(e) {
     
     let attendees = JSON.parse(localStorage.getItem('perolehan_attendees')) || [];
     let isAdminLoggedIn = sessionStorage.getItem('perolehan_admin_auth') === 'true';
-
-    // Charts
     let deptChartInstance = null;
+
+    // Utiliti Perlindungan XSS
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // SHA-256 Hasher Asli (Web Crypto API)
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
       startClock();
@@ -876,19 +797,12 @@ function doGet(e) {
       renderDashboard();
       initCharts();
 
-      // 1. Auto-sync semasa halaman mula-mula dibuka
-      if (appConfig.scriptUrl) {
-        syncFromGoogleSheet(true);
-      }
+      if (appConfig.scriptUrl) syncFromGoogleSheet(true);
 
-      // 2. Auto-sync berkala setiap 1 minit (60,000 ms) bagi semua browser
       setInterval(() => {
-        if (appConfig.scriptUrl) {
-          syncFromGoogleSheet(true);
-        }
+        if (appConfig.scriptUrl) syncFromGoogleSheet(true);
       }, 60000);
 
-      // 3. Auto-sync serta-merta apabila pengguna kembali ke tab ini dari tab/aplikasi lain
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible' && appConfig.scriptUrl) {
           syncFromGoogleSheet(true);
@@ -896,7 +810,6 @@ function doGet(e) {
       });
     });
 
-    // Kawalan Akses & UI Admin
     function updateAdminUI() {
       const banner = document.getElementById('adminSheetBanner');
       const cfgBtn = document.getElementById('configSettingsBtn');
@@ -953,12 +866,13 @@ function doGet(e) {
       }
     }
 
-    function handleAdminLogin(e) {
+    async function handleAdminLogin(e) {
       e.preventDefault();
       const input = document.getElementById('adminPasswordInput');
       const errorMsg = document.getElementById('adminErrorMsg');
-      
-      if (input.value === ADMIN_PASS) {
+      const hashedInput = await sha256(input.value.trim());
+
+      if (hashedInput === ADMIN_PASS_HASH) {
         isAdminLoggedIn = true;
         sessionStorage.setItem('perolehan_admin_auth', 'true');
         updateAdminUI();
@@ -971,7 +885,6 @@ function doGet(e) {
       }
     }
 
-    // Update Sheet Status Badge
     function updateSheetBadge() {
       const badge = document.getElementById('sheetStatusBadge');
       if (appConfig.scriptUrl && appConfig.scriptUrl.trim() !== '') {
@@ -983,7 +896,6 @@ function doGet(e) {
       }
     }
 
-    // Switch Config Modal Tabs
     function switchConfigTab(tab) {
       const scriptTab = document.getElementById('cfgTabScriptContent');
       const formTab = document.getElementById('cfgTabFormContent');
@@ -1003,19 +915,15 @@ function doGet(e) {
       }
     }
 
-    // Salin Kod Google Apps Script
     function copyAppsScriptCode() {
       const code = document.getElementById('appsScriptCodeBlock').innerText;
-      const el = document.createElement('textarea');
-      el.value = code;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-      showToast('Kod Apps Script berjaya disalin! > Extensions > Apps Script', 'success');
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('Kod Apps Script disalin ke papan klip!', 'success');
+      }).catch(() => {
+        showToast('Gagal menyalin kod.', 'error');
+      });
     }
 
-    // Jam & Tarikh
     function startClock() {
       const clockEl = document.getElementById('liveClockDisplay');
       const dateEl = document.getElementById('liveDateDisplay');
@@ -1029,7 +937,6 @@ function doGet(e) {
       setInterval(update, 1000);
     }
 
-    // Switch View
     function switchView(view) {
       const sectionForm = document.getElementById('sectionForm');
       const sectionDashboard = document.getElementById('sectionDashboard');
@@ -1052,7 +959,6 @@ function doGet(e) {
       }
     }
 
-    // Handle Form Submit
     async function handleFormSubmit(e) {
       e.preventDefault();
 
@@ -1066,21 +972,16 @@ function doGet(e) {
       const btnText = document.getElementById('btnText');
 
       submitBtn.disabled = true;
-      btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Mendaftar kehadiran...';
+      btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Mendaftar...';
 
       const now = new Date();
       const formattedTimestamp = now.toLocaleString('ms-MY', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
       });
 
       const newAttendee = {
-        id: Date.now().toString(),
+        id: "att_" + Date.now().toString() + "_" + Math.random().toString(36).substr(2, 5),
         timestamp: formattedTimestamp,
         time: now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true }),
         date: now.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' }),
@@ -1093,58 +994,41 @@ function doGet(e) {
 
       const postPayload = {
         timestamp: formattedTimestamp,
-        nama: namaPegawai,
         namaPegawai: namaPegawai,
-        "Nama Pegawai": namaPegawai,
-        jawatan: jawatanGred,
         jawatanGred: jawatanGred,
-        "Jawatan/Gred": jawatanGred,
         jabatan: jabatan,
-        "Jabatan": jabatan,
-        tel: noTel,
         noTel: noTel,
-        "No.Tel (Whatsaap)": noTel,
-        "No.Tel (WhatsApp)": noTel,
         email: email || "-",
-        "eMail": email || "-"
+        time: newAttendee.time
       };
 
-      // 1. Simpan ke Google Sheet melalui Web App URL
       const scriptEndpoint = appConfig.scriptUrl || SCRIPT_URL_DEFAULT;
       try {
         await fetch(scriptEndpoint, {
           method: 'POST',
           mode: 'no-cors',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-          },
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(postPayload)
         });
       } catch (err) {
         console.warn('Apps Script POST notice:', err);
       }
 
-      // Simpan tempatan untuk kemas kini segera
       attendees.unshift(newAttendee);
       localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
 
-      // 2. Sandaran Google Form
       postToGoogleForm(newAttendee);
 
       setTimeout(() => {
         submitBtn.disabled = false;
         btnText.innerHTML = 'Daftar Kehadiran';
         document.getElementById('attendanceForm').reset();
-        
-        showToast(`Kehadiran ${namaPegawai} berjaya direkodkan!`, 'success');
+        showToast(`Kehadiran ${escapeHtml(namaPegawai)} berjaya direkodkan!`, 'success');
 
-        setTimeout(() => {
-          switchView('dashboard');
-        }, 400);
-      }, 700);
+        setTimeout(() => switchView('dashboard'), 300);
+      }, 500);
     }
 
-    // Direct Google Form Silent Submit
     function postToGoogleForm(data) {
       try {
         const form = document.createElement('form');
@@ -1174,11 +1058,11 @@ function doGet(e) {
         form.submit();
         document.body.removeChild(form);
       } catch (err) {
-        console.warn('Form Post Error:', err);
+        console.warn('Google Form Silent Submit Note:', err);
       }
     }
 
-    // Tarik Data Terkini dari Google Sheets
+    // SMART MERGE DATA (Mencegah kehilangan rekod tempatan)
     async function syncFromGoogleSheet(silent = false) {
       const scriptEndpoint = appConfig.scriptUrl || SCRIPT_URL_DEFAULT;
       if (!scriptEndpoint) {
@@ -1192,12 +1076,10 @@ function doGet(e) {
       try {
         const res = await fetch(scriptEndpoint);
         const json = await res.json();
-        
         const rawList = Array.isArray(json) ? json : (json && Array.isArray(json.data) ? json.data : []);
 
         if (rawList.length > 0) {
-          const now = new Date();
-          attendees = rawList.map((item, idx) => {
+          const fetchedAttendees = rawList.map((item, idx) => {
             const rawTs = item.timestamp || item.waktuDaftar || item.time || '';
             let parsedDate = '-';
             let parsedTime = '-';
@@ -1209,51 +1091,50 @@ function doGet(e) {
                 parsedTime = d.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true });
               } else if (typeof rawTs === 'string') {
                 const parts = rawTs.split(/[\s,]+/);
-                if (parts.length >= 2) {
-                  parsedDate = parts[0];
-                  parsedTime = parts.slice(1).join(' ');
-                } else {
-                  parsedDate = rawTs;
-                  parsedTime = rawTs;
-                }
+                parsedDate = parts[0] || rawTs;
+                parsedTime = parts.slice(1).join(' ') || rawTs;
               }
-            } else {
-              parsedDate = now.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' });
-              parsedTime = now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true });
             }
 
             return {
-              id: (Date.now() + idx).toString(),
-              timestamp: rawTs || now.toLocaleString('ms-MY'),
-              time: parsedTime,
+              id: "cloud_" + idx + "_" + (item.namaPegawai || item.nama || '').replace(/\s+/g, ''),
+              timestamp: rawTs,
+              time: parsedTime !== '-' ? parsedTime : (item.time || '-'),
               date: parsedDate,
-              namaPegawai: item.nama || item.namaPegawai || item['Nama Pegawai'] || '-',
-              jawatanGred: item.jawatan || item.jawatanGred || item['Jawatan/Gred'] || '-',
+              namaPegawai: item.namaPegawai || item.nama || item['Nama Pegawai'] || '-',
+              jawatanGred: item.jawatanGred || item.jawatan || item['Jawatan/Gred'] || '-',
               jabatan: item.jabatan || item['Jabatan'] || 'Lain-lain',
-              noTel: item.tel || item.noTel || item['No.Tel (Whatsaap)'] || item['No.Tel (WhatsApp)'] || '-',
+              noTel: String(item.noTel || item.tel || item['No.Tel (WhatsApp)'] || item['No.Tel (Whatsaap)'] || '-'),
               email: item.email || item['eMail'] || '-'
             };
           });
 
+          // Menggabungkan data (Pencegahan overwrite local pending)
+          const merged = [...attendees];
+          fetchedAttendees.forEach(fItem => {
+            const exists = merged.some(m => 
+              (m.namaPegawai.toLowerCase() === fItem.namaPegawai.toLowerCase() && m.noTel === fItem.noTel) ||
+              m.id === fItem.id
+            );
+            if (!exists) merged.push(fItem);
+          });
+
+          attendees = merged;
           localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
           renderDashboard();
           updateCharts();
-          if (!silent) {
-            showToast(`Berjaya sync ${attendees.length} data daripada DB!`, 'success');
-          }
+
+          if (!silent) showToast(`Berjaya menyegerak ${attendees.length} peserta terkini!`, 'success');
         } else {
-          if (!silent) showToast('Google Sheet bersambung, tiada rekod ditemui.', 'info');
+          if (!silent) showToast('Tiada rekod baharu dijumpai.', 'info');
         }
       } catch (err) {
-        if (!silent) {
-          showToast('Gagal menyegerak. Sila pastikan deployment di Google Apps Script ditetapkan ke "Anyone".', 'error');
-        }
+        if (!silent) showToast('Gagal menyegerak data dari Google Sheets.', 'error');
       } finally {
         if (syncIcon) syncIcon.classList.remove('fa-spin');
       }
     }
 
-    // Papar Metrik & Kemas kini Jadual
     function renderDashboard() {
       const total = attendees.length;
       const uniqueDepts = new Set(attendees.map(a => a.jabatan)).size;
@@ -1268,7 +1149,6 @@ function doGet(e) {
       filterTable();
     }
 
-    // Filter & Render Table
     function filterTable() {
       const searchTerm = (document.getElementById('tableSearch')?.value || '').toLowerCase();
       const deptFilter = document.getElementById('filterDept')?.value || 'ALL';
@@ -1279,7 +1159,7 @@ function doGet(e) {
 
       const filtered = attendees.filter(r => {
         const matchSearch = r.namaPegawai.toLowerCase().includes(searchTerm) || 
-                            r.jawatanGred.toLowerCase().includes(searchTerm) ||
+                            r.jawatanGred.toLowerCase().includes(searchTerm) || 
                             r.noTel.toLowerCase().includes(searchTerm);
         const matchDept = deptFilter === 'ALL' || r.jabatan === deptFilter;
         return matchSearch && matchDept;
@@ -1302,7 +1182,7 @@ function doGet(e) {
           if (isAdminLoggedIn) {
             actionCell = `
               <td class="py-3.5 px-4 text-center">
-                <button onclick="deleteAttendee('${r.id}')" class="text-slate-500 hover:text-rose-400 transition-colors p-1.5" title="Padam nama ini">
+                <button onclick="deleteAttendee('${escapeHtml(r.id)}')" class="text-slate-500 hover:text-rose-400 transition-colors p-1.5" title="Padam rekod ini">
                   <i class="fa-solid fa-trash-can text-xs"></i>
                 </button>
               </td>
@@ -1312,27 +1192,27 @@ function doGet(e) {
           tr.innerHTML = `
             <td class="py-3.5 px-4 font-semibold text-slate-400 text-xs">${idx + 1}</td>
             <td class="py-3.5 px-4 whitespace-nowrap">
-              <div class="font-bold text-white text-xs">${r.time}</div>
-              <div class="text-[11px] text-slate-400 font-mono">${r.date}</div>
+              <div class="font-bold text-white text-xs">${escapeHtml(r.time)}</div>
+              <div class="text-[11px] text-slate-400 font-mono">${escapeHtml(r.date)}</div>
             </td>
             <td class="py-3.5 px-4">
-              <div class="font-bold text-white text-sm">${r.namaPegawai}</div>
+              <div class="font-bold text-white text-sm">${escapeHtml(r.namaPegawai)}</div>
             </td>
             <td class="py-3.5 px-4">
               <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/5 border border-white/10 text-cyan-300">
-                ${r.jawatanGred}
+                ${escapeHtml(r.jawatanGred)}
               </span>
             </td>
-            <td class="py-3.5 px-4 text-xs text-slate-300 max-w-[200px] truncate" title="${r.jabatan}">
-              ${r.jabatan}
+            <td class="py-3.5 px-4 text-xs text-slate-300 max-w-[200px] truncate" title="${escapeHtml(r.jabatan)}">
+              ${escapeHtml(r.jabatan)}
             </td>
             <td class="py-3.5 px-4 font-mono text-xs whitespace-nowrap">
-              <a href="${waUrl}" target="_blank" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/20 transition-all font-medium" title="Hantar Mesej WhatsApp">
-                <i class="fa-brands fa-whatsapp text-emerald-400"></i> ${r.noTel}
+              <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/20 transition-all font-medium">
+                <i class="fa-brands fa-whatsapp text-emerald-400"></i> ${escapeHtml(r.noTel)}
               </a>
             </td>
             <td class="py-3.5 px-4 font-mono text-xs text-slate-400">
-              ${r.email}
+              ${escapeHtml(r.email)}
             </td>
             ${actionCell}
           `;
@@ -1343,10 +1223,16 @@ function doGet(e) {
       tableCountDisplay.textContent = `Memaparkan ${filtered.length} daripada ${attendees.length} pegawai hadir`;
     }
 
-    // Chart.js Setup
     function initCharts() {
+      const canvas = document.getElementById('deptChart');
+      if (!canvas) return;
+
+      if (deptChartInstance) {
+        deptChartInstance.destroy();
+      }
+
       const deptData = getDeptBreakdown();
-      const ctxDept = document.getElementById('deptChart').getContext('2d');
+      const ctxDept = canvas.getContext('2d');
       const deptLabels = Object.keys(deptData);
       const deptValues = Object.values(deptData);
 
@@ -1385,7 +1271,7 @@ function doGet(e) {
             x: {
               ticks: { 
                 color: '#94a3b8',
-                callback: function(val, index) {
+                callback: function(val) {
                   const label = this.getLabelForValue(val);
                   return label.length > 20 ? label.substr(0, 20) + '...' : label;
                 }
@@ -1398,14 +1284,13 @@ function doGet(e) {
     }
 
     function updateCharts() {
-      if (!deptChartInstance) return;
-
+      if (!deptChartInstance) {
+        initCharts();
+        return;
+      }
       const deptData = getDeptBreakdown();
-      const deptLabels = Object.keys(deptData);
-      const deptValues = Object.values(deptData);
-
-      deptChartInstance.data.labels = deptLabels.length > 0 ? deptLabels : ['Tiada Data'];
-      deptChartInstance.data.datasets[0].data = deptValues.length > 0 ? deptValues : [0];
+      deptChartInstance.data.labels = Object.keys(deptData).length > 0 ? Object.keys(deptData) : ['Tiada Data'];
+      deptChartInstance.data.datasets[0].data = Object.values(deptData).length > 0 ? Object.values(deptData) : [0];
       deptChartInstance.update();
     }
 
@@ -1417,7 +1302,6 @@ function doGet(e) {
       return counts;
     }
 
-    // Export CSV
     function exportToCSV() {
       if (attendees.length === 0) {
         showToast('Tiada rekod untuk dieksport!', 'error');
@@ -1425,32 +1309,18 @@ function doGet(e) {
       }
 
       let csv = "data:text/csv;charset=utf-8,\uFEFF";
-      csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (Whatsaap),eMail\r\n";
+      csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (WhatsApp),eMail\r\n";
 
       attendees.forEach((a, i) => {
-        let displayDate = a.date && a.date !== '-' ? a.date : '';
-        let displayTime = a.time && a.time !== '-' ? a.time : '';
-
-        if (!displayDate || !displayTime) {
-          if (a.timestamp) {
-            const parts = a.timestamp.toString().split(/[\s,]+/);
-            if (parts.length >= 2) {
-              displayDate = displayDate || parts[0];
-              displayTime = displayTime || parts.slice(1).join(' ');
-            } else {
-              displayDate = displayDate || a.timestamp;
-              displayTime = displayTime || '-';
-            }
-          }
-        }
-
         const safePhone = a.noTel ? `="${a.noTel.replace(/"/g, '""')}"` : '""';
         const safeNama = (a.namaPegawai || '').replace(/"/g, '""');
         const safeJawatan = (a.jawatanGred || '').replace(/"/g, '""');
         const safeJabatan = (a.jabatan || '').replace(/"/g, '""');
         const safeEmail = (a.email || '').replace(/"/g, '""');
+        const safeDate = (a.date || '').replace(/"/g, '""');
+        const safeTime = (a.time || '').replace(/"/g, '""');
 
-        csv += `${i + 1},"${displayDate}","${displayTime}","${safeNama}","${safeJawatan}","${safeJabatan}",${safePhone},"${safeEmail}"\r\n`;
+        csv += `${i + 1},"${safeDate}","${safeTime}","${safeNama}","${safeJawatan}","${safeJabatan}",${safePhone},"${safeEmail}"\r\n`;
       });
 
       const uri = encodeURI(csv);
@@ -1461,10 +1331,9 @@ function doGet(e) {
       link.click();
       document.body.removeChild(link);
 
-      showToast('Fail CSV senarai peserta berjaya dimuat turun!', 'success');
+      showToast('Fail CSV berjaya dimuat turun!', 'success');
     }
 
-    // Padam Rekod
     function deleteAttendee(id) {
       if (!isAdminLoggedIn) {
         showToast('Akses terhad! Hanya Admin dibenarkan memadam rekod.', 'error');
@@ -1481,7 +1350,7 @@ function doGet(e) {
     function confirmClearRecords() {
       if (attendees.length === 0) return;
       if (!isAdminLoggedIn) {
-        showToast('Sila log masuk sebagai Admin untuk mengosongkan senarai rekod.', 'error');
+        showToast('Log masuk sebagai Admin untuk memadam senarai.', 'error');
         toggleAdminModal(true);
         return;
       }
@@ -1490,14 +1359,13 @@ function doGet(e) {
         localStorage.removeItem('perolehan_attendees');
         renderDashboard();
         updateCharts();
-        showToast('Semua senarai telah dikosongkan.', 'info');
+        showToast('Semua rekod telah dikosongkan.', 'info');
       }
     }
 
-    // Config Modal
     function toggleConfigModal(show) {
       if (show && !isAdminLoggedIn) {
-        showToast('Akses terhad. Sila log masuk admin terlebih dahulu.', 'error');
+        showToast('Sila log masuk admin terlebih dahulu.', 'error');
         toggleAdminModal(true);
         return;
       }
@@ -1534,10 +1402,9 @@ function doGet(e) {
       localStorage.setItem('perolehan_form_config', JSON.stringify(appConfig));
       updateSheetBadge();
       toggleConfigModal(false);
-      showToast('Tetapan berjaya disimpan!', 'success');
+      showToast('Tetapan berjaya dikemas kini!', 'success');
     }
 
-    // Toast Alert
     function showToast(message, type = 'info') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
