@@ -548,8 +548,8 @@
               <option value="Jabatan Kewangan (JKEW)">Jabatan Kewangan (JKEW)</option>
             </select>
 
-            <!-- Padam Rekod Button -->
-            <button onclick="confirmClearRecords()" class="p-2.5 text-rose-400 hover:text-white hover:bg-rose-500/20 border border-rose-500/20 rounded-xl transition-all" title="Kosongkan Senarai">
+            <!-- Padam Rekod Button (Hanya Muncul Jika Admin) -->
+            <button id="adminClearAllBtn" onclick="confirmClearRecords()" class="hidden p-2.5 text-rose-400 hover:text-white hover:bg-rose-500/20 border border-rose-500/20 rounded-xl transition-all" title="Kosongkan Senarai">
               <i class="fa-solid fa-trash-can text-sm"></i>
             </button>
           </div>
@@ -567,7 +567,7 @@
                 <th class="py-3.5 px-4">Jabatan</th>
                 <th class="py-3.5 px-4">No. Tel (WhatsApp)</th>
                 <th class="py-3.5 px-4">eMail</th>
-                <th class="py-3.5 px-4 text-center">Tindakan</th>
+                <th id="thTindakan" class="py-3.5 px-4 text-center hidden">Tindakan</th>
               </tr>
             </thead>
             <tbody id="attendanceTableBody" class="divide-y divide-white/5 text-xs sm:text-sm text-slate-300">
@@ -583,7 +583,7 @@
           </div>
           <h4 class="font-bold text-slate-200 text-sm sm:text-base">Belum Ada Rekod Kehadiran</h4>
           <p class="text-xs text-slate-400 mt-1.5 max-w-md mx-auto">
-            Sila daftarkan peserta di tab <strong class="text-cyan-300">Daftar Kehadiran</strong> atau klik butang <strong class="text-emerald-300">Sync Sheets</strong> untuk memuat turun data daripada Pengkalan Data.
+            Sila daftarkan peserta di tab <strong class="text-cyan-300">Daftar Kehadiran</strong> atau klik butang <strong class="text-emerald-300">Sync Sheets</strong> untuk memuat turun data daripada Google Sheet.
           </p>
           <div class="mt-4 flex justify-center gap-3">
             <button onclick="switchView('form')" class="px-4 py-2 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold hover:bg-cyan-500/30 transition-all">
@@ -889,18 +889,27 @@ function doGet(e) {
       const cfgBtn = document.getElementById('configSettingsBtn');
       const lockIcon = document.getElementById('adminLockIcon');
       const adminBtnLabel = document.getElementById('adminBtnLabel');
+      const clearAllBtn = document.getElementById('adminClearAllBtn');
+      const thTindakan = document.getElementById('thTindakan');
 
       if (isAdminLoggedIn) {
         if (banner) banner.classList.remove('hidden');
         if (cfgBtn) cfgBtn.classList.remove('hidden');
+        if (clearAllBtn) clearAllBtn.classList.remove('hidden');
+        if (thTindakan) thTindakan.classList.remove('hidden');
         if (lockIcon) lockIcon.className = "fa-solid fa-lock-open text-emerald-400 text-sm";
         if (adminBtnLabel) adminBtnLabel.textContent = "Keluar";
       } else {
         if (banner) banner.classList.add('hidden');
         if (cfgBtn) cfgBtn.classList.add('hidden');
+        if (clearAllBtn) clearAllBtn.classList.add('hidden');
+        if (thTindakan) thTindakan.classList.add('hidden');
         if (lockIcon) lockIcon.className = "fa-solid fa-lock text-slate-400 text-sm";
         if (adminBtnLabel) adminBtnLabel.textContent = "Admin";
       }
+
+      // Refresh jadual untuk sembunyikan/paparkan kolum tindakan padam
+      filterTable();
     }
 
     function handleAdminAuthToggle() {
@@ -1259,6 +1268,18 @@ function doGet(e) {
 
           const tr = document.createElement('tr');
           tr.className = "hover:bg-white/[0.04] transition-colors";
+          
+          let actionCell = '';
+          if (isAdminLoggedIn) {
+            actionCell = `
+              <td class="py-3.5 px-4 text-center">
+                <button onclick="deleteAttendee('${r.id}')" class="text-slate-500 hover:text-rose-400 transition-colors p-1.5" title="Padam nama ini">
+                  <i class="fa-solid fa-trash-can text-xs"></i>
+                </button>
+              </td>
+            `;
+          }
+
           tr.innerHTML = `
             <td class="py-3.5 px-4 font-semibold text-slate-400 text-xs">${idx + 1}</td>
             <td class="py-3.5 px-4 whitespace-nowrap">
@@ -1284,11 +1305,7 @@ function doGet(e) {
             <td class="py-3.5 px-4 font-mono text-xs text-slate-400">
               ${r.email}
             </td>
-            <td class="py-3.5 px-4 text-center">
-              <button onclick="deleteAttendee('${r.id}')" class="text-slate-500 hover:text-rose-400 transition-colors p-1.5" title="Padam nama ini">
-                <i class="fa-solid fa-trash-can text-xs"></i>
-              </button>
-            </td>
+            ${actionCell}
           `;
           tbody.appendChild(tr);
         });
@@ -1398,6 +1415,11 @@ function doGet(e) {
 
     // Padam Rekod
     function deleteAttendee(id) {
+      if (!isAdminLoggedIn) {
+        showToast('Akses terhad! Hanya Admin dibenarkan memadam rekod.', 'error');
+        toggleAdminModal(true);
+        return;
+      }
       attendees = attendees.filter(a => a.id !== id);
       localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
       renderDashboard();
