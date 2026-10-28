@@ -193,7 +193,7 @@
           <!-- Butang Segerak Google Sheets -->
           <button onclick="syncFromGoogleSheet()" id="syncBtn" class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20 transition-all shadow-sm flex items-center gap-1.5 text-xs font-semibold" title="Tarik Data Terkini dari Google Sheets">
             <i class="fa-solid fa-rotate text-xs" id="syncIcon"></i>
-            <span class="hidden md:inline">Sync Sheets</span>
+            <span class="hidden md:inline">Sync DB</span>
           </button>
 
           <!-- Butang Admin Login / Keluar -->
@@ -1001,7 +1001,7 @@ function doGet(e) {
       el.select();
       document.execCommand('copy');
       document.body.removeChild(el);
-      showToast('Kod Apps Script berjaya disalin! Tampal ke Google Sheets &gt; Extensions &gt; Apps Script', 'success');
+      showToast('Kod Apps Script berjaya disalin! &gt; Extensions &gt; Apps Script', 'success');
     }
 
     // Jam & Tarikh
@@ -1232,7 +1232,7 @@ function doGet(e) {
           renderDashboard();
           updateCharts();
           if (!silent) {
-            showToast(`Berjaya menyegerak ${attendees.length} data daripada Google Sheet!`, 'success');
+            showToast(`Berjaya sync ${attendees.length} data daripada DB!`, 'success');
           }
         } else {
           if (!silent) showToast('Google Sheet bersambung, tiada rekod ditemui.', 'info');
@@ -1530,7 +1530,7 @@ function doGet(e) {
       localStorage.setItem('perolehan_form_config', JSON.stringify(appConfig));
       updateSheetBadge();
       toggleConfigModal(false);
-      showToast('Tetapan Google Sheets & Google Form berjaya disimpan!', 'success');
+      showToast('Tetapan berjaya disimpan!', 'success');
     }
 
     // Toast Alert
