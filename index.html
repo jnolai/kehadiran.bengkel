@@ -1190,13 +1190,36 @@ function doGet(e) {
         if (rawList.length > 0) {
           const now = new Date();
           attendees = rawList.map((item, idx) => {
-            const rawDate = item.timestamp ? new Date(item.timestamp) : now;
-            const isValidDate = !isNaN(rawDate.getTime());
+            const rawTs = item.timestamp || item.waktuDaftar || item.time || '';
+            let parsedDate = '-';
+            let parsedTime = '-';
+
+            if (rawTs) {
+              const d = new Date(rawTs);
+              if (!isNaN(d.getTime())) {
+                parsedDate = d.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' });
+                parsedTime = d.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true });
+              } else if (typeof rawTs === 'string') {
+                // Sekiranya format bertulis teks (contoh: "28/10/2026, 11:15:00 am" atau "28/10/2026 11:15:00")
+                const parts = rawTs.split(/[\s,]+/);
+                if (parts.length >= 2) {
+                  parsedDate = parts[0];
+                  parsedTime = parts.slice(1).join(' ');
+                } else {
+                  parsedDate = rawTs;
+                  parsedTime = rawTs;
+                }
+              }
+            } else {
+              parsedDate = now.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' });
+              parsedTime = now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true });
+            }
+
             return {
               id: (Date.now() + idx).toString(),
-              timestamp: item.timestamp || now.toISOString(),
-              time: isValidDate ? rawDate.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true }) : (item.time || '-'),
-              date: isValidDate ? rawDate.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' }) : (item.date || '-'),
+              timestamp: rawTs || now.toLocaleString('ms-MY'),
+              time: parsedTime,
+              date: parsedDate,
               namaPegawai: item.nama || item.namaPegawai || item['Nama Pegawai'] || '-',
               jawatanGred: item.jawatan || item.jawatanGred || item['Jawatan/Gred'] || '-',
               jabatan: item.jabatan || item['Jabatan'] || 'Lain-lain',
@@ -1399,7 +1422,31 @@ function doGet(e) {
       csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (Whatsaap),eMail\r\n";
 
       attendees.forEach((a, i) => {
-        csv += `${i + 1},"${a.date}","${a.time}","${a.namaPegawai}","${a.jawatanGred}","${a.jabatan}","${a.noTel}","${a.email}"\r\n`;
+        // Tentukan tarikh dan masa yang sah atau guna timestamp sebagai sandaran
+        let displayDate = a.date && a.date !== '-' ? a.date : '';
+        let displayTime = a.time && a.time !== '-' ? a.time : '';
+
+        if (!displayDate || !displayTime) {
+          if (a.timestamp) {
+            const parts = a.timestamp.toString().split(/[\s,]+/);
+            if (parts.length >= 2) {
+              displayDate = displayDate || parts[0];
+              displayTime = displayTime || parts.slice(1).join(' ');
+            } else {
+              displayDate = displayDate || a.timestamp;
+              displayTime = displayTime || '-';
+            }
+          }
+        }
+
+        // Format telefon menggunakan format '="..."' supaya sifar (0) di hadapan nombor telefon tidak hilang dalam Microsoft Excel
+        const safePhone = a.noTel ? `="${a.noTel.replace(/"/g, '""')}"` : '""';
+        const safeNama = (a.namaPegawai || '').replace(/"/g, '""');
+        const safeJawatan = (a.jawatanGred || '').replace(/"/g, '""');
+        const safeJabatan = (a.jabatan || '').replace(/"/g, '""');
+        const safeEmail = (a.email || '').replace(/"/g, '""');
+
+        csv += `${i + 1},"${displayDate}","${displayTime}","${safeNama}","${safeJawatan}","${safeJabatan}",${safePhone},"${safeEmail}"\r\n`;
       });
 
       const uri = encodeURI(csv);
