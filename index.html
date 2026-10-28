@@ -747,7 +747,7 @@ function doGet(e) {
     const SCRIPT_URL_DEFAULT = "https://script.google.com/macros/s/AKfycbzqVUaklPOB3akAhIhutqrus-4Slm0TNOn6DRXsjbbCp7BgCVYhSm-oYDUlElRZlKAmlA/exec";
     
     // Hash SHA-256 untuk '' (Kata laluan asal tidak disimpan sebagai plain-text)
-    const ADMIN_PASS_HASH = "b99eb4e41416be7847c2122dd1d735f4ae446e12e1281ce13d7807ec1dfecfdc";
+    const ADMIN_PASS = "UMKB13813";
     
     const DEFAULT_CONFIG = {
       scriptUrl: SCRIPT_URL_DEFAULT,
@@ -866,24 +866,23 @@ function doGet(e) {
       }
     }
 
-    async function handleAdminLogin(e) {
-      e.preventDefault();
-      const input = document.getElementById('adminPasswordInput');
-      const errorMsg = document.getElementById('adminErrorMsg');
-      const hashedInput = await sha256(input.value.trim());
+    function handleAdminLogin(e) {
+  e.preventDefault();
+  const input = document.getElementById('adminPasswordInput');
+  const errorMsg = document.getElementById('adminErrorMsg');
 
-      if (hashedInput === ADMIN_PASS_HASH) {
-        isAdminLoggedIn = true;
-        sessionStorage.setItem('perolehan_admin_auth', 'true');
-        updateAdminUI();
-        toggleAdminModal(false);
-        showToast('Log masuk Admin berjaya!', 'success');
-      } else {
-        if (errorMsg) errorMsg.classList.remove('hidden');
-        input.value = '';
-        input.focus();
-      }
-    }
+  if (input.value.trim() === ADMIN_PASS) {
+    isAdminLoggedIn = true;
+    sessionStorage.setItem('perolehan_admin_auth', 'true');
+    updateAdminUI();
+    toggleAdminModal(false);
+    showToast('Log masuk Admin berjaya!', 'success');
+  } else {
+    if (errorMsg) errorMsg.classList.remove('hidden');
+    input.value = '';
+    input.focus();
+  }
+}
 
     function updateSheetBadge() {
       const badge = document.getElementById('sheetStatusBadge');
