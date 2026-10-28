@@ -859,7 +859,6 @@ function doGet(e) {
     let appConfig = {
       ...DEFAULT_CONFIG,
       ...savedConfig,
-      // Pastikan URL sentiasa menggunakan Web App yang diberikan jika tiada perubahan tersuai
       scriptUrl: savedConfig.scriptUrl && savedConfig.scriptUrl.trim() !== '' ? savedConfig.scriptUrl : SCRIPT_URL_DEFAULT
     };
     
@@ -877,10 +876,24 @@ function doGet(e) {
       renderDashboard();
       initCharts();
 
-      // Auto-sync dari Google Sheets semasa aplikasi mula dibuka
+      // 1. Auto-sync semasa halaman mula-mula dibuka
       if (appConfig.scriptUrl) {
         syncFromGoogleSheet(true);
       }
+
+      // 2. Auto-sync berkala setiap 1 minit (60,000 ms) bagi semua browser
+      setInterval(() => {
+        if (appConfig.scriptUrl) {
+          syncFromGoogleSheet(true);
+        }
+      }, 60000);
+
+      // 3. Auto-sync serta-merta apabila pengguna kembali ke tab ini dari tab/aplikasi lain
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && appConfig.scriptUrl) {
+          syncFromGoogleSheet(true);
+        }
+      });
     });
 
     // Kawalan Akses & UI Admin
@@ -908,13 +921,11 @@ function doGet(e) {
         if (adminBtnLabel) adminBtnLabel.textContent = "Admin";
       }
 
-      // Refresh jadual untuk sembunyikan/paparkan kolum tindakan padam
       filterTable();
     }
 
     function handleAdminAuthToggle() {
       if (isAdminLoggedIn) {
-        // Log keluar
         isAdminLoggedIn = false;
         sessionStorage.removeItem('perolehan_admin_auth');
         updateAdminUI();
@@ -1001,7 +1012,7 @@ function doGet(e) {
       el.select();
       document.execCommand('copy');
       document.body.removeChild(el);
-      showToast('Kod Apps Script berjaya disalin! &gt; Extensions &gt; Apps Script', 'success');
+      showToast('Kod Apps Script berjaya disalin! > Extensions > Apps Script', 'success');
     }
 
     // Jam & Tarikh
@@ -1058,7 +1069,6 @@ function doGet(e) {
       btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Mendaftar kehadiran...';
 
       const now = new Date();
-      // Format tarikh dan masa tempatan Malaysia (cth: 28/10/2026, 10:15:26 am)
       const formattedTimestamp = now.toLocaleString('ms-MY', {
         day: '2-digit',
         month: '2-digit',
@@ -1081,7 +1091,6 @@ function doGet(e) {
         email: email || '-'
       };
 
-      // Payload seragam yang memadankan semua kemungkinan pembacaan di Apps Script
       const postPayload = {
         timestamp: formattedTimestamp,
         nama: namaPegawai,
@@ -1115,7 +1124,7 @@ function doGet(e) {
         console.warn('Apps Script POST notice:', err);
       }
 
-      // Simpan juga dalam LocalStorage untuk paparan pantas luar talian
+      // Simpan tempatan untuk kemas kini segera
       attendees.unshift(newAttendee);
       localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
 
@@ -1184,7 +1193,6 @@ function doGet(e) {
         const res = await fetch(scriptEndpoint);
         const json = await res.json();
         
-        // Terima data sama ada dalam array terus atau dalam json.data
         const rawList = Array.isArray(json) ? json : (json && Array.isArray(json.data) ? json.data : []);
 
         if (rawList.length > 0) {
@@ -1200,7 +1208,6 @@ function doGet(e) {
                 parsedDate = d.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' });
                 parsedTime = d.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true });
               } else if (typeof rawTs === 'string') {
-                // Sekiranya format bertulis teks (contoh: "28/10/2026, 11:15:00 am" atau "28/10/2026 11:15:00")
                 const parts = rawTs.split(/[\s,]+/);
                 if (parts.length >= 2) {
                   parsedDate = parts[0];
@@ -1285,7 +1292,6 @@ function doGet(e) {
       } else {
         noRecordsState.classList.add('hidden');
         filtered.forEach((r, idx) => {
-          // Bersihkan no tel untuk link terus WhatsApp
           const cleanPhone = r.noTel.replace(/[^0-9]/g, '');
           const waUrl = cleanPhone.startsWith('6') ? `https://wa.me/${cleanPhone}` : (cleanPhone.startsWith('0') ? `https://wa.me/6${cleanPhone}` : `https://wa.me/60${cleanPhone}`);
 
@@ -1422,7 +1428,6 @@ function doGet(e) {
       csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (Whatsaap),eMail\r\n";
 
       attendees.forEach((a, i) => {
-        // Tentukan tarikh dan masa yang sah atau guna timestamp sebagai sandaran
         let displayDate = a.date && a.date !== '-' ? a.date : '';
         let displayTime = a.time && a.time !== '-' ? a.time : '';
 
@@ -1439,7 +1444,6 @@ function doGet(e) {
           }
         }
 
-        // Format telefon menggunakan format '="..."' supaya sifar (0) di hadapan nombor telefon tidak hilang dalam Microsoft Excel
         const safePhone = a.noTel ? `="${a.noTel.replace(/"/g, '""')}"` : '""';
         const safeNama = (a.namaPegawai || '').replace(/"/g, '""');
         const safeJawatan = (a.jawatanGred || '').replace(/"/g, '""');
