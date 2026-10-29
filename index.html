@@ -459,7 +459,7 @@
             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
               <i class="fa-solid fa-magnifying-glass text-xs"></i>
             </span>
-            <input type="text" id="tableSearch" oninput="filterTable()" placeholder="Cari nama, gred, No. Tel, atau no bilik..."
+            <input type="text" id="tableSearch" oninput="filterTable()" placeholder="Cari nama, gred, atau no. tel..."
               class="glass-input w-full pl-10 pr-4 py-2.5 rounded-xl text-xs sm:text-sm placeholder-slate-500">
           </div>
 
@@ -513,7 +513,7 @@
                 <th class="py-3.5 px-4">Jawatan / Gred</th>
                 <th class="py-3.5 px-4">Jabatan</th>
                 <th class="py-3.5 px-4">No. Tel (WhatsApp)</th>
-                <th class="py-3.5 px-4">Bilik & Kunci</th>
+                <th id="thBilikKunci" class="py-3.5 px-4 hidden">Bilik & Kunci</th>
                 <th id="thTindakan" class="py-3.5 px-4 text-center hidden">Tindakan</th>
               </tr>
             </thead>
@@ -663,17 +663,20 @@
       const adminBtnLabel = document.getElementById('adminBtnLabel');
       const clearAllBtn = document.getElementById('adminClearAllBtn');
       const thTindakan = document.getElementById('thTindakan');
+      const thBilikKunci = document.getElementById('thBilikKunci');
 
       if (isAdminLoggedIn) {
         if (cfgBtn) cfgBtn.classList.remove('hidden');
         if (clearAllBtn) clearAllBtn.classList.remove('hidden');
         if (thTindakan) thTindakan.classList.remove('hidden');
+        if (thBilikKunci) thBilikKunci.classList.remove('hidden');
         if (lockIcon) lockIcon.className = "fa-solid fa-lock-open text-emerald-400 text-sm";
         if (adminBtnLabel) adminBtnLabel.textContent = "Keluar";
       } else {
         if (cfgBtn) cfgBtn.classList.add('hidden');
         if (clearAllBtn) clearAllBtn.classList.add('hidden');
         if (thTindakan) thTindakan.classList.add('hidden');
+        if (thBilikKunci) thBilikKunci.classList.add('hidden');
         if (lockIcon) lockIcon.className = "fa-solid fa-lock text-slate-400 text-sm";
         if (adminBtnLabel) adminBtnLabel.textContent = "Admin";
       }
@@ -821,7 +824,6 @@
       }, 500);
     }
 
-    // FUNGSI KHAS URUSETIA: KEMAS KINI NO BILIK & STATUS KUNCI
     function updateRoomNumber(id, val) {
       const att = attendees.find(a => a.id === id);
       if (att) {
@@ -931,10 +933,12 @@
       const tableCountDisplay = document.getElementById('tableCountDisplay');
 
       const filtered = attendees.filter(r => {
+        // Carian no. bilik hanya sah sekiranya admin sedang log masuk
+        const matchRoom = isAdminLoggedIn && r.roomNo && r.roomNo.toLowerCase().includes(searchTerm);
         const matchSearch = r.namaPegawai.toLowerCase().includes(searchTerm) || 
                             r.jawatanGred.toLowerCase().includes(searchTerm) || 
                             r.noTel.toLowerCase().includes(searchTerm) ||
-                            (r.roomNo && r.roomNo.toLowerCase().includes(searchTerm));
+                            matchRoom;
         const matchDept = deptFilter === 'ALL' || r.jabatan === deptFilter;
         return matchSearch && matchDept;
       });
@@ -952,39 +956,27 @@
           const tr = document.createElement('tr');
           tr.className = "hover:bg-white/[0.04] transition-colors";
           
-          // Kawalan Urusetia Bilik & Kunci
+          // Kolum Bilik & Kunci: Ditampilkan HANYA jika Urusetia log masuk
           let roomAndKeyHtml = '';
           if (isAdminLoggedIn) {
             roomAndKeyHtml = `
-              <div class="flex items-center gap-2">
-                <input type="text" value="${escapeHtml(r.roomNo || '')}" 
-                  onchange="updateRoomNumber('${escapeHtml(r.id)}', this.value)"
-                  placeholder="No. Bilik" 
-                  class="glass-input w-20 px-2 py-1 rounded-lg text-xs font-mono font-bold text-center border-white/20">
-                <button type="button" onclick="toggleKeyStatus('${escapeHtml(r.id)}')"
-                  class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm ${
-                    r.keyReceived 
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30' 
-                      : 'bg-amber-500/10 text-amber-300 border border-amber-500/30 hover:bg-amber-500/20'
-                  }">
-                  <i class="fa-solid ${r.keyReceived ? 'fa-key text-emerald-400' : 'fa-lock'}"></i>
-                  <span>${r.keyReceived ? 'Kunci Diterima' : 'Belum Terima'}</span>
-                </button>
-              </div>
-            `;
-          } else {
-            roomAndKeyHtml = `
-              <div class="flex items-center gap-2">
-                <span class="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-white/5 border border-white/10 text-cyan-300">
-                  ${r.roomNo ? 'Bilik: ' + escapeHtml(r.roomNo) : 'Belum Diisi'}
-                </span>
-                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold ${
-                  r.keyReceived ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20' : 'bg-slate-800 text-slate-400'
-                }">
-                  <i class="fa-solid fa-key text-[10px]"></i>
-                  ${r.keyReceived ? 'Kunci Diterima' : 'Belum Terima'}
-                </span>
-              </div>
+              <td class="py-3.5 px-4 whitespace-nowrap">
+                <div class="flex items-center gap-2">
+                  <input type="text" value="${escapeHtml(r.roomNo || '')}" 
+                    onchange="updateRoomNumber('${escapeHtml(r.id)}', this.value)"
+                    placeholder="No. Bilik" 
+                    class="glass-input w-20 px-2 py-1 rounded-lg text-xs font-mono font-bold text-center border-white/20">
+                  <button type="button" onclick="toggleKeyStatus('${escapeHtml(r.id)}')"
+                    class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm ${
+                      r.keyReceived 
+                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30' 
+                        : 'bg-amber-500/10 text-amber-300 border border-amber-500/30 hover:bg-amber-500/20'
+                    }">
+                    <i class="fa-solid ${r.keyReceived ? 'fa-key text-emerald-400' : 'fa-lock'}"></i>
+                    <span>${r.keyReceived ? 'Kunci Diterima' : 'Belum Terima'}</span>
+                  </button>
+                </div>
+              </td>
             `;
           }
 
@@ -1021,9 +1013,7 @@
                 <i class="fa-brands fa-whatsapp text-emerald-400"></i> ${escapeHtml(r.noTel)}
               </a>
             </td>
-            <td class="py-3.5 px-4 whitespace-nowrap">
-              ${roomAndKeyHtml}
-            </td>
+            ${roomAndKeyHtml}
             ${actionCell}
           `;
           tbody.appendChild(tr);
@@ -1105,17 +1095,27 @@
       }
 
       let csv = "data:text/csv;charset=utf-8,\uFEFF";
-      csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (WhatsApp),No Bilik,Status Kunci\r\n";
+      
+      // Hadkan data CSV sekiranya bukan Admin yang memuat turun
+      if (isAdminLoggedIn) {
+        csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (WhatsApp),No Bilik,Status Kunci\r\n";
+      } else {
+        csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (WhatsApp)\r\n";
+      }
 
       attendees.forEach((a, i) => {
         const safePhone = a.noTel ? `="${a.noTel.replace(/"/g, '""')}"` : '""';
         const safeNama = (a.namaPegawai || '').replace(/"/g, '""');
         const safeJawatan = (a.jawatanGred || '').replace(/"/g, '""');
         const safeJabatan = (a.jabatan || '').replace(/"/g, '""');
-        const safeRoom = (a.roomNo || '-').replace(/"/g, '""');
-        const safeKey = a.keyReceived ? 'Kunci Telah Diterima' : 'Belum Terima';
 
-        csv += `${i + 1},"${a.date}","${a.time}","${safeNama}","${safeJawatan}","${safeJabatan}",${safePhone},"${safeRoom}","${safeKey}"\r\n`;
+        if (isAdminLoggedIn) {
+          const safeRoom = (a.roomNo || '-').replace(/"/g, '""');
+          const safeKey = a.keyReceived ? 'Kunci Telah Diterima' : 'Belum Terima';
+          csv += `${i + 1},"${a.date}","${a.time}","${safeNama}","${safeJawatan}","${safeJabatan}",${safePhone},"${safeRoom}","${safeKey}"\r\n`;
+        } else {
+          csv += `${i + 1},"${a.date}","${a.time}","${safeNama}","${safeJawatan}","${safeJabatan}",${safePhone}\r\n`;
+        }
       });
 
       const uri = encodeURI(csv);
