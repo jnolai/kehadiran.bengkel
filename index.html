@@ -379,8 +379,8 @@
         </div>
       </div>
 
-      <!-- KPI Grid -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
+      <!-- KPI Grid (3 Kad Seimbang) -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-7">
         <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-cyan-500/40 transition-all">
           <div class="flex items-center justify-between">
             <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Jumlah Peserta</p>
@@ -404,19 +404,6 @@
           <div class="mt-3 flex items-baseline gap-2">
             <span id="metricKeyCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
             <span class="text-xs text-emerald-400">bilik</span>
-          </div>
-        </div>
-
-        <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-amber-500/40 transition-all">
-          <div class="flex items-center justify-between">
-            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">No. WhatsApp</p>
-            <div class="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(245,158,11,0.25)]">
-              <i class="fa-brands fa-whatsapp"></i>
-            </div>
-          </div>
-          <div class="mt-3 flex items-baseline gap-2">
-            <span id="metricWhatsappCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
-            <span class="text-xs text-slate-400">direkodkan</span>
           </div>
         </div>
 
@@ -666,7 +653,7 @@
         .replace(/'/g, '&#039;');
     }
 
-    // Fungsi pembantu memendekkan nama jabatan untuk label carta
+    // Memendekkan nama jabatan untuk label carta
     function formatDeptLabel(deptName) {
       if (!deptName) return '';
       const match = deptName.match(/\(([^)]+)\)/);
@@ -691,7 +678,6 @@
       renderDashboard();
       initCharts();
 
-      // Muatkan nilai tetapan jika pernah disimpan secara kustom
       const savedScriptUrl = localStorage.getItem('perolehan_script_url');
       if (savedScriptUrl && document.getElementById('cfgScriptUrl')) {
         document.getElementById('cfgScriptUrl').value = savedScriptUrl;
@@ -879,7 +865,7 @@
       }, 500);
     }
 
-    // Fungsi menghantar kemaskini bilik & kunci terus ke Apps Script / Google Sheets
+    // Hantar data bilik dan kunci ke Google Sheets
     async function sendRoomKeyUpdateToSheet(attendee) {
       const scriptUrl = getScriptUrl();
       if (!scriptUrl) return;
@@ -909,13 +895,12 @@
         att.roomNo = val.trim();
         localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
         
-        // Hantar terus ke Google Sheets
         await sendRoomKeyUpdateToSheet(att);
         showToast(`No. Bilik ${escapeHtml(att.namaPegawai)} dikemaskini (${att.roomNo || 'Kosong'}).`, 'info');
       }
     }
 
-    // Tukar Status Serahan Kunci
+    // Tukar Status Kunci
     async function toggleKeyStatus(id) {
       if (!isAdminLoggedIn) {
         showToast('Hanya Urusetia/Admin boleh mengesahkan serahan kunci!', 'error');
@@ -930,7 +915,6 @@
         filterTable();
         renderDashboard();
 
-        // Hantar perubahan status ke Google Sheets
         await sendRoomKeyUpdateToSheet(att);
 
         if (att.keyReceived) {
@@ -978,7 +962,6 @@
             const key = nama + '_' + tel;
             const existing = existingMap.get(key);
 
-            // Prioritaskan data bilik & kunci dari Google Sheets
             const roomFromCloud = item.roomNo !== undefined ? String(item.roomNo).trim() : '';
             const keyFromCloud = item.keyReceived === true || item.keyReceived === 'true' || item.keyReceived === 'Kunci Diterima';
 
@@ -1015,12 +998,14 @@
       const total = attendees.length;
       const uniqueDepts = new Set(attendees.map(a => a.jabatan)).size;
       const keyCount = attendees.filter(a => a.keyReceived).length;
-      const whatsappCount = attendees.filter(a => a.noTel && a.noTel !== '-').length;
 
-      document.getElementById('metricTotal').textContent = total;
-      document.getElementById('metricDeptCount').textContent = uniqueDepts;
-      document.getElementById('metricKeyCount').textContent = keyCount;
-      document.getElementById('metricWhatsappCount').textContent = whatsappCount;
+      const metricTotal = document.getElementById('metricTotal');
+      const metricDeptCount = document.getElementById('metricDeptCount');
+      const metricKeyCount = document.getElementById('metricKeyCount');
+
+      if (metricTotal) metricTotal.textContent = total;
+      if (metricDeptCount) metricDeptCount.textContent = uniqueDepts;
+      if (metricKeyCount) metricKeyCount.textContent = keyCount;
 
       filterTable();
     }
