@@ -202,7 +202,7 @@
             <span id="adminBtnLabel" class="hidden md:inline">Admin</span>
           </button>
 
-          <!-- Butang Tetapan (Hanya muncul jika admin log masuk) -->
+          <!-- Butang Tetapan -->
           <button id="configSettingsBtn" onclick="toggleConfigModal(true)" class="hidden p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 transition-all shadow-sm" title="Tetapan Google Sheets & Google Forms">
             <i class="fa-solid fa-sliders text-sm"></i>
           </button>
@@ -626,8 +626,13 @@ function doPost(e) {
 function doGet(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var rows = sheet.getDataRange().getValues();
+  if (rows.length <= 1) {
+    return ContentService.createTextOutput(JSON.stringify([]))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
   var results = [];
-  for (var i = 1; i &lt; rows.length; i++) {
+  for (var i = 1; i < rows.length; i++) {
+    if (!rows[i][1] && !rows[i][4]) continue; // Langkau baris kosong
     results.push({
       timestamp: rows[i][0],
       namaPegawai: rows[i][1],
@@ -742,11 +747,9 @@ function doGet(e) {
     </div>
   </footer>
 
-  <!-- LOGIK JAVASCRIPT LENGKAP -->
+  <!-- LOGIK JAVASCRIPT -->
   <script>
     const SCRIPT_URL_DEFAULT = "https://script.google.com/macros/s/AKfycbzqVUaklPOB3akAhIhutqrus-4Slm0TNOn6DRXsjbbCp7BgCVYhSm-oYDUlElRZlKAmlA/exec";
-    
-    // Hash SHA-256 untuk '' (Kata laluan asal tidak disimpan sebagai plain-text)
     const ADMIN_PASS = "UMKB13813";
     
     const DEFAULT_CONFIG = {
@@ -770,7 +773,6 @@ function doGet(e) {
     let isAdminLoggedIn = sessionStorage.getItem('perolehan_admin_auth') === 'true';
     let deptChartInstance = null;
 
-    // Utiliti Perlindungan XSS
     function escapeHtml(str) {
       if (!str) return '';
       return String(str)
@@ -779,14 +781,6 @@ function doGet(e) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
-    }
-
-    // SHA-256 Hasher Asli (Web Crypto API)
-    async function sha256(message) {
-      const msgBuffer = new TextEncoder().encode(message);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -867,22 +861,22 @@ function doGet(e) {
     }
 
     function handleAdminLogin(e) {
-  e.preventDefault();
-  const input = document.getElementById('adminPasswordInput');
-  const errorMsg = document.getElementById('adminErrorMsg');
+      e.preventDefault();
+      const input = document.getElementById('adminPasswordInput');
+      const errorMsg = document.getElementById('adminErrorMsg');
 
-  if (input.value.trim() === ADMIN_PASS) {
-    isAdminLoggedIn = true;
-    sessionStorage.setItem('perolehan_admin_auth', 'true');
-    updateAdminUI();
-    toggleAdminModal(false);
-    showToast('Log masuk Admin berjaya!', 'success');
-  } else {
-    if (errorMsg) errorMsg.classList.remove('hidden');
-    input.value = '';
-    input.focus();
-  }
-}
+      if (input.value.trim() === ADMIN_PASS) {
+        isAdminLoggedIn = true;
+        sessionStorage.setItem('perolehan_admin_auth', 'true');
+        updateAdminUI();
+        toggleAdminModal(false);
+        showToast('Log masuk Admin berjaya!', 'success');
+      } else {
+        if (errorMsg) errorMsg.classList.remove('hidden');
+        input.value = '';
+        input.focus();
+      }
+    }
 
     function updateSheetBadge() {
       const badge = document.getElementById('sheetStatusBadge');
@@ -1057,11 +1051,11 @@ function doGet(e) {
         form.submit();
         document.body.removeChild(form);
       } catch (err) {
-        console.warn('Google Form Silent Submit Note:', err);
+        console.warn('Google Form Submit notice:', err);
       }
     }
 
-    // SMART MERGE DATA (Mencegah kehilangan rekod tempatan)
+    // FUNGSI SYNC DB: Mengutamakan data semasa dari Google Sheets
     async function syncFromGoogleSheet(silent = false) {
       const scriptEndpoint = appConfig.scriptUrl || SCRIPT_URL_DEFAULT;
       if (!scriptEndpoint) {
@@ -1073,7 +1067,9 @@ function doGet(e) {
       if (syncIcon) syncIcon.classList.add('fa-spin');
 
       try {
-        const res = await fetch(scriptEndpoint);
+        // Cache buster bagi mengelakkan pelayar menggunakan respons lama
+        const cacheUrl = scriptEndpoint + (scriptEndpoint.includes('?') ? '&' : '?') + 't=' + Date.now();
+        const res = await fetch(cacheUrl);
         const json = await res.json();
         const rawList = Array.isArray(json) ? json : (json && Array.isArray(json.data) ? json.data : []);
 
@@ -1096,7 +1092,7 @@ function doGet(e) {
             }
 
             return {
-              id: "cloud_" + idx + "_" + (item.namaPegawai || item.nama || '').replace(/\s+/g, ''),
+              id: "cloud_" + idx + "_" + (item.namaPegawai || idx),
               timestamp: rawTs,
               time: parsedTime !== '-' ? parsedTime : (item.time || '-'),
               date: parsedDate,
@@ -1108,27 +1104,20 @@ function doGet(e) {
             };
           });
 
-          // Menggabungkan data (Pencegahan overwrite local pending)
-          const merged = [...attendees];
-          fetchedAttendees.forEach(fItem => {
-            const exists = merged.some(m => 
-              (m.namaPegawai.toLowerCase() === fItem.namaPegawai.toLowerCase() && m.noTel === fItem.noTel) ||
-              m.id === fItem.id
-            );
-            if (!exists) merged.push(fItem);
-          });
-
-          attendees = merged;
+          // Gantikan data lokal secara penuh agar sebarang edit di Sheet dipaparkan terus
+          attendees = fetchedAttendees;
           localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
+          
           renderDashboard();
           updateCharts();
 
-          if (!silent) showToast(`Berjaya menyegerak ${attendees.length} peserta terkini!`, 'success');
+          if (!silent) showToast(`Berjaya menarik ${attendees.length} data terkini dari Google Sheets!`, 'success');
         } else {
-          if (!silent) showToast('Tiada rekod baharu dijumpai.', 'info');
+          if (!silent) showToast('Tiada rekod dijumpai dalam Google Sheets.', 'info');
         }
       } catch (err) {
-        if (!silent) showToast('Gagal menyegerak data dari Google Sheets.', 'error');
+        console.error('Sync Error:', err);
+        if (!silent) showToast('Gagal menyegerak: Sila pastikan Apps Script dideploy sebagai Web App (Anyone).', 'error');
       } finally {
         if (syncIcon) syncIcon.classList.remove('fa-spin');
       }
