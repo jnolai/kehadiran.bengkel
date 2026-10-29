@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kehadiran - Bengkel Perancangan Perolehan Tahunan 2027 DBKL</title>
-  
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -24,16 +24,16 @@
       }
     }
   </script>
-  
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-    
+
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #090d16;
@@ -146,7 +146,7 @@
   <header class="sticky top-0 z-40 bg-slate-950/45 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/25">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
-        
+
         <div class="flex items-center space-x-3.5">
           <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-500 p-[1.5px] shadow-lg shadow-cyan-500/25">
             <div class="w-full h-full bg-slate-900/95 rounded-[14px] flex items-center justify-center">
@@ -227,7 +227,7 @@
 
         <div class="glass-card-elevated rounded-3xl p-6 sm:p-9 relative overflow-hidden">
           <div class="absolute -top-20 -right-20 w-44 h-44 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
-          
+
           <form id="attendanceForm" onsubmit="handleFormSubmit(event)" class="space-y-6 relative z-10">
             <div>
               <label for="namaPegawai" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
@@ -295,19 +295,18 @@
                   <option value="Jabatan Pengurusan Maklumat (JPM)">Jabatan Pengurusan Maklumat (JPM)</option>
                   <option value="Jabatan Perancangan Bandaraya (JPB)">Jabatan Perancangan Bandaraya (JPB)</option>
                   <option value="Jabatan Kewangan (JKEW)">Jabatan Kewangan (JKEW)</option>
-                  <option value="Pejabat Cawangan Wangsa Maju">Pejabat Cawangan Wangsa Maju</option> 
-                  <option value="Pejabat Cawangan Lembah Pantai">Pejabat Cawangan Lembah Pantai</option> 
-                  <option value="Pejabat Cawangan Batu">Pejabat Cawangan Batu</option> 
-                  <option value="Pejabat Cawangan Setiawangsa">Pejabat Cawangan Setiawangsa</option> 
-                  <option value="Pejabat Cawangan Setiawangsa">Pejabat Cawangan Setiawangsa</option> 
-                  <option value="Pejabat Cawangan Bandar Tun Razak">Pejabat Cawangan Bandar Tun Razak</option> 
-                  <option value="Pejabat Cawangan Kepong">Pejabat Cawangan Kepong</option> 
-                  <option value="Pejabat Cawangan Segambut">Pejabat Cawangan Segambut</option> 
-                  <option value="Pejabat Cawangan Titiwangsa">Pejabat Cawangan Titiwangsa</option> 
-                  <option value="Pejabat Cawangan Bukit Bintang">Pejabat Cawangan Bukit Bintang</option> 
-                  <option value="Pejabat Cawangan Cheras">Pejabat Cawangan Cheras</option> 
+                  <option value="Pejabat Cawangan Wangsa Maju">Pejabat Cawangan Wangsa Maju</option>
+                  <option value="Pejabat Cawangan Lembah Pantai">Pejabat Cawangan Lembah Pantai</option>
+                  <option value="Pejabat Cawangan Batu">Pejabat Cawangan Batu</option>
+                  <option value="Pejabat Cawangan Setiawangsa">Pejabat Cawangan Setiawangsa</option>
+                  <option value="Pejabat Cawangan Bandar Tun Razak">Pejabat Cawangan Bandar Tun Razak</option>
+                  <option value="Pejabat Cawangan Kepong">Pejabat Cawangan Kepong</option>
+                  <option value="Pejabat Cawangan Segambut">Pejabat Cawangan Segambut</option>
+                  <option value="Pejabat Cawangan Titiwangsa">Pejabat Cawangan Titiwangsa</option>
+                  <option value="Pejabat Cawangan Bukit Bintang">Pejabat Cawangan Bukit Bintang</option>
+                  <option value="Pejabat Cawangan Cheras">Pejabat Cawangan Cheras</option>
                   <option value="Pejabat Cawangan Seputeh">Pejabat Cawangan Seputeh</option>
-                   <option value="Urusetia">Urusetia</option>
+                  <option value="Urusetia">Urusetia</option>
                 </select>
                 <span class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-400">
                   <i class="fa-solid fa-chevron-down text-xs"></i>
@@ -435,7 +434,7 @@
         </div>
       </div>
 
-      <!-- Carta Bar -->
+      <!-- Carta Bar Mendatar (Diperkemas untuk paparan mudah alih) -->
       <div class="mb-7">
         <div class="glass-card p-6 rounded-3xl relative">
           <div class="flex items-center justify-between mb-4">
@@ -447,8 +446,12 @@
               <i class="fa-solid fa-chart-column mr-1"></i> Taburan Sektor
             </div>
           </div>
-          <div class="relative h-72 w-full">
-            <canvas id="deptChart"></canvas>
+          
+          <!-- Kontena responsif dengan skrol menegak jika data banyak -->
+          <div id="chartScrollContainer" class="relative max-h-96 overflow-y-auto custom-scrollbar pr-2 w-full">
+            <div id="chartWrapper" class="relative w-full" style="min-height: 280px;">
+              <canvas id="deptChart"></canvas>
+            </div>
           </div>
         </div>
       </div>
@@ -496,17 +499,16 @@
               <option value="Jabatan Pengurusan Maklumat (JPM)">Jabatan Pengurusan Maklumat (JPM)</option>
               <option value="Jabatan Perancangan Bandaraya (JPB)">Jabatan Perancangan Bandaraya (JPB)</option>
               <option value="Jabatan Kewangan (JKEW)">Jabatan Kewangan (JKEW)</option>
-              <option value="Pejabat Cawangan Wangsa Maju">Pejabat Cawangan Wangsa Maju</option> 
-              <option value="Pejabat Cawangan Lembah Pantai">Pejabat Cawangan Lembah Pantai</option> 
-              <option value="Pejabat Cawangan Batu">Pejabat Cawangan Batu</option> 
-              <option value="Pejabat Cawangan Setiawangsa">Pejabat Cawangan Setiawangsa</option> 
-              <option value="Pejabat Cawangan Setiawangsa">Pejabat Cawangan Setiawangsa</option> 
-              <option value="Pejabat Cawangan Bandar Tun Razak">Pejabat Cawangan Bandar Tun Razak</option> 
-              <option value="Pejabat Cawangan Kepong">Pejabat Cawangan Kepong</option> 
-              <option value="Pejabat Cawangan Segambut">Pejabat Cawangan Segambut</option> 
-              <option value="Pejabat Cawangan Titiwangsa">Pejabat Cawangan Titiwangsa</option> 
-              <option value="Pejabat Cawangan Bukit Bintang">Pejabat Cawangan Bukit Bintang</option> 
-              <option value="Pejabat Cawangan Cheras">Pejabat Cawangan Cheras</option> 
+              <option value="Pejabat Cawangan Wangsa Maju">Pejabat Cawangan Wangsa Maju</option>
+              <option value="Pejabat Cawangan Lembah Pantai">Pejabat Cawangan Lembah Pantai</option>
+              <option value="Pejabat Cawangan Batu">Pejabat Cawangan Batu</option>
+              <option value="Pejabat Cawangan Setiawangsa">Pejabat Cawangan Setiawangsa</option>
+              <option value="Pejabat Cawangan Bandar Tun Razak">Pejabat Cawangan Bandar Tun Razak</option>
+              <option value="Pejabat Cawangan Kepong">Pejabat Cawangan Kepong</option>
+              <option value="Pejabat Cawangan Segambut">Pejabat Cawangan Segambut</option>
+              <option value="Pejabat Cawangan Titiwangsa">Pejabat Cawangan Titiwangsa</option>
+              <option value="Pejabat Cawangan Bukit Bintang">Pejabat Cawangan Bukit Bintang</option>
+              <option value="Pejabat Cawangan Cheras">Pejabat Cawangan Cheras</option>
               <option value="Pejabat Cawangan Seputeh">Pejabat Cawangan Seputeh</option>
               <option value="Urusetia">Urusetia</option>
             </select>
@@ -640,8 +642,8 @@
       <div class="flex items-center gap-2">
         <span>Sistem Rekod Kehadiran Pintar UMKB@JKEW</span>
         <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
-                @JnolAi
-              </span>
+          @JnolAi
+        </span>
       </div>
     </div>
   </footer>
@@ -649,7 +651,7 @@
   <script>
     const SCRIPT_URL_DEFAULT = "https://script.google.com/macros/s/AKfycbzqVUaklPOB3akAhIhutqrus-4Slm0TNOn6DRXsjbbCp7BgCVYhSm-oYDUlElRZlKAmlA/exec";
     const ADMIN_PASS = "UMKB13813";
-    
+
     let attendees = JSON.parse(localStorage.getItem('perolehan_attendees')) || [];
     let isAdminLoggedIn = sessionStorage.getItem('perolehan_admin_auth') === 'true';
     let deptChartInstance = null;
@@ -664,6 +666,27 @@
         .replace(/'/g, '&#039;');
     }
 
+    // Fungsi pembantu memendekkan nama jabatan untuk carta
+    function formatDeptLabel(deptName) {
+      if (!deptName) return '';
+      // 1. Ambil singkatan jika ada dalam tanda kurung
+      const match = deptName.match(/\(([^)]+)\)/);
+      if (match && match[1]) {
+        return match[1];
+      }
+      // 2. Ringkasan standard untuk Pejabat Eksekutif & Cawangan
+      if (deptName.includes('Pejabat Pengarah Eksekutif')) {
+        return deptName.replace('Pejabat Pengarah Eksekutif', 'PE');
+      }
+      if (deptName.includes('Pejabat Datuk Bandar Kuala Lumpur')) {
+        return 'PDB';
+      }
+      if (deptName.includes('Pejabat Cawangan')) {
+        return deptName.replace('Pejabat Cawangan', 'Caw.');
+      }
+      return deptName.length > 20 ? deptName.substring(0, 18) + '…' : deptName;
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       startClock();
       updateAdminUI();
@@ -671,10 +694,7 @@
       initCharts();
 
       if (SCRIPT_URL_DEFAULT) {
-        // Tarik data semasa mula dibuka
         syncFromGoogleSheet(true);
-
-        // Auto-sync setiap 1 minit (60,000 milisaat) secara senyap di latar belakang
         setInterval(() => {
           syncFromGoogleSheet(true);
         }, 60000);
@@ -784,7 +804,7 @@
         sectionDashboard.classList.remove('hidden');
         tabDashboardBtn.className = "px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm flex items-center gap-2 transition-all";
         tabFormBtn.className = "px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white hover:bg-white/5 flex items-center gap-2 transition-all";
-        
+
         renderDashboard();
         updateCharts();
       }
@@ -922,7 +942,7 @@
 
           attendees = fetchedAttendees;
           localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
-          
+
           renderDashboard();
           updateCharts();
           if (!silent) showToast(`Berjaya menarik ${attendees.length} data terkini!`, 'success');
@@ -978,7 +998,7 @@
 
           const tr = document.createElement('tr');
           tr.className = "hover:bg-white/[0.04] transition-colors";
-          
+
           let roomAndKeyHtml = '';
           if (isAdminLoggedIn) {
             roomAndKeyHtml = `
@@ -1043,43 +1063,63 @@
 
     function initCharts() {
       const canvas = document.getElementById('deptChart');
+      const chartWrapper = document.getElementById('chartWrapper');
       if (!canvas) return;
 
       if (deptChartInstance) deptChartInstance.destroy();
 
       const deptData = getDeptBreakdown();
       const ctxDept = canvas.getContext('2d');
-      const deptLabels = Object.keys(deptData);
+      const rawLabels = Object.keys(deptData);
+      const shortLabels = rawLabels.map(formatDeptLabel);
       const deptValues = Object.values(deptData);
+
+      // Tetapkan ketinggian kontena secara dinamik mengikut jumlah jabatan
+      const targetHeight = Math.max(260, rawLabels.length * 36);
+      if (chartWrapper) {
+        chartWrapper.style.height = `${targetHeight}px`;
+      }
 
       deptChartInstance = new Chart(ctxDept, {
         type: 'bar',
         data: {
-          labels: deptLabels.length > 0 ? deptLabels : ['Tiada Data'],
+          labels: shortLabels.length > 0 ? shortLabels : ['Tiada Data'],
           datasets: [{
             label: 'Bilangan Pegawai',
             data: deptValues.length > 0 ? deptValues : [0],
             backgroundColor: 'rgba(6, 182, 212, 0.75)',
             borderColor: '#22d3ee',
             borderWidth: 1.5,
-            borderRadius: 8,
-            maxBarThickness: 32
+            borderRadius: 6,
+            maxBarThickness: 20
           }]
         },
         options: {
+          indexAxis: 'y', // Bar mendatar - sesuai untuk skrin telefon
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { display: false }
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                title: function(context) {
+                  const idx = context[0].dataIndex;
+                  return rawLabels[idx] || context[0].label;
+                }
+              }
+            }
           },
           scales: {
-            y: {
+            x: {
               beginAtZero: true,
               ticks: { precision: 0, color: '#94a3b8', stepSize: 1 },
               grid: { color: 'rgba(255, 255, 255, 0.05)' }
             },
-            x: {
-              ticks: { color: '#94a3b8' },
+            y: {
+              ticks: { 
+                color: '#cbd5e1', 
+                font: { size: 11, weight: '500' }
+              },
               grid: { display: false }
             }
           }
@@ -1093,8 +1133,17 @@
         return;
       }
       const deptData = getDeptBreakdown();
-      deptChartInstance.data.labels = Object.keys(deptData).length > 0 ? Object.keys(deptData) : ['Tiada Data'];
-      deptChartInstance.data.datasets[0].data = Object.values(deptData).length > 0 ? Object.values(deptData) : [0];
+      const rawLabels = Object.keys(deptData);
+      const shortLabels = rawLabels.map(formatDeptLabel);
+      const deptValues = Object.values(deptData);
+
+      const chartWrapper = document.getElementById('chartWrapper');
+      if (chartWrapper) {
+        chartWrapper.style.height = `${Math.max(260, rawLabels.length * 36)}px`;
+      }
+
+      deptChartInstance.data.labels = shortLabels.length > 0 ? shortLabels : ['Tiada Data'];
+      deptChartInstance.data.datasets[0].data = deptValues.length > 0 ? deptValues : [0];
       deptChartInstance.update();
     }
 
@@ -1113,7 +1162,7 @@
       }
 
       let csv = "data:text/csv;charset=utf-8,\uFEFF";
-      
+
       if (isAdminLoggedIn) {
         csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (WhatsApp),No Bilik,Status Kunci\r\n";
       } else {
@@ -1184,7 +1233,7 @@
     function showToast(message, type = 'info') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
-      
+
       let icon = 'fa-circle-check text-emerald-400';
       let borderStyle = 'border-emerald-500/40 text-emerald-200';
 
