@@ -43,7 +43,6 @@
       font-family: 'Outfit', sans-serif;
     }
 
-    /* Glassmorphism Styles */
     .glass-card {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(24px);
@@ -78,7 +77,6 @@
       color: #f8fafc;
     }
 
-    /* Floating Aurora Animated Blobs */
     .aurora-blob {
       position: absolute;
       border-radius: 50%;
@@ -137,19 +135,18 @@
 </head>
 <body class="text-slate-100 min-h-screen flex flex-col relative overflow-x-hidden selection:bg-cyan-500 selection:text-white">
 
-  <!-- Ambient Aurora Glow Elements -->
+  <!-- Ambient Glow -->
   <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
     <div class="aurora-blob blob-cyan"></div>
     <div class="aurora-blob blob-purple"></div>
     <div class="aurora-blob blob-emerald"></div>
   </div>
 
-  <!-- Header Navigasi Glassmorphism -->
+  <!-- Header Navigasi -->
   <header class="sticky top-0 z-40 bg-slate-950/45 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/25">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         
-        <!-- Logo & Tajuk Bengkel -->
         <div class="flex items-center space-x-3.5">
           <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-500 p-[1.5px] shadow-lg shadow-cyan-500/25">
             <div class="w-full h-full bg-slate-900/95 rounded-[14px] flex items-center justify-center">
@@ -177,7 +174,6 @@
           </div>
         </div>
 
-        <!-- Butang Navigasi Tab & Integrasi Form -->
         <div class="flex items-center space-x-2">
           <div class="p-1 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1 backdrop-blur-md">
             <button id="tabFormBtn" onclick="switchView('form')" class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm flex items-center gap-2 transition-all">
@@ -190,19 +186,16 @@
             </button>
           </div>
 
-          <!-- Butang Segerak Google Sheets -->
           <button onclick="syncFromGoogleSheet()" id="syncBtn" class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20 transition-all shadow-sm flex items-center gap-1.5 text-xs font-semibold" title="Tarik Data Terkini dari Google Sheets">
             <i class="fa-solid fa-rotate text-xs" id="syncIcon"></i>
             <span class="hidden md:inline">Sync DB</span>
           </button>
 
-          <!-- Butang Admin Login / Keluar -->
           <button id="adminLoginBtn" onclick="handleAdminAuthToggle()" class="p-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-cyan-300 hover:border-cyan-500/40 hover:bg-white/10 transition-all shadow-sm flex items-center gap-1.5 text-xs font-semibold" title="Admin Login">
             <i class="fa-solid fa-lock text-sm" id="adminLockIcon"></i>
             <span id="adminBtnLabel" class="hidden md:inline">Admin</span>
           </button>
 
-          <!-- Butang Tetapan -->
           <button id="configSettingsBtn" onclick="toggleConfigModal(true)" class="hidden p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 transition-all shadow-sm" title="Tetapan Google Sheets & Google Forms">
             <i class="fa-solid fa-sliders text-sm"></i>
           </button>
@@ -212,7 +205,6 @@
     </div>
   </header>
 
-  <!-- Container Pemberitahuan Toast -->
   <div id="toastContainer" class="fixed top-24 right-4 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none"></div>
 
   <!-- Kandungan Utama -->
@@ -291,7 +283,7 @@
                   <option value="Jabatan Ukur Bahan (JUB)">Jabatan Ukur Bahan (JUB)</option>
                   <option value="Jabatan Perancangan Ekonomi dan Pembangunan (JPEP)">Jabatan Perancangan Ekonomi dan Pembangunan (JPEP)</option>
                   <option value="Jabatan Kawalan Bangunan (JKB)">Jabatan Kawalan Bangunan (JKB)</option>
-                  <option value="Jabatan Pentadbiran  Bahagian Pengurusan Perolehan (JP-BPP)">Jabatan Pentadbiran  Bahagian Pengurusan Perolehan (JP-BPP)</option>
+                  <option value="Jabatan Pentadbiran Bahagian Pengurusan Perolehan (JP-BPP)">Jabatan Pentadbiran Bahagian Pengurusan Perolehan (JP-BPP)</option>
                   <option value="Jabatan Kebudayaan, Kesenian, Pelancongan Dan Sukan (JKKPS)">Jabatan Kebudayaan, Kesenian, Pelancongan Dan Sukan (JKKPS)</option>
                   <option value="Jabatan Penilaian dan Pengurusan Harta (JPPH)">Jabatan Penilaian dan Pengurusan Harta (JPPH)</option>
                   <option value="Jabatan Intergriti (JIT)">Jabatan Intergriti (JIT)</option>
@@ -348,19 +340,6 @@
               </div>
             </div>
 
-            <!-- Admin Banner -->
-            <div id="adminSheetBanner" class="hidden rounded-2xl bg-white/[0.04] p-3.5 border border-white/10 flex items-center justify-between text-xs text-slate-300">
-              <span class="flex items-center gap-2">
-                <i class="fa-solid fa-table text-emerald-400"></i> Google Sheets Web App:
-                <span id="sheetStatusBadge" class="text-emerald-400 font-semibold flex items-center gap-1">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Bersedia
-                </span>
-              </span>
-              <button type="button" onclick="toggleConfigModal(true)" class="text-cyan-400 hover:text-cyan-300 underline font-medium">
-                Ubah Skrip / URL
-              </button>
-            </div>
-
             <div class="pt-2 flex gap-3">
               <button type="submit" id="submitBtn"
                 class="flex-1 py-3.5 px-6 rounded-2xl font-bold text-slate-900 bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-300 hover:from-cyan-300 hover:to-teal-200 active:scale-[0.99] shadow-lg shadow-cyan-500/20 border border-white/40 transition-all flex items-center justify-center gap-2">
@@ -384,7 +363,7 @@
             Dashboard Kehadiran Peserta
           </h2>
           <p class="text-xs sm:text-sm text-slate-400">
-            Bengkel Perancangan Perolehan Tahunan 2027 • Pemantauan Masa Nyata
+            Bengkel Perancangan Perolehan Tahunan 2027 • Pemantauan Masa Nyata & Pengurusan Urusetia
           </p>
         </div>
         <div class="flex flex-wrap items-center gap-2.5">
@@ -417,14 +396,14 @@
 
         <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-emerald-500/40 transition-all">
           <div class="flex items-center justify-between">
-            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Jabatan Terlibat</p>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Kunci Diterima</p>
             <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(16,185,129,0.25)]">
-              <i class="fa-solid fa-building-columns"></i>
+              <i class="fa-solid fa-key"></i>
             </div>
           </div>
           <div class="mt-3 flex items-baseline gap-2">
-            <span id="metricDeptCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
-            <span class="text-xs text-slate-400">bahagian</span>
+            <span id="metricKeyCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
+            <span class="text-xs text-emerald-400">bilik</span>
           </div>
         </div>
 
@@ -443,14 +422,14 @@
 
         <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-purple-500/40 transition-all">
           <div class="flex items-center justify-between">
-            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">eMail Dibekal</p>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Jabatan Terlibat</p>
             <div class="w-10 h-10 rounded-2xl bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(168,85,247,0.25)]">
-              <i class="fa-regular fa-envelope"></i>
+              <i class="fa-solid fa-building-columns"></i>
             </div>
           </div>
           <div class="mt-3 flex items-baseline gap-2">
-            <span id="metricEmailCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
-            <span class="text-xs text-slate-400">peserta</span>
+            <span id="metricDeptCount" class="text-3xl sm:text-4xl font-extrabold text-white font-heading">0</span>
+            <span class="text-xs text-slate-400">bahagian</span>
           </div>
         </div>
       </div>
@@ -480,7 +459,7 @@
             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
               <i class="fa-solid fa-magnifying-glass text-xs"></i>
             </span>
-            <input type="text" id="tableSearch" oninput="filterTable()" placeholder="Cari nama pegawai, jawatan atau No. WhatsApp..."
+            <input type="text" id="tableSearch" oninput="filterTable()" placeholder="Cari nama, gred, No. Tel, atau no bilik..."
               class="glass-input w-full pl-10 pr-4 py-2.5 rounded-xl text-xs sm:text-sm placeholder-slate-500">
           </div>
 
@@ -504,7 +483,7 @@
               <option value="Jabatan Ukur Bahan (JUB)">Jabatan Ukur Bahan (JUB)</option>
               <option value="Jabatan Perancangan Ekonomi dan Pembangunan (JPEP)">Jabatan Perancangan Ekonomi dan Pembangunan (JPEP)</option>
               <option value="Jabatan Kawalan Bangunan (JKB)">Jabatan Kawalan Bangunan (JKB)</option>
-              <option value="Jabatan Pentadbiran  Bahagian Pengurusan Perolehan (JP-BPP)">Jabatan Pentadbiran  Bahagian Pengurusan Perolehan (JP-BPP)</option>
+              <option value="Jabatan Pentadbiran Bahagian Pengurusan Perolehan (JP-BPP)">Jabatan Pentadbiran Bahagian Pengurusan Perolehan (JP-BPP)</option>
               <option value="Jabatan Kebudayaan, Kesenian, Pelancongan Dan Sukan (JKKPS)">Jabatan Kebudayaan, Kesenian, Pelancongan Dan Sukan (JKKPS)</option>
               <option value="Jabatan Penilaian dan Pengurusan Harta (JPPH)">Jabatan Penilaian dan Pengurusan Harta (JPPH)</option>
               <option value="Jabatan Intergriti (JIT)">Jabatan Intergriti (JIT)</option>
@@ -534,7 +513,7 @@
                 <th class="py-3.5 px-4">Jawatan / Gred</th>
                 <th class="py-3.5 px-4">Jabatan</th>
                 <th class="py-3.5 px-4">No. Tel (WhatsApp)</th>
-                <th class="py-3.5 px-4">eMail</th>
+                <th class="py-3.5 px-4">Bilik & Kunci</th>
                 <th id="thTindakan" class="py-3.5 px-4 text-center hidden">Tindakan</th>
               </tr>
             </thead>
@@ -556,7 +535,7 @@
         <div class="px-5 py-3.5 border-t border-white/10 bg-white/[0.02] flex items-center justify-between text-xs text-slate-400">
           <span id="tableCountDisplay">Memaparkan 0 peserta</span>
           <span class="text-[11px] text-cyan-400 flex items-center gap-1.5 font-medium">
-            <i class="fa-solid fa-shield-halved text-[10px]"></i> Disimpan &amp; Disegerak
+            <i class="fa-solid fa-shield-halved text-[10px]"></i> Pengurusan Urusetia Aktif
           </span>
         </div>
       </div>
@@ -572,7 +551,7 @@
             <i class="fa-solid fa-table-cells"></i>
           </div>
           <div>
-            <h3 class="font-bold text-white text-base">Penyambung Terus Google Sheets &amp; Google Form</h3>
+            <h3 class="font-bold text-white text-base">Penyambung Terus Google Sheets & Google Form</h3>
             <p class="text-[11px] text-slate-400">Pilih kaedah simpanan data terus ke Google Drive anda</p>
           </div>
         </div>
@@ -581,124 +560,17 @@
         </button>
       </div>
 
-      <div class="flex border-b border-white/10 bg-white/[0.02] px-6 pt-2">
-        <button id="cfgTabScriptBtn" onclick="switchConfigTab('script')" class="py-2.5 px-4 text-xs font-bold text-cyan-400 border-b-2 border-cyan-400 transition-all flex items-center gap-2">
-          <i class="fa-solid fa-code"></i> Google Sheets (Apps Script Web App)
-        </button>
-        <button id="cfgTabFormBtn" onclick="switchConfigTab('form')" class="py-2.5 px-4 text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center gap-2">
-          <i class="fa-brands fa-google"></i> Google Form Asal
-        </button>
-      </div>
-
       <div class="p-6 space-y-4 overflow-y-auto custom-scrollbar text-xs sm:text-sm flex-1">
-        <!-- Tab 1: Script -->
-        <div id="cfgTabScriptContent" class="space-y-4">
-          <div>
-            <label class="block font-bold text-slate-200 mb-1">URL Google Apps Script Web App (Exec URL)</label>
-            <input type="url" id="cfgScriptUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec"
-              class="glass-input w-full px-3.5 py-3 rounded-xl font-mono text-xs">
-          </div>
-
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <label class="font-bold text-slate-300 text-xs">Kod Apps Script Dioptimumkan (Salin ke Extensions &gt; Apps Script):</label>
-              <button onclick="copyAppsScriptCode()" type="button" class="text-cyan-400 hover:text-cyan-300 text-xs flex items-center gap-1 font-semibold">
-                <i class="fa-regular fa-copy"></i> Salin Kod
-              </button>
-            </div>
-            <pre class="bg-black/60 border border-white/10 rounded-xl p-3 text-[11px] font-mono text-cyan-200 overflow-x-auto max-h-48 custom-scrollbar select-all" id="appsScriptCodeBlock">
-function doPost(e) {
-  var lock = LockService.getScriptLock();
-  lock.tryLock(10000);
-  try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Timestamp", "Nama Pegawai", "Jawatan/Gred", "Jabatan", "No. Tel (WhatsApp)", "eMail", "Waktu Rekod"]);
-    }
-    var data = JSON.parse(e.postData.contents);
-    sheet.appendRow([
-      data.timestamp || new Date(),
-      data.namaPegawai || "",
-      data.jawatanGred || "",
-      data.jabatan || "",
-      data.noTel ? "'" + data.noTel : "",
-      data.email || "",
-      data.time || ""
-    ]);
-    return ContentService.createTextOutput(JSON.stringify({status: "success"}))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({status: "error", message: err.toString()}))
-      .setMimeType(ContentService.MimeType.JSON);
-  } finally {
-    lock.releaseLock();
-  }
-}
-
-function doGet(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var rows = sheet.getDataRange().getValues();
-  if (rows.length <= 1) {
-    return ContentService.createTextOutput(JSON.stringify([]))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-  var results = [];
-  for (var i = 1; i < rows.length; i++) {
-    if (!rows[i][1] && !rows[i][4]) continue; // Langkau baris kosong
-    results.push({
-      timestamp: rows[i][0],
-      namaPegawai: rows[i][1],
-      jawatanGred: rows[i][2],
-      jabatan: rows[i][3],
-      noTel: rows[i][4],
-      email: rows[i][5],
-      time: rows[i][6]
-    });
-  }
-  return ContentService.createTextOutput(JSON.stringify(results))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-            </pre>
-          </div>
-        </div>
-
-        <!-- Tab 2: Form -->
-        <div id="cfgTabFormContent" class="space-y-3.5 hidden">
-          <div>
-            <label class="block font-semibold text-slate-300 mb-1">Form Action URL</label>
-            <input type="url" id="cfgFormUrl" class="glass-input w-full px-3.5 py-2.5 rounded-xl font-mono text-xs">
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block font-semibold text-slate-300 mb-1">Entry: Nama Pegawai</label>
-              <input type="text" id="cfgEntryNama" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-300 mb-1">Entry: Jawatan/Gred</label>
-              <input type="text" id="cfgEntryJawatan" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-300 mb-1">Entry: Jabatan</label>
-              <input type="text" id="cfgEntryJabatan" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-300 mb-1">Entry: No.Tel (WhatsApp)</label>
-              <input type="text" id="cfgEntryTel" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
-            </div>
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-300 mb-1">Entry: eMail</label>
-            <input type="text" id="cfgEntryEmail" class="glass-input w-full px-3 py-2 rounded-xl font-mono text-xs">
-          </div>
+        <div>
+          <label class="block font-bold text-slate-200 mb-1">URL Google Apps Script Web App (Exec URL)</label>
+          <input type="url" id="cfgScriptUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec"
+            class="glass-input w-full px-3.5 py-3 rounded-xl font-mono text-xs">
         </div>
       </div>
 
-      <div class="p-5 border-t border-white/10 flex justify-between items-center bg-white/[0.02]">
-        <span class="text-[11px] text-slate-400">Penyimpanan automatik dalam cache pelayar.</span>
-        <div class="flex gap-2.5">
-          <button type="button" onclick="toggleConfigModal(false)" class="px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-medium transition-all">Tutup</button>
-          <button type="button" onclick="saveConfiguration()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-90 text-slate-950 font-bold shadow-lg shadow-cyan-400/20 transition-all">Simpan Tetapan</button>
-        </div>
+      <div class="p-5 border-t border-white/10 flex justify-end gap-2.5 bg-white/[0.02]">
+        <button type="button" onclick="toggleConfigModal(false)" class="px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-medium transition-all">Tutup</button>
+        <button type="button" onclick="saveConfiguration()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-90 text-slate-950 font-bold shadow-lg shadow-cyan-400/20 transition-all">Simpan Tetapan</button>
       </div>
     </div>
   </div>
@@ -711,7 +583,7 @@ function doGet(e) {
           <div class="w-9 h-9 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center justify-center">
             <i class="fa-solid fa-user-shield"></i>
           </div>
-          <h3 class="font-bold text-white text-base font-heading">Log Masuk Admin</h3>
+          <h3 class="font-bold text-white text-base font-heading">Log Masuk Urusetia</h3>
         </div>
         <button onclick="toggleAdminModal(false)" class="text-slate-400 hover:text-white p-1">
           <i class="fa-solid fa-xmark"></i>
@@ -720,7 +592,7 @@ function doGet(e) {
 
       <form onsubmit="handleAdminLogin(event)" class="space-y-4">
         <div>
-          <label for="adminPasswordInput" class="block text-xs font-semibold text-slate-300 mb-1.5">Kata Laluan</label>
+          <label for="adminPasswordInput" class="block text-xs font-semibold text-slate-300 mb-1.5">Kata Laluan Urusetia</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
               <i class="fa-solid fa-key text-xs"></i>
@@ -754,32 +626,13 @@ function doGet(e) {
       </div>
       <div class="flex items-center gap-2">
         <span>Sistem Rekod Kehadiran Pintar UMKB@JKEW</span>
-        <span class="font-bold text-cyan-300 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/30">@JnolAi</span>
       </div>
     </div>
   </footer>
 
-  <!-- LOGIK JAVASCRIPT -->
   <script>
     const SCRIPT_URL_DEFAULT = "https://script.google.com/macros/s/AKfycbzqVUaklPOB3akAhIhutqrus-4Slm0TNOn6DRXsjbbCp7BgCVYhSm-oYDUlElRZlKAmlA/exec";
     const ADMIN_PASS = "UMKB13813";
-    
-    const DEFAULT_CONFIG = {
-      scriptUrl: SCRIPT_URL_DEFAULT,
-      formActionUrl: "https://docs.google.com/forms/d/1uVKyrv2OXRlLgXzGdl12Vx4cwFH2p43350Sq8UA3SBA/formResponse",
-      entryNama: "entry.1000001",
-      entryJawatan: "entry.1000002",
-      entryJabatan: "entry.1000003",
-      entryTel: "entry.1000004",
-      entryEmail: "entry.1000005"
-    };
-
-    let savedConfig = JSON.parse(localStorage.getItem('perolehan_form_config')) || {};
-    let appConfig = {
-      ...DEFAULT_CONFIG,
-      ...savedConfig,
-      scriptUrl: savedConfig.scriptUrl && savedConfig.scriptUrl.trim() !== '' ? savedConfig.scriptUrl : SCRIPT_URL_DEFAULT
-    };
     
     let attendees = JSON.parse(localStorage.getItem('perolehan_attendees')) || [];
     let isAdminLoggedIn = sessionStorage.getItem('perolehan_admin_auth') === 'true';
@@ -797,27 +650,14 @@ function doGet(e) {
 
     window.addEventListener('DOMContentLoaded', () => {
       startClock();
-      populateConfigInputs();
-      updateSheetBadge();
       updateAdminUI();
       renderDashboard();
       initCharts();
 
-      if (appConfig.scriptUrl) syncFromGoogleSheet(true);
-
-      setInterval(() => {
-        if (appConfig.scriptUrl) syncFromGoogleSheet(true);
-      }, 60000);
-
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible' && appConfig.scriptUrl) {
-          syncFromGoogleSheet(true);
-        }
-      });
+      if (SCRIPT_URL_DEFAULT) syncFromGoogleSheet(true);
     });
 
     function updateAdminUI() {
-      const banner = document.getElementById('adminSheetBanner');
       const cfgBtn = document.getElementById('configSettingsBtn');
       const lockIcon = document.getElementById('adminLockIcon');
       const adminBtnLabel = document.getElementById('adminBtnLabel');
@@ -825,14 +665,12 @@ function doGet(e) {
       const thTindakan = document.getElementById('thTindakan');
 
       if (isAdminLoggedIn) {
-        if (banner) banner.classList.remove('hidden');
         if (cfgBtn) cfgBtn.classList.remove('hidden');
         if (clearAllBtn) clearAllBtn.classList.remove('hidden');
         if (thTindakan) thTindakan.classList.remove('hidden');
         if (lockIcon) lockIcon.className = "fa-solid fa-lock-open text-emerald-400 text-sm";
         if (adminBtnLabel) adminBtnLabel.textContent = "Keluar";
       } else {
-        if (banner) banner.classList.add('hidden');
         if (cfgBtn) cfgBtn.classList.add('hidden');
         if (clearAllBtn) clearAllBtn.classList.add('hidden');
         if (thTindakan) thTindakan.classList.add('hidden');
@@ -882,51 +720,12 @@ function doGet(e) {
         sessionStorage.setItem('perolehan_admin_auth', 'true');
         updateAdminUI();
         toggleAdminModal(false);
-        showToast('Log masuk Admin berjaya!', 'success');
+        showToast('Log masuk Admin/Urusetia berjaya!', 'success');
       } else {
         if (errorMsg) errorMsg.classList.remove('hidden');
         input.value = '';
         input.focus();
       }
-    }
-
-    function updateSheetBadge() {
-      const badge = document.getElementById('sheetStatusBadge');
-      if (appConfig.scriptUrl && appConfig.scriptUrl.trim() !== '') {
-        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Google Sheet Bersambung (Live)';
-        badge.className = 'text-emerald-400 font-semibold flex items-center gap-1.5';
-      } else {
-        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-cyan-400"></span> Mod Sandaran';
-        badge.className = 'text-cyan-400 font-semibold flex items-center gap-1.5';
-      }
-    }
-
-    function switchConfigTab(tab) {
-      const scriptTab = document.getElementById('cfgTabScriptContent');
-      const formTab = document.getElementById('cfgTabFormContent');
-      const scriptBtn = document.getElementById('cfgTabScriptBtn');
-      const formBtn = document.getElementById('cfgTabFormBtn');
-
-      if (tab === 'script') {
-        scriptTab.classList.remove('hidden');
-        formTab.classList.add('hidden');
-        scriptBtn.className = "py-2.5 px-4 text-xs font-bold text-cyan-400 border-b-2 border-cyan-400 transition-all flex items-center gap-2";
-        formBtn.className = "py-2.5 px-4 text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center gap-2";
-      } else {
-        scriptTab.classList.add('hidden');
-        formTab.classList.remove('hidden');
-        formBtn.className = "py-2.5 px-4 text-xs font-bold text-cyan-400 border-b-2 border-cyan-400 transition-all flex items-center gap-2";
-        scriptBtn.className = "py-2.5 px-4 text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center gap-2";
-      }
-    }
-
-    function copyAppsScriptCode() {
-      const code = document.getElementById('appsScriptCodeBlock').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        showToast('Kod Apps Script disalin ke papan klip!', 'success');
-      }).catch(() => {
-        showToast('Gagal menyalin kod.', 'error');
-      });
     }
 
     function startClock() {
@@ -994,26 +793,17 @@ function doGet(e) {
         jawatanGred,
         jabatan,
         noTel,
-        email: email || '-'
+        email: email || '-',
+        roomNo: '',
+        keyReceived: false
       };
 
-      const postPayload = {
-        timestamp: formattedTimestamp,
-        namaPegawai: namaPegawai,
-        jawatanGred: jawatanGred,
-        jabatan: jabatan,
-        noTel: noTel,
-        email: email || "-",
-        time: newAttendee.time
-      };
-
-      const scriptEndpoint = appConfig.scriptUrl || SCRIPT_URL_DEFAULT;
       try {
-        await fetch(scriptEndpoint, {
+        await fetch(SCRIPT_URL_DEFAULT, {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(postPayload)
+          body: JSON.stringify(newAttendee)
         });
       } catch (err) {
         console.warn('Apps Script POST notice:', err);
@@ -1022,70 +812,57 @@ function doGet(e) {
       attendees.unshift(newAttendee);
       localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
 
-      postToGoogleForm(newAttendee);
-
       setTimeout(() => {
         submitBtn.disabled = false;
         btnText.innerHTML = 'Daftar Kehadiran';
         document.getElementById('attendanceForm').reset();
         showToast(`Kehadiran ${escapeHtml(namaPegawai)} berjaya direkodkan!`, 'success');
-
         setTimeout(() => switchView('dashboard'), 300);
       }, 500);
     }
 
-    function postToGoogleForm(data) {
-      try {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = appConfig.formActionUrl;
-        form.target = 'hidden_google_iframe';
-
-        const fields = [
-          { name: appConfig.entryNama, value: data.namaPegawai },
-          { name: appConfig.entryJawatan, value: data.jawatanGred },
-          { name: appConfig.entryJabatan, value: data.jabatan },
-          { name: appConfig.entryTel, value: data.noTel },
-          { name: appConfig.entryEmail, value: data.email === '-' ? '' : data.email }
-        ];
-
-        fields.forEach(f => {
-          if (f.name && f.name.trim() !== '') {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = f.name;
-            input.value = f.value;
-            form.appendChild(input);
-          }
-        });
-
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
-      } catch (err) {
-        console.warn('Google Form Submit notice:', err);
+    // FUNGSI KHAS URUSETIA: KEMAS KINI NO BILIK & STATUS KUNCI
+    function updateRoomNumber(id, val) {
+      const att = attendees.find(a => a.id === id);
+      if (att) {
+        att.roomNo = val.trim();
+        localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
       }
     }
 
-    // FUNGSI SYNC DB: Mengutamakan data semasa dari Google Sheets
-    async function syncFromGoogleSheet(silent = false) {
-      const scriptEndpoint = appConfig.scriptUrl || SCRIPT_URL_DEFAULT;
-      if (!scriptEndpoint) {
-        if (!silent) showToast('URL Google Apps Script tidak dijumpai!', 'error');
+    function toggleKeyStatus(id) {
+      if (!isAdminLoggedIn) {
+        showToast('Hanya Urusetia/Admin boleh mengesahkan serahan kunci!', 'error');
+        toggleAdminModal(true);
         return;
       }
+      const att = attendees.find(a => a.id === id);
+      if (att) {
+        att.keyReceived = !att.keyReceived;
+        localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
+        filterTable();
+        renderDashboard();
+        if (att.keyReceived) {
+          showToast(`Kunci bilik bagi ${escapeHtml(att.namaPegawai)} telah diserahkan!`, 'success');
+        } else {
+          showToast(`Status kunci telah ditetapkan semula (Belum Terima).`, 'info');
+        }
+      }
+    }
 
+    async function syncFromGoogleSheet(silent = false) {
       const syncIcon = document.getElementById('syncIcon');
       if (syncIcon) syncIcon.classList.add('fa-spin');
 
       try {
-        // Cache buster bagi mengelakkan pelayar menggunakan respons lama
-        const cacheUrl = scriptEndpoint + (scriptEndpoint.includes('?') ? '&' : '?') + 't=' + Date.now();
+        const cacheUrl = SCRIPT_URL_DEFAULT + (SCRIPT_URL_DEFAULT.includes('?') ? '&' : '?') + 't=' + Date.now();
         const res = await fetch(cacheUrl);
         const json = await res.json();
         const rawList = Array.isArray(json) ? json : (json && Array.isArray(json.data) ? json.data : []);
 
         if (rawList.length > 0) {
+          const existingMap = new Map(attendees.map(a => [a.namaPegawai + '_' + a.noTel, a]));
+
           const fetchedAttendees = rawList.map((item, idx) => {
             const rawTs = item.timestamp || item.waktuDaftar || item.time || '';
             let parsedDate = '-';
@@ -1096,40 +873,36 @@ function doGet(e) {
               if (!isNaN(d.getTime())) {
                 parsedDate = d.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' });
                 parsedTime = d.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true });
-              } else if (typeof rawTs === 'string') {
-                const parts = rawTs.split(/[\s,]+/);
-                parsedDate = parts[0] || rawTs;
-                parsedTime = parts.slice(1).join(' ') || rawTs;
               }
             }
 
+            const key = (item.namaPegawai || '') + '_' + (item.noTel || '');
+            const existing = existingMap.get(key);
+
             return {
-              id: "cloud_" + idx + "_" + (item.namaPegawai || idx),
+              id: existing ? existing.id : ("cloud_" + idx + "_" + (item.namaPegawai || idx)),
               timestamp: rawTs,
               time: parsedTime !== '-' ? parsedTime : (item.time || '-'),
               date: parsedDate,
-              namaPegawai: item.namaPegawai || item.nama || item['Nama Pegawai'] || '-',
-              jawatanGred: item.jawatanGred || item.jawatan || item['Jawatan/Gred'] || '-',
-              jabatan: item.jabatan || item['Jabatan'] || 'Lain-lain',
-              noTel: String(item.noTel || item.tel || item['No.Tel (WhatsApp)'] || item['No.Tel (Whatsaap)'] || '-'),
-              email: item.email || item['eMail'] || '-'
+              namaPegawai: item.namaPegawai || item.nama || '-',
+              jawatanGred: item.jawatanGred || item.jawatan || '-',
+              jabatan: item.jabatan || 'Lain-lain',
+              noTel: String(item.noTel || item.tel || '-'),
+              email: item.email || '-',
+              roomNo: existing ? (existing.roomNo || '') : (item.roomNo || ''),
+              keyReceived: existing ? !!existing.keyReceived : (item.keyReceived === true || item.keyReceived === 'true')
             };
           });
 
-          // Gantikan data lokal secara penuh agar sebarang edit di Sheet dipaparkan terus
           attendees = fetchedAttendees;
           localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
           
           renderDashboard();
           updateCharts();
-
-          if (!silent) showToast(`Berjaya menarik ${attendees.length} data terkini dari Google Sheets!`, 'success');
-        } else {
-          if (!silent) showToast('Tiada rekod dijumpai dalam Google Sheets.', 'info');
+          if (!silent) showToast(`Berjaya menarik ${attendees.length} data terkini!`, 'success');
         }
       } catch (err) {
         console.error('Sync Error:', err);
-        if (!silent) showToast('Gagal menyegerak: Sila pastikan Apps Script dideploy sebagai Web App (Anyone).', 'error');
       } finally {
         if (syncIcon) syncIcon.classList.remove('fa-spin');
       }
@@ -1138,13 +911,13 @@ function doGet(e) {
     function renderDashboard() {
       const total = attendees.length;
       const uniqueDepts = new Set(attendees.map(a => a.jabatan)).size;
+      const keyCount = attendees.filter(a => a.keyReceived).length;
       const whatsappCount = attendees.filter(a => a.noTel && a.noTel !== '-').length;
-      const emailCount = attendees.filter(a => a.email && a.email !== '-').length;
 
       document.getElementById('metricTotal').textContent = total;
       document.getElementById('metricDeptCount').textContent = uniqueDepts;
+      document.getElementById('metricKeyCount').textContent = keyCount;
       document.getElementById('metricWhatsappCount').textContent = whatsappCount;
-      document.getElementById('metricEmailCount').textContent = emailCount;
 
       filterTable();
     }
@@ -1160,7 +933,8 @@ function doGet(e) {
       const filtered = attendees.filter(r => {
         const matchSearch = r.namaPegawai.toLowerCase().includes(searchTerm) || 
                             r.jawatanGred.toLowerCase().includes(searchTerm) || 
-                            r.noTel.toLowerCase().includes(searchTerm);
+                            r.noTel.toLowerCase().includes(searchTerm) ||
+                            (r.roomNo && r.roomNo.toLowerCase().includes(searchTerm));
         const matchDept = deptFilter === 'ALL' || r.jabatan === deptFilter;
         return matchSearch && matchDept;
       });
@@ -1178,6 +952,42 @@ function doGet(e) {
           const tr = document.createElement('tr');
           tr.className = "hover:bg-white/[0.04] transition-colors";
           
+          // Kawalan Urusetia Bilik & Kunci
+          let roomAndKeyHtml = '';
+          if (isAdminLoggedIn) {
+            roomAndKeyHtml = `
+              <div class="flex items-center gap-2">
+                <input type="text" value="${escapeHtml(r.roomNo || '')}" 
+                  onchange="updateRoomNumber('${escapeHtml(r.id)}', this.value)"
+                  placeholder="No. Bilik" 
+                  class="glass-input w-20 px-2 py-1 rounded-lg text-xs font-mono font-bold text-center border-white/20">
+                <button type="button" onclick="toggleKeyStatus('${escapeHtml(r.id)}')"
+                  class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm ${
+                    r.keyReceived 
+                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30' 
+                      : 'bg-amber-500/10 text-amber-300 border border-amber-500/30 hover:bg-amber-500/20'
+                  }">
+                  <i class="fa-solid ${r.keyReceived ? 'fa-key text-emerald-400' : 'fa-lock'}"></i>
+                  <span>${r.keyReceived ? 'Kunci Diterima' : 'Belum Terima'}</span>
+                </button>
+              </div>
+            `;
+          } else {
+            roomAndKeyHtml = `
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-white/5 border border-white/10 text-cyan-300">
+                  ${r.roomNo ? 'Bilik: ' + escapeHtml(r.roomNo) : 'Belum Diisi'}
+                </span>
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold ${
+                  r.keyReceived ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20' : 'bg-slate-800 text-slate-400'
+                }">
+                  <i class="fa-solid fa-key text-[10px]"></i>
+                  ${r.keyReceived ? 'Kunci Diterima' : 'Belum Terima'}
+                </span>
+              </div>
+            `;
+          }
+
           let actionCell = '';
           if (isAdminLoggedIn) {
             actionCell = `
@@ -1211,8 +1021,8 @@ function doGet(e) {
                 <i class="fa-brands fa-whatsapp text-emerald-400"></i> ${escapeHtml(r.noTel)}
               </a>
             </td>
-            <td class="py-3.5 px-4 font-mono text-xs text-slate-400">
-              ${escapeHtml(r.email)}
+            <td class="py-3.5 px-4 whitespace-nowrap">
+              ${roomAndKeyHtml}
             </td>
             ${actionCell}
           `;
@@ -1227,9 +1037,7 @@ function doGet(e) {
       const canvas = document.getElementById('deptChart');
       if (!canvas) return;
 
-      if (deptChartInstance) {
-        deptChartInstance.destroy();
-      }
+      if (deptChartInstance) deptChartInstance.destroy();
 
       const deptData = getDeptBreakdown();
       const ctxDept = canvas.getContext('2d');
@@ -1254,13 +1062,7 @@ function doGet(e) {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: 'rgba(15, 23, 42, 0.9)',
-              borderColor: 'rgba(255, 255, 255, 0.15)',
-              borderWidth: 1,
-              cornerRadius: 10
-            }
+            legend: { display: false }
           },
           scales: {
             y: {
@@ -1269,13 +1071,7 @@ function doGet(e) {
               grid: { color: 'rgba(255, 255, 255, 0.05)' }
             },
             x: {
-              ticks: { 
-                color: '#94a3b8',
-                callback: function(val) {
-                  const label = this.getLabelForValue(val);
-                  return label.length > 20 ? label.substr(0, 20) + '...' : label;
-                }
-              },
+              ticks: { color: '#94a3b8' },
               grid: { display: false }
             }
           }
@@ -1309,24 +1105,23 @@ function doGet(e) {
       }
 
       let csv = "data:text/csv;charset=utf-8,\uFEFF";
-      csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (WhatsApp),eMail\r\n";
+      csv += "Bil,Tarikh,Masa,Nama Pegawai,Jawatan/Gred,Jabatan,No.Tel (WhatsApp),No Bilik,Status Kunci\r\n";
 
       attendees.forEach((a, i) => {
         const safePhone = a.noTel ? `="${a.noTel.replace(/"/g, '""')}"` : '""';
         const safeNama = (a.namaPegawai || '').replace(/"/g, '""');
         const safeJawatan = (a.jawatanGred || '').replace(/"/g, '""');
         const safeJabatan = (a.jabatan || '').replace(/"/g, '""');
-        const safeEmail = (a.email || '').replace(/"/g, '""');
-        const safeDate = (a.date || '').replace(/"/g, '""');
-        const safeTime = (a.time || '').replace(/"/g, '""');
+        const safeRoom = (a.roomNo || '-').replace(/"/g, '""');
+        const safeKey = a.keyReceived ? 'Kunci Telah Diterima' : 'Belum Terima';
 
-        csv += `${i + 1},"${safeDate}","${safeTime}","${safeNama}","${safeJawatan}","${safeJabatan}",${safePhone},"${safeEmail}"\r\n`;
+        csv += `${i + 1},"${a.date}","${a.time}","${safeNama}","${safeJawatan}","${safeJabatan}",${safePhone},"${safeRoom}","${safeKey}"\r\n`;
       });
 
       const uri = encodeURI(csv);
       const link = document.createElement("a");
       link.setAttribute("href", uri);
-      link.setAttribute("download", `Kehadiran_Bengkel_Perolehan_2027_${new Date().toISOString().slice(0,10)}.csv`);
+      link.setAttribute("download", `Kehadiran_Bengkel_2027_${new Date().toISOString().slice(0,10)}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -1349,11 +1144,6 @@ function doGet(e) {
 
     function confirmClearRecords() {
       if (attendees.length === 0) return;
-      if (!isAdminLoggedIn) {
-        showToast('Log masuk sebagai Admin untuk memadam senarai.', 'error');
-        toggleAdminModal(true);
-        return;
-      }
       if (confirm('Padam SEMUA senarai kehadiran peserta bengkel?')) {
         attendees = [];
         localStorage.removeItem('perolehan_attendees');
@@ -1364,11 +1154,6 @@ function doGet(e) {
     }
 
     function toggleConfigModal(show) {
-      if (show && !isAdminLoggedIn) {
-        showToast('Sila log masuk admin terlebih dahulu.', 'error');
-        toggleAdminModal(true);
-        return;
-      }
       const modal = document.getElementById('configModal');
       if (show) {
         modal.classList.remove('hidden');
@@ -1377,32 +1162,6 @@ function doGet(e) {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
       }
-    }
-
-    function populateConfigInputs() {
-      document.getElementById('cfgScriptUrl').value = appConfig.scriptUrl || '';
-      document.getElementById('cfgFormUrl').value = appConfig.formActionUrl || '';
-      document.getElementById('cfgEntryNama').value = appConfig.entryNama || '';
-      document.getElementById('cfgEntryJawatan').value = appConfig.entryJawatan || '';
-      document.getElementById('cfgEntryJabatan').value = appConfig.entryJabatan || '';
-      document.getElementById('cfgEntryTel').value = appConfig.entryTel || '';
-      document.getElementById('cfgEntryEmail').value = appConfig.entryEmail || '';
-    }
-
-    function saveConfiguration() {
-      appConfig = {
-        scriptUrl: document.getElementById('cfgScriptUrl').value.trim(),
-        formActionUrl: document.getElementById('cfgFormUrl').value.trim(),
-        entryNama: document.getElementById('cfgEntryNama').value.trim(),
-        entryJawatan: document.getElementById('cfgEntryJawatan').value.trim(),
-        entryJabatan: document.getElementById('cfgEntryJabatan').value.trim(),
-        entryTel: document.getElementById('cfgEntryTel').value.trim(),
-        entryEmail: document.getElementById('cfgEntryEmail').value.trim()
-      };
-      localStorage.setItem('perolehan_form_config', JSON.stringify(appConfig));
-      updateSheetBadge();
-      toggleConfigModal(false);
-      showToast('Tetapan berjaya dikemas kini!', 'success');
     }
 
     function showToast(message, type = 'info') {
