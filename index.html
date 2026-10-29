@@ -669,12 +669,10 @@
     // Fungsi pembantu memendekkan nama jabatan untuk label carta
     function formatDeptLabel(deptName) {
       if (!deptName) return '';
-      // 1. Ambil teks di dalam kurungan sekiranya wujud (cth: "Jabatan Kewangan (JKEW)" -> "JKEW")
       const match = deptName.match(/\(([^)]+)\)/);
       if (match && match[1]) {
         return match[1];
       }
-      // 2. Ringkasan standard untuk Pejabat Eksekutif & Cawangan
       if (deptName.includes('Pejabat Pengarah Eksekutif')) {
         return deptName.replace('Pejabat Pengarah Eksekutif', 'PE');
       }
@@ -693,13 +691,23 @@
       renderDashboard();
       initCharts();
 
-      if (SCRIPT_URL_DEFAULT) {
+      // Muatkan nilai tetapan jika pernah disimpan secara kustom
+      const savedScriptUrl = localStorage.getItem('perolehan_script_url');
+      if (savedScriptUrl && document.getElementById('cfgScriptUrl')) {
+        document.getElementById('cfgScriptUrl').value = savedScriptUrl;
+      }
+
+      if (getScriptUrl()) {
         syncFromGoogleSheet(true);
         setInterval(() => {
           syncFromGoogleSheet(true);
         }, 60000);
       }
     });
+
+    function getScriptUrl() {
+      return localStorage.getItem('perolehan_script_url') || SCRIPT_URL_DEFAULT;
+    }
 
     function updateAdminUI() {
       const cfgBtn = document.getElementById('configSettingsBtn');
@@ -845,15 +853,18 @@
         keyReceived: false
       };
 
-      try {
-        await fetch(SCRIPT_URL_DEFAULT, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(newAttendee)
-        });
-      } catch (err) {
-        console.warn('Apps Script POST notice:', err);
+      const scriptUrl = getScriptUrl();
+      if (scriptUrl) {
+        try {
+          await fetch(scriptUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(newAttendee)
+          });
+        } catch (err) {
+          console.warn('Apps Script POST notice:', err);
+        }
       }
 
       attendees.unshift(newAttendee);
@@ -861,22 +872,51 @@
 
       setTimeout(() => {
         submitBtn.disabled = false;
-        btnText.innerHTML = 'Daftar Kehadiran';
+        btnText.innerHTML = '<i class="fa-solid fa-check-circle text-slate-900"></i> Daftar Kehadiran';
         document.getElementById('attendanceForm').reset();
         showToast(`Kehadiran ${escapeHtml(namaPegawai)} berjaya direkodkan!`, 'success');
         setTimeout(() => switchView('dashboard'), 300);
       }, 500);
     }
 
-    function updateRoomNumber(id, val) {
+    // Fungsi menghantar kemaskini bilik & kunci terus ke Apps Script / Google Sheets
+    async function sendRoomKeyUpdateToSheet(attendee) {
+      const scriptUrl = getScriptUrl();
+      if (!scriptUrl) return;
+
+      try {
+        await fetch(scriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'updateRoomKey',
+            namaPegawai: attendee.namaPegawai,
+            noTel: attendee.noTel,
+            roomNo: attendee.roomNo,
+            keyReceived: attendee.keyReceived
+          })
+        });
+      } catch (err) {
+        console.warn('Gagal menghantar kemaskini bilik/kunci ke Apps Script:', err);
+      }
+    }
+
+    // Kemaskini No. Bilik
+    async function updateRoomNumber(id, val) {
       const att = attendees.find(a => a.id === id);
       if (att) {
         att.roomNo = val.trim();
         localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
+        
+        // Hantar terus ke Google Sheets
+        await sendRoomKeyUpdateToSheet(att);
+        showToast(`No. Bilik ${escapeHtml(att.namaPegawai)} dikemaskini (${att.roomNo || 'Kosong'}).`, 'info');
       }
     }
 
-    function toggleKeyStatus(id) {
+    // Tukar Status Serahan Kunci
+    async function toggleKeyStatus(id) {
       if (!isAdminLoggedIn) {
         showToast('Hanya Urusetia/Admin boleh mengesahkan serahan kunci!', 'error');
         toggleAdminModal(true);
@@ -886,8 +926,13 @@
       if (att) {
         att.keyReceived = !att.keyReceived;
         localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
+        
         filterTable();
         renderDashboard();
+
+        // Hantar perubahan status ke Google Sheets
+        await sendRoomKeyUpdateToSheet(att);
+
         if (att.keyReceived) {
           showToast(`Kunci bilik bagi ${escapeHtml(att.namaPegawai)} telah diserahkan!`, 'success');
         } else {
@@ -900,8 +945,14 @@
       const syncIcon = document.getElementById('syncIcon');
       if (syncIcon) syncIcon.classList.add('fa-spin');
 
+      const scriptUrl = getScriptUrl();
+      if (!scriptUrl) {
+        if (syncIcon) syncIcon.classList.remove('fa-spin');
+        return;
+      }
+
       try {
-        const cacheUrl = SCRIPT_URL_DEFAULT + (SCRIPT_URL_DEFAULT.includes('?') ? '&' : '?') + 't=' + Date.now();
+        const cacheUrl = scriptUrl + (scriptUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
         const res = await fetch(cacheUrl);
         const json = await res.json();
         const rawList = Array.isArray(json) ? json : (json && Array.isArray(json.data) ? json.data : []);
@@ -922,21 +973,27 @@
               }
             }
 
-            const key = (item.namaPegawai || '') + '_' + (item.noTel || '');
+            const nama = item.namaPegawai || item.nama || '-';
+            const tel = String(item.noTel || item.tel || '-');
+            const key = nama + '_' + tel;
             const existing = existingMap.get(key);
 
+            // Prioritaskan data bilik & kunci dari Google Sheets
+            const roomFromCloud = item.roomNo !== undefined ? String(item.roomNo).trim() : '';
+            const keyFromCloud = item.keyReceived === true || item.keyReceived === 'true' || item.keyReceived === 'Kunci Diterima';
+
             return {
-              id: existing ? existing.id : ("cloud_" + idx + "_" + (item.namaPegawai || idx)),
+              id: existing ? existing.id : ("cloud_" + idx + "_" + (nama || idx)),
               timestamp: rawTs,
               time: parsedTime !== '-' ? parsedTime : (item.time || '-'),
               date: parsedDate,
-              namaPegawai: item.namaPegawai || item.nama || '-',
+              namaPegawai: nama,
               jawatanGred: item.jawatanGred || item.jawatan || '-',
               jabatan: item.jabatan || 'Lain-lain',
-              noTel: String(item.noTel || item.tel || '-'),
-              email: item.email || '-',
-              roomNo: existing ? (existing.roomNo || '') : (item.roomNo || ''),
-              keyReceived: existing ? !!existing.keyReceived : (item.keyReceived === true || item.keyReceived === 'true')
+              noTel: tel,
+              email: item.email || item.emel || '-',
+              roomNo: roomFromCloud !== '' ? roomFromCloud : (existing ? (existing.roomNo || '') : ''),
+              keyReceived: item.keyReceived !== undefined ? keyFromCloud : (existing ? !!existing.keyReceived : false)
             };
           });
 
@@ -1074,13 +1131,11 @@
       const shortLabels = rawLabels.map(formatDeptLabel);
       const deptValues = Object.values(deptData);
 
-      // Ketinggian dinamik mengikut bilangan jabatan
       const targetHeight = Math.max(260, rawLabels.length * 36);
       if (chartWrapper) {
         chartWrapper.style.height = `${targetHeight}px`;
       }
 
-      // Efek gradient mendatar
       const gradient = ctxDept.createLinearGradient(0, 0, 400, 0);
       gradient.addColorStop(0, 'rgba(6, 182, 212, 0.35)');
       gradient.addColorStop(1, 'rgba(6, 182, 212, 0.95)');
@@ -1101,30 +1156,26 @@
           }]
         },
         options: {
-          indexAxis: 'y', // Bar mendatar sesuai skrin telefon
+          indexAxis: 'y',
           responsive: true,
           maintainAspectRatio: false,
-          
-          // Konfigurasi animasi bertingkat (staggered)
           animation: {
             duration: 1200,
             easing: 'easeOutQuart',
             delay: function(context) {
               let delay = 0;
               if (context.type === 'data' && context.mode === 'default') {
-                delay = context.dataIndex * 50; // Sela masa 50ms bagi setiap bar
+                delay = context.dataIndex * 50;
               }
               return delay;
             }
           },
-
           animations: {
             x: {
               from: 0,
               duration: 900
             }
           },
-
           plugins: {
             legend: { display: false },
             tooltip: {
@@ -1223,7 +1274,7 @@
 
         if (isAdminLoggedIn) {
           const safeRoom = (a.roomNo || '-').replace(/"/g, '""');
-          const safeKey = a.keyReceived ? 'Kunci Telah Diterima' : 'Belum Terima';
+          const safeKey = a.keyReceived ? 'Kunci Diterima' : 'Belum Terima';
           csv += `${i + 1},"${a.date}","${a.time}","${safeNama}","${safeJawatan}","${safeJabatan}",${safePhone},"${safeRoom}","${safeKey}"\r\n`;
         } else {
           csv += `${i + 1},"${safeNama}","${safeJawatan}","${safeJabatan}",${safePhone}\r\n`;
@@ -1274,6 +1325,16 @@
         modal.classList.add('hidden');
         modal.classList.remove('flex');
       }
+    }
+
+    function saveConfiguration() {
+      const input = document.getElementById('cfgScriptUrl');
+      if (input && input.value.trim()) {
+        localStorage.setItem('perolehan_script_url', input.value.trim());
+        showToast('URL Google Apps Script berjaya disimpan!', 'success');
+      }
+      toggleConfigModal(false);
+      syncFromGoogleSheet();
     }
 
     function showToast(message, type = 'info') {
