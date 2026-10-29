@@ -434,7 +434,7 @@
         </div>
       </div>
 
-      <!-- Carta Bar Mendatar (Diperkemas untuk paparan mudah alih) -->
+      <!-- Carta Bar Mendatar Beranimasi -->
       <div class="mb-7">
         <div class="glass-card p-6 rounded-3xl relative">
           <div class="flex items-center justify-between mb-4">
@@ -447,7 +447,7 @@
             </div>
           </div>
           
-          <!-- Kontena responsif dengan skrol menegak jika data banyak -->
+          <!-- Kontena responsif dengan skrol menegak -->
           <div id="chartScrollContainer" class="relative max-h-96 overflow-y-auto custom-scrollbar pr-2 w-full">
             <div id="chartWrapper" class="relative w-full" style="min-height: 280px;">
               <canvas id="deptChart"></canvas>
@@ -666,10 +666,10 @@
         .replace(/'/g, '&#039;');
     }
 
-    // Fungsi pembantu memendekkan nama jabatan untuk carta
+    // Fungsi pembantu memendekkan nama jabatan untuk label carta
     function formatDeptLabel(deptName) {
       if (!deptName) return '';
-      // 1. Ambil singkatan jika ada dalam tanda kurung
+      // 1. Ambil teks di dalam kurungan sekiranya wujud (cth: "Jabatan Kewangan (JKEW)" -> "JKEW")
       const match = deptName.match(/\(([^)]+)\)/);
       if (match && match[1]) {
         return match[1];
@@ -1074,11 +1074,16 @@
       const shortLabels = rawLabels.map(formatDeptLabel);
       const deptValues = Object.values(deptData);
 
-      // Tetapkan ketinggian kontena secara dinamik mengikut jumlah jabatan
+      // Ketinggian dinamik mengikut bilangan jabatan
       const targetHeight = Math.max(260, rawLabels.length * 36);
       if (chartWrapper) {
         chartWrapper.style.height = `${targetHeight}px`;
       }
+
+      // Efek gradient mendatar
+      const gradient = ctxDept.createLinearGradient(0, 0, 400, 0);
+      gradient.addColorStop(0, 'rgba(6, 182, 212, 0.35)');
+      gradient.addColorStop(1, 'rgba(6, 182, 212, 0.95)');
 
       deptChartInstance = new Chart(ctxDept, {
         type: 'bar',
@@ -1087,24 +1092,56 @@
           datasets: [{
             label: 'Bilangan Pegawai',
             data: deptValues.length > 0 ? deptValues : [0],
-            backgroundColor: 'rgba(6, 182, 212, 0.75)',
+            backgroundColor: gradient,
             borderColor: '#22d3ee',
             borderWidth: 1.5,
-            borderRadius: 6,
-            maxBarThickness: 20
+            borderRadius: 8,
+            borderSkipped: false,
+            maxBarThickness: 22
           }]
         },
         options: {
-          indexAxis: 'y', // Bar mendatar - sesuai untuk skrin telefon
+          indexAxis: 'y', // Bar mendatar sesuai skrin telefon
           responsive: true,
           maintainAspectRatio: false,
+          
+          // Konfigurasi animasi bertingkat (staggered)
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuart',
+            delay: function(context) {
+              let delay = 0;
+              if (context.type === 'data' && context.mode === 'default') {
+                delay = context.dataIndex * 50; // Sela masa 50ms bagi setiap bar
+              }
+              return delay;
+            }
+          },
+
+          animations: {
+            x: {
+              from: 0,
+              duration: 900
+            }
+          },
+
           plugins: {
             legend: { display: false },
             tooltip: {
+              backgroundColor: 'rgba(15, 23, 42, 0.9)',
+              titleColor: '#38bdf8',
+              bodyColor: '#f8fafc',
+              borderColor: 'rgba(255, 255, 255, 0.15)',
+              borderWidth: 1,
+              padding: 10,
+              cornerRadius: 10,
               callbacks: {
                 title: function(context) {
                   const idx = context[0].dataIndex;
                   return rawLabels[idx] || context[0].label;
+                },
+                label: function(context) {
+                  return ` Hadir: ${context.parsed.x} orang`;
                 }
               }
             }
@@ -1112,13 +1149,18 @@
           scales: {
             x: {
               beginAtZero: true,
-              ticks: { precision: 0, color: '#94a3b8', stepSize: 1 },
+              ticks: { 
+                precision: 0, 
+                color: '#94a3b8', 
+                stepSize: 1,
+                font: { family: 'Plus Jakarta Sans', size: 10 }
+              },
               grid: { color: 'rgba(255, 255, 255, 0.05)' }
             },
             y: {
               ticks: { 
                 color: '#cbd5e1', 
-                font: { size: 11, weight: '500' }
+                font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' }
               },
               grid: { display: false }
             }
@@ -1144,7 +1186,11 @@
 
       deptChartInstance.data.labels = shortLabels.length > 0 ? shortLabels : ['Tiada Data'];
       deptChartInstance.data.datasets[0].data = deptValues.length > 0 ? deptValues : [0];
-      deptChartInstance.update();
+      
+      deptChartInstance.update({
+        duration: 800,
+        easing: 'easeOutCubic'
+      });
     }
 
     function getDeptBreakdown() {
