@@ -1043,7 +1043,15 @@
         noRecordsState.classList.add('hidden');
         filtered.forEach((r, idx) => {
           const cleanPhone = r.noTel.replace(/[^0-9]/g, '');
-          const waUrl = cleanPhone.startsWith('6') ? `https://wa.me/${cleanPhone}` : (cleanPhone.startsWith('0') ? `https://wa.me/6${cleanPhone}` : `https://wa.me/60${cleanPhone}`);
+          const formattedPhone = cleanPhone.startsWith('6') ? cleanPhone : (cleanPhone.startsWith('0') ? `6${cleanPhone}` : `60${cleanPhone}`);
+
+          const defaultMessage = `Salam Jumaat Datuk Bandar, Pengarah2 Eksekutif dan Ketua2 Jabatan.
+
+Dimaklumkan aktiviti kunci masuk/kemaskini data PPT2027 dalam Sistem ePPP hanya dibuka sehingga jam 3petang hari ini.
+Jabatan2 yang masih belum mengemaskini maklumat Parlimen dan Kluster bajet, adalah dimohon mengemaskini maklumat2 tersebut dalam sistem ePPP dengan kadar segera.
+Terima kasih 🙏🏻`;
+
+          const waUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(defaultMessage)}`;
 
           const tr = document.createElement('tr');
           tr.className = "hover:bg-white/[0.04] transition-colors";
@@ -1203,7 +1211,7 @@
               ticks: { 
                 precision: 0, 
                 color: '#94a3b8', 
-                stepSize: 1,
+                stepSize: 1, 
                 font: { family: 'Plus Jakarta Sans', size: 10 }
               },
               grid: { color: 'rgba(255, 255, 255, 0.05)' }
