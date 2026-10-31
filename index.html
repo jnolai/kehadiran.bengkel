@@ -72,6 +72,12 @@
       box-shadow: 0 0 20px rgba(6, 182, 212, 0.25);
       outline: none;
     }
+    .glass-input:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
     .glass-input option {
       background: #0f172a;
       color: #f8fafc;
@@ -176,13 +182,13 @@
 
         <div class="flex items-center space-x-2">
           <div class="p-1 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1 backdrop-blur-md">
-            <button id="tabFormBtn" onclick="switchView('form')" class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm flex items-center gap-2 transition-all">
-              <i class="fa-solid fa-id-badge"></i>
-              <span class="hidden sm:inline">Daftar Kehadiran</span>
-            </button>
-            <button id="tabDashboardBtn" onclick="switchView('dashboard')" class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white hover:bg-white/5 flex items-center gap-2 transition-all">
+            <button id="tabDashboardBtn" onclick="switchView('dashboard')" class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm flex items-center gap-2 transition-all">
               <i class="fa-solid fa-chart-pie"></i>
               <span class="hidden sm:inline">Dashboard & Peserta</span>
+            </button>
+            <button id="tabFormBtn" onclick="switchView('form')" class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white hover:bg-white/5 flex items-center gap-2 transition-all">
+              <i class="fa-solid fa-lock text-rose-400 text-xs"></i>
+              <span class="hidden sm:inline">Daftar Kehadiran (Tutup)</span>
             </button>
           </div>
 
@@ -210,144 +216,110 @@
   <!-- Kandungan Utama -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
 
-    <!-- TAB 1: BORANG PENDAFTARAN -->
-    <section id="sectionForm" class="block">
+    <!-- TAB 1: BORANG PENDAFTARAN (DIKUNCI / DITUTUP) -->
+    <section id="sectionForm" class="hidden">
       <div class="max-w-2xl mx-auto">
         <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-semibold mb-3 backdrop-blur-md">
-            <i class="fa-solid fa-building-columns text-cyan-400"></i> Borang Kehadiran Rasmi
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs font-semibold mb-3 backdrop-blur-md">
+            <i class="fa-solid fa-lock text-rose-400"></i> Pendaftaran Ditutup
           </div>
           <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-400 font-heading">
             Bengkel Perancangan Perolehan Tahunan 2027
           </h2>
           <p class="text-xs sm:text-sm text-slate-400 mt-2">
-            Sila isi maklumat kehadiran pegawai di bawah. Medan bertanda <span class="text-rose-400 font-bold">*</span> adalah wajib.
+            Pendaftaran kehadiran telah ditamatkan secara rasmi oleh Urusetia.
           </p>
         </div>
 
-        <div class="glass-card-elevated rounded-3xl p-6 sm:p-9 relative overflow-hidden">
-          <div class="absolute -top-20 -right-20 w-44 h-44 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="glass-card-elevated rounded-3xl p-6 sm:p-9 relative overflow-hidden border border-rose-500/30">
+          <div class="absolute -top-20 -right-20 w-44 h-44 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-          <form id="attendanceForm" onsubmit="handleFormSubmit(event)" class="space-y-6 relative z-10">
+          <!-- Banner Notis Penutupan -->
+          <div class="p-4 mb-6 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-300 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-circle-exclamation text-lg"></i>
+            </div>
             <div>
-              <label for="namaPegawai" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
-                Nama Pegawai <span class="text-rose-400 font-bold">*</span>
+              <h4 class="text-sm font-bold text-rose-200">Sesi Pendaftaran Telah Tamat</h4>
+              <p class="text-xs text-rose-300/80 mt-1 leading-relaxed">
+                Pendaftaran kehadiran bagi bengkel ini telah ditutup. Sila rujuk terus pihak <strong>Urusetia Bengkel (UMKB@JKEW)</strong> untuk sebarang pengesahan atau pertanyaan lanjut.
+              </p>
+            </div>
+          </div>
+
+          <form id="attendanceForm" onsubmit="handleFormSubmit(event)" class="space-y-6 relative z-10 opacity-60 pointer-events-none select-none">
+            <div>
+              <label for="namaPegawai" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                Nama Pegawai
               </label>
               <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-solid fa-user-tie"></i>
                 </span>
-                <input type="text" id="namaPegawai" required placeholder="Nama penuh pegawai"
-                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-500 font-medium">
+                <input type="text" id="namaPegawai" disabled placeholder="Nama penuh pegawai"
+                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-600 font-medium">
               </div>
             </div>
 
             <div>
-              <label for="jawatanGred" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
-                Jawatan/Gred <span class="text-rose-400 font-bold">*</span>
+              <label for="jawatanGred" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                Jawatan/Gred
               </label>
               <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-solid fa-award"></i>
                 </span>
-                <input type="text" id="jawatanGred" required placeholder="Contoh: Pegawai Tadbir N41 / Penolong Jurutera JA29"
-                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-500 font-medium">
+                <input type="text" id="jawatanGred" disabled placeholder="Contoh: Pegawai Tadbir N41 / Penolong Jurutera JA29"
+                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-600 font-medium">
               </div>
             </div>
 
             <div>
-              <label for="jabatan" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
-                Jabatan <span class="text-rose-400 font-bold">*</span>
+              <label for="jabatan" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                Jabatan
               </label>
               <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-solid fa-landmark"></i>
                 </span>
-                <select id="jabatan" required
-                  class="glass-input w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm appearance-none cursor-pointer">
-                  <option value="" disabled selected class="text-slate-500">Pilih Jabatan / Pejabat</option>
-                  <option value="Pejabat Datuk Bandar Kuala Lumpur">Pejabat Datuk Bandar Kuala Lumpur</option>
-                  <option value="Pejabat Pengarah Eksekutif (Pembangunan Sosioekonomi)">Pejabat Pengarah Eksekutif (Pembangunan Sosioekonomi)</option>
-                  <option value="Pejabat Pengarah Eksekutif (Pengurusan)">Pejabat Pengarah Eksekutif (Pengurusan)</option>
-                  <option value="Pejabat Pengarah Eksekutif (Pengurusan Projek)">Pejabat Pengarah Eksekutif (Pengurusan Projek)</option>
-                  <option value="Pejabat Pengarah Eksekutif (Perancangan)">Pejabat Pengarah Eksekutif (Perancangan)</option>
-                  <option value="Jabatan Pembangunan Komuniti Dan Kesejahteraan Bandar (JPKKB)">Jabatan Pembangunan Komuniti Dan Kesejahteraan Bandar (JPKKB)</option>
-                  <option value="Jabatan Pelaksanaan Projek Dan Penyelenggaraan Bangunan (JPPPB)">Jabatan Pelaksanaan Projek Dan Penyelenggaraan Bangunan (JPPPB)</option>
-                  <option value="Jabatan Pembangunan Landskap Dan Rekreasi (JPLR)">Jabatan Pembangunan Landskap Dan Rekreasi (JPLR)</option>
-                  <option value="Jabatan Kesihatan dan Alam Sekitar (JKAS)">Jabatan Kesihatan dan Alam Sekitar (JKAS)</option>
-                  <option value="Jabatan Penguatkuasaan dan Keselamatan (JPK)">Jabatan Penguatkuasaan dan Keselamatan (JPK)</option>
-                  <option value="Jabatan Kejuruteraan Mekanikal Dan Elektrikal (JKME)">Jabatan Kejuruteraan Mekanikal Dan Elektrikal (JKME)</option>
-                  <option value="Jabatan Pelesenan Dan Pembangunan Perniagaan (JPPP)">Jabatan Pelesenan Dan Pembangunan Perniagaan (JPPP)</option>
-                  <option value="Jabatan Kejuruteraan Awam Dan Saliran (JKAWS)">Jabatan Kejuruteraan Awam Dan Saliran (JKAWS)</option>
-                  <option value="Jabatan Pengangkutan Bandar (JPB)">Jabatan Pengangkutan Bandar (JPB)</option>
-                  <option value="Jabatan Ukur Bahan (JUB)">Jabatan Ukur Bahan (JUB)</option>
-                  <option value="Jabatan Perancangan Ekonomi dan Pembangunan (JPEP)">Jabatan Perancangan Ekonomi dan Pembangunan (JPEP)</option>
-                  <option value="Jabatan Kawalan Bangunan (JKB)">Jabatan Kawalan Bangunan (JKB)</option>
-                  <option value="Jabatan Pentadbiran Bahagian Pengurusan Perolehan (JP-BPP)">Jabatan Pentadbiran Bahagian Pengurusan Perolehan (JP-BPP)</option>
-                  <option value="Jabatan Kebudayaan, Kesenian, Pelancongan Dan Sukan (JKKPS)">Jabatan Kebudayaan, Kesenian, Pelancongan Dan Sukan (JKKPS)</option>
-                  <option value="Jabatan Penilaian dan Pengurusan Harta (JPPH)">Jabatan Penilaian dan Pengurusan Harta (JPPH)</option>
-                  <option value="Jabatan Intergriti (JIT)">Jabatan Intergriti (JIT)</option>
-                  <option value="Jabatan Audit Dalam (JAD)">Jabatan Audit Dalam (JAD)</option>
-                  <option value="Jabatan Pengurusan Sumber Manusia (JPSM)">Jabatan Pengurusan Sumber Manusia (JPSM)</option>
-                  <option value="Jabatan Perancangan Korporat (JPRK)">Jabatan Perancangan Korporat (JPRK)</option>
-                  <option value="Jabatan Undang-Undang dan Pendakwaan (JUP)">Jabatan Undang-Undang dan Pendakwaan (JUP)</option>
-                  <option value="Jabatan Perancangan Infrastruktur (JPIF)">Jabatan Perancangan Infrastruktur (JPIF)</option>
-                  <option value="Jabatan Pengurusan Maklumat (JPM)">Jabatan Pengurusan Maklumat (JPM)</option>
-                  <option value="Jabatan Perancangan Bandaraya (JPB)">Jabatan Perancangan Bandaraya (JPB)</option>
-                  <option value="Jabatan Kewangan (JKEW)">Jabatan Kewangan (JKEW)</option>
-                  <option value="Pejabat Cawangan Wangsa Maju">Pejabat Cawangan Wangsa Maju</option>
-                  <option value="Pejabat Cawangan Lembah Pantai">Pejabat Cawangan Lembah Pantai</option>
-                  <option value="Pejabat Cawangan Batu">Pejabat Cawangan Batu</option>
-                  <option value="Pejabat Cawangan Setiawangsa">Pejabat Cawangan Setiawangsa</option>
-                  <option value="Pejabat Cawangan Bandar Tun Razak">Pejabat Cawangan Bandar Tun Razak</option>
-                  <option value="Pejabat Cawangan Kepong">Pejabat Cawangan Kepong</option>
-                  <option value="Pejabat Cawangan Segambut">Pejabat Cawangan Segambut</option>
-                  <option value="Pejabat Cawangan Titiwangsa">Pejabat Cawangan Titiwangsa</option>
-                  <option value="Pejabat Cawangan Bukit Bintang">Pejabat Cawangan Bukit Bintang</option>
-                  <option value="Pejabat Cawangan Cheras">Pejabat Cawangan Cheras</option>
-                  <option value="Pejabat Cawangan Seputeh">Pejabat Cawangan Seputeh</option>
-                  <option value="Urusetia">Urusetia</option>
+                <select id="jabatan" disabled
+                  class="glass-input w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm appearance-none">
+                  <option value="" disabled selected class="text-slate-500">Pendaftaran ditutup</option>
                 </select>
-                <span class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-400">
-                  <i class="fa-solid fa-chevron-down text-xs"></i>
-                </span>
               </div>
             </div>
 
             <div>
-              <label for="noTel" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
-                No.Tel (WhatsApp) <span class="text-rose-400 font-bold">*</span>
+              <label for="noTel" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                No.Tel (WhatsApp)
               </label>
               <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-emerald-400">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-brands fa-whatsapp text-lg"></i>
                 </span>
-                <input type="tel" id="noTel" required placeholder="Contoh: 0123456789"
-                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-500 font-medium">
+                <input type="tel" id="noTel" disabled placeholder="Pendaftaran ditutup"
+                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-600 font-medium">
               </div>
             </div>
 
             <div>
-              <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-200 mb-2">
-                eMail <span class="text-slate-400 text-[10px] lowercase font-normal">(pilihan)</span>
+              <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                eMail
               </label>
               <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-regular fa-envelope"></i>
                 </span>
-                <input type="email" id="email" placeholder="Contoh: pegawai@dbkl.gov.my"
-                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-500 font-medium">
+                <input type="email" id="email" disabled placeholder="Pendaftaran ditutup"
+                  class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm placeholder-slate-600 font-medium">
               </div>
             </div>
 
-            <div class="pt-2 flex gap-3">
-              <button type="submit" id="submitBtn"
-                class="flex-1 py-3.5 px-6 rounded-2xl font-bold text-slate-900 bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-300 hover:from-cyan-300 hover:to-teal-200 active:scale-[0.99] shadow-lg shadow-cyan-500/20 border border-white/40 transition-all flex items-center justify-center gap-2">
-                <i class="fa-solid fa-check-circle text-slate-900"></i>
-                <span id="btnText">Daftar Kehadiran</span>
-              </button>
-              <button type="reset" class="px-5 py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all" title="Kosongkan borang">
-                <i class="fa-solid fa-arrow-rotate-left"></i>
+            <div class="pt-2">
+              <button type="button" disabled
+                class="w-full py-3.5 px-6 rounded-2xl font-bold text-slate-400 bg-slate-800/80 border border-white/10 cursor-not-allowed flex items-center justify-center gap-2">
+                <i class="fa-solid fa-ban text-rose-400"></i>
+                <span>Pendaftaran Telah Ditutup</span>
               </button>
             </div>
           </form>
@@ -356,7 +328,7 @@
     </section>
 
     <!-- TAB 2: DASHBOARD KEHADIRAN -->
-    <section id="sectionDashboard" class="hidden">
+    <section id="sectionDashboard" class="block">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-7">
         <div>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-heading">
@@ -379,7 +351,7 @@
         </div>
       </div>
 
-      <!-- KPI Grid (3 Kad: Jumlah Peserta -> Jabatan Terlibat -> Kunci Diterima) -->
+      <!-- KPI Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-7">
         <!-- 1. Jumlah Peserta -->
         <div class="glass-card p-5 rounded-3xl relative overflow-hidden group hover:border-cyan-500/40 transition-all">
@@ -437,7 +409,6 @@
             </div>
           </div>
           
-          <!-- Kontena responsif dengan skrol menegak -->
           <div id="chartScrollContainer" class="relative max-h-96 overflow-y-auto custom-scrollbar pr-2 w-full">
             <div id="chartWrapper" class="relative w-full" style="min-height: 280px;">
               <canvas id="deptChart"></canvas>
@@ -533,7 +504,7 @@
           </div>
           <h4 class="font-bold text-slate-200 text-sm sm:text-base">Belum Ada Rekod Kehadiran</h4>
           <p class="text-xs text-slate-400 mt-1.5 max-w-md mx-auto">
-            Sila daftarkan peserta di tab <strong class="text-cyan-300">Daftar Kehadiran</strong> atau klik butang <strong class="text-emerald-300">Sync DB</strong>.
+            Klik butang <strong class="text-emerald-300">Sync DB</strong> untuk memuat data terkini dari pengkalan data Google Sheets.
           </p>
         </div>
 
@@ -556,7 +527,7 @@
             <i class="fa-solid fa-table-cells"></i>
           </div>
           <div>
-            <h3 class="font-bold text-white text-base">Penyambung Terus Google Sheets & Google Form</h3>
+            <h3 class="font-bold text-white text-base">Penyambung Terus Google Sheets</h3>
             <p class="text-[11px] text-slate-400">Pilih kaedah simpanan data terus ke Google Drive anda</p>
           </div>
         </div>
@@ -656,7 +627,6 @@
         .replace(/'/g, '&#039;');
     }
 
-    // Memendekkan nama jabatan untuk label carta
     function formatDeptLabel(deptName) {
       if (!deptName) return '';
       const match = deptName.match(/\(([^)]+)\)/);
@@ -678,7 +648,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       startClock();
       updateAdminUI();
-      renderDashboard();
+      switchView('dashboard'); // Paparan utama terus ke dashboard kerana borang telah dikunci
       initCharts();
 
       const savedScriptUrl = localStorage.getItem('perolehan_script_url');
@@ -797,7 +767,7 @@
       if (view === 'form') {
         sectionForm.classList.remove('hidden');
         sectionDashboard.classList.add('hidden');
-        tabFormBtn.className = "px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm flex items-center gap-2 transition-all";
+        tabFormBtn.className = "px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-sm flex items-center gap-2 transition-all";
         tabDashboardBtn.className = "px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white hover:bg-white/5 flex items-center gap-2 transition-all";
       } else {
         sectionForm.classList.add('hidden');
@@ -810,68 +780,12 @@
       }
     }
 
-    async function handleFormSubmit(e) {
+    // Fungsi submit dilumpuhkan
+    function handleFormSubmit(e) {
       e.preventDefault();
-
-      const namaPegawai = document.getElementById('namaPegawai').value.trim();
-      const jawatanGred = document.getElementById('jawatanGred').value.trim();
-      const jabatan = document.getElementById('jabatan').value;
-      const noTel = document.getElementById('noTel').value.trim();
-      const email = document.getElementById('email').value.trim();
-
-      const submitBtn = document.getElementById('submitBtn');
-      const btnText = document.getElementById('btnText');
-
-      submitBtn.disabled = true;
-      btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Mendaftar...';
-
-      const now = new Date();
-      const formattedTimestamp = now.toLocaleString('ms-MY', {
-        day: '2-digit', month: '2-digit', year: 'numeric',
-        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
-      });
-
-      const newAttendee = {
-        id: "att_" + Date.now().toString() + "_" + Math.random().toString(36).substr(2, 5),
-        timestamp: formattedTimestamp,
-        time: now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', hour12: true }),
-        date: now.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' }),
-        namaPegawai,
-        jawatanGred,
-        jabatan,
-        noTel,
-        email: email || '-',
-        roomNo: '',
-        keyReceived: false
-      };
-
-      const scriptUrl = getScriptUrl();
-      if (scriptUrl) {
-        try {
-          await fetch(scriptUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(newAttendee)
-          });
-        } catch (err) {
-          console.warn('Apps Script POST notice:', err);
-        }
-      }
-
-      attendees.unshift(newAttendee);
-      localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
-
-      setTimeout(() => {
-        submitBtn.disabled = false;
-        btnText.innerHTML = '<i class="fa-solid fa-check-circle text-slate-900"></i> Daftar Kehadiran';
-        document.getElementById('attendanceForm').reset();
-        showToast(`Kehadiran ${escapeHtml(namaPegawai)} berjaya direkodkan!`, 'success');
-        setTimeout(() => switchView('dashboard'), 300);
-      }, 500);
+      showToast('Pendaftaran telah ditutup!', 'error');
     }
 
-    // Hantar data bilik dan kunci ke Google Sheets
     async function sendRoomKeyUpdateToSheet(attendee) {
       const scriptUrl = getScriptUrl();
       if (!scriptUrl) return;
@@ -894,19 +808,16 @@
       }
     }
 
-    // Kemaskini No. Bilik
     async function updateRoomNumber(id, val) {
       const att = attendees.find(a => a.id === id);
       if (att) {
         att.roomNo = val.trim();
         localStorage.setItem('perolehan_attendees', JSON.stringify(attendees));
-        
         await sendRoomKeyUpdateToSheet(att);
         showToast(`No. Bilik ${escapeHtml(att.namaPegawai)} dikemaskini (${att.roomNo || 'Kosong'}).`, 'info');
       }
     }
 
-    // Tukar Status Kunci
     async function toggleKeyStatus(id) {
       if (!isAdminLoggedIn) {
         showToast('Hanya Urusetia/Admin boleh mengesahkan serahan kunci!', 'error');
@@ -1056,7 +967,6 @@ Terima kasih 🙏🏻`;
           const tr = document.createElement('tr');
           tr.className = "hover:bg-white/[0.04] transition-colors";
 
-          // Hanya Admin/Urusetia dapat melihat No. Tel (WhatsApp)
           let phoneCell = '';
           if (isAdminLoggedIn) {
             phoneCell = `
@@ -1176,12 +1086,6 @@ Terima kasih 🙏🏻`;
                 delay = context.dataIndex * 50;
               }
               return delay;
-            }
-          },
-          animations: {
-            x: {
-              from: 0,
-              duration: 900
             }
           },
           plugins: {
